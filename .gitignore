@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# エディタ
+.vscode/
+.idea/
+
+# 一時ファイル
+*.log
+.appgenius_temp/
+
+# 機密情報（このプロジェクトは環境変数を使わないが、誤コミット防止の保険）
+.env
+.env.local
+.env.*.local
+*.pem
+*-key.json
+
+# このテンプレートリポジトリ配下に置かれた別プロジェクト（混入防止）
+chatgpt-illustration-tokuten/
+tokuten-matome/
+claude-canva-tokuten/

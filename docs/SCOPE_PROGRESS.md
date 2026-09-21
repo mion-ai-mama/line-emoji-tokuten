@@ -55,6 +55,11 @@
 | K-005 | グリッド画像一括処理パイプライン（切り出し・中央配置・背景透過・APNG合成・タブ画像・ZIP作成） | [x] `assets/kit/scripts/emoji_pipeline.py`（`build_apng.py`を内部利用） |
 | K-006 | Codex用／ChatGPT用マスタープロンプト（キャラ候補A/B/C提案＋会話コマンド駆動） | [x] `assets/kit/prompts/{codex,chatgpt}-emoji-set-prompt.md` |
 
+> 2026-09-21追記: 配布ZIPを`prompts/`・`scripts/`のフォルダ分け構成から**フラット構成**に変更。
+> ユーザーが実機で解凍したところ2フォルダに分かれて見え、ページの「3ファイルを添付」という
+> 案内と食い違っていたため（実証性：ユーザー報告で発覚）。README.md §6のzipコマンドも
+> `zip -j`に更新済み。
+
 いずれも競合ファイルを一切含まない、完全新規のオリジナル作成物とする。
 `emoji_pipeline.py`は合成テスト用グリッド画像で`all`コマンドの動作を確認済み（180×180・96×74のPNG出力、ZIP20MB制限チェックを含む）。
 

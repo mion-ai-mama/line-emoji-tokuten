@@ -124,12 +124,17 @@ python3 -m http.server 8000
 忘れずに書き換えてください**（キットとページ本文は別ファイルとして重複管理しているため、
 片方だけ更新すると内容がズレます）。
 
+> 配布ZIPは、上表のファイルを**フォルダ分けせず1階層に展開**する構成にしています
+> （`-j`でサブフォルダを潰して固める。読者が解凍したときに`prompts/`・`scripts/`の
+> 2フォルダに分かれて見え、「3ファイルを添付」の案内と噛み合わなくなる問題があったため）。
+
 内容を更新したら、ZIPを作り直してダウンロードボタンに反映させます。
 
 ```bash
 cd assets/kit
+rm -rf scripts/__pycache__
 rm -f line-emoji-kit.zip
-zip -r line-emoji-kit.zip prompts scripts -x ".*" -x "*__pycache__*"
+zip -j line-emoji-kit.zip prompts/*.json prompts/*.md scripts/*.py scripts/*.txt
 ```
 
 ---

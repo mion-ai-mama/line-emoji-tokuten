@@ -46,7 +46,8 @@ HTML / CSS / JavaScript だけで作られた静的サイトで、ビルド作�
     ├── favicon/favicon.svg
     ├── images/cta-banner.png   「AIマネタイズの教科書」バナー（既存ポリシー通り固定）
     └── kit/                    配布キット本体（§6参照）
-        ├── line-emoji-kit.zip  ダウンロードボタンからリンクしているZIP（要再生成、§6）
+        ├── core-files.zip      添付・作業フォルダ用の必須3ファイルのみ（メインのDLボタン）
+        ├── line-emoji-kit.zip  プロンプト控え等も含む完全版（任意・サブリンク）
         ├── prompts/            8-emoji-set-plan.json／Codex用・ChatGPT用マスタープロンプト
         └── scripts/            emoji_pipeline.py（グリッド切り出し→APNG合成→ZIP作成）
                                  build_apng.py（emoji_pipeline.pyが内部利用）
@@ -109,7 +110,17 @@ python3 -m http.server 8000
 ## 6. 配布キット（`assets/kit/`）の中身と更新方法
 
 このページ固有の成果物として、8個セットを会話駆動で一括生成するための
-構成JSON・Pythonパイプライン・マスタープロンプトを1つのZIPにまとめて配布しています。
+構成JSON・Pythonパイプライン・マスタープロンプトを配布しています。ZIPは2種類あります。
+
+| ZIP | 中身 | 用途 |
+|---|---|---|
+| `core-files.zip` | `8-emoji-set-plan.json` / `emoji_pipeline.py` / `build_apng.py`の3つのみ | ページのメインのダウンロードボタン。Codex/ChatGPTに添付・配置する必須ファイルだけを渡す |
+| `line-emoji-kit.zip` | 上記3つ＋プロンプトの控え（`.md`）＋`add_text_overlay.py`等 | ページ内のサブリンク（任意）。全ファイルの完全版 |
+
+> 2026-09-22追記: 当初はkit一式（7ファイル）を1つのZIPにまとめていたが、
+> ユーザーが実機で試したところ「7ファイルの中からどの3つを選べばいいか分かりにくい」
+> というフィードバックがあったため、**必須3ファイルだけの`core-files.zip`を主導線にし、
+> 完全版は任意のサブリンクに格下げ**した。
 
 | ファイル | 役割 |
 |---|---|
@@ -124,16 +135,15 @@ python3 -m http.server 8000
 忘れずに書き換えてください**（キットとページ本文は別ファイルとして重複管理しているため、
 片方だけ更新すると内容がズレます）。
 
-> 配布ZIPは、上表のファイルを**フォルダ分けせず1階層に展開**する構成にしています
-> （`-j`でサブフォルダを潰して固める。読者が解凍したときに`prompts/`・`scripts/`の
-> 2フォルダに分かれて見え、「3ファイルを添付」の案内と噛み合わなくなる問題があったため）。
+どちらのZIPも**フォルダ分けせず1階層に展開**する構成です（`-j`でサブフォルダを潰して固める）。
 
-内容を更新したら、ZIPを作り直してダウンロードボタンに反映させます。
+内容を更新したら、両方のZIPを作り直してダウンロードボタンに反映させます。
 
 ```bash
 cd assets/kit
 rm -rf scripts/__pycache__
-rm -f line-emoji-kit.zip
+rm -f core-files.zip line-emoji-kit.zip
+zip -j core-files.zip prompts/8-emoji-set-plan.json scripts/emoji_pipeline.py scripts/build_apng.py
 zip -j line-emoji-kit.zip prompts/*.json prompts/*.md scripts/*.py scripts/*.txt
 ```
 

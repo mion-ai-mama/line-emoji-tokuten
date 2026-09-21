@@ -673,6 +673,17 @@ button:focus-visible {
   margin: 0 auto 2rem;
 }
 
+.kit-extra-link {
+  text-align: center;
+  margin: -1rem 0 2rem;
+  font-size: 0.85rem;
+}
+
+.kit-extra-link a {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+
 /* ============================================================
    アコーディオン
 ============================================================ */

@@ -1,4 +1,4 @@
-# Instagramリール特典ページ（GitHub Pages型テンプレート）
+# 動くLINE絵文字の作り方 完全ガイド（Instagramリール特典ページ）
 
 > 設計の共通原則（基本原則・資産価値の原則・自律解決の原則）は `~/.claude/CLAUDE.md` に従う。
 
@@ -10,74 +10,102 @@
   database: なし
   hosting: GitHub Pages（静的ファイル配信のみ）
 
-このプロジェクトはビルド・サーバーが不要な完全な静的サイトです。
-`index.html` をブラウザで直接開く、または `python3 -m http.server` 等の
-簡易サーバーで確認できます。ポート番号のランダム生成・専用バックエンドポートの
-割り当ては不要です。
+ビルド・サーバーが不要な完全な静的サイト。`index.html` を直接開く、または
+`python3 -m http.server` で確認する。ポートのランダム生成・バックエンドポートの割り当ては不要。
 
 ## 環境変数
 
-このプロジェクトは環境変数を使用しません（APIキー・DB接続情報等が一切不要な
-完全な静的サイトのため）。`.env` 系ファイルは作成しないでください。
+このプロジェクトは環境変数を使用しない（APIキー・DB接続情報が一切不要な静的サイトのため）。
+`.env` 系ファイルは作成しない。
+
+## ファイル構成の原則
+
+フラット構成を維持する（テンプレート元リポジトリの `css/` `js/` 分割・`LICENSE.md`・`.github/` は
+このプロジェクトでは使わないため削除済み）。
+
+```text
+index.html / style.css / script.js / README.md / assets/
+```
+
+- **文章の単一の源は `index.html`**。`content.js` 方式は使わない。文言を変えるときは `index.html` を直接編集する。
+- 画像は `assets/` に**同名ファイル**を置くだけで反映される。HTMLの書き換えは不要。
+- 配布キット本体（ZIP）は `assets/kit/` に置き、ダウンロードボタンから直接リンクする。
+
+## このプロジェクト固有の成果物：配布キット
+
+ページ本体とは別に、**読者がダウンロードして使う「オリジナルのCodex/ChatGPT用プロンプトキット」**を
+新規に作成する（競合ファイルの転載は禁止。詳細は `docs/requirements.md` §2 を参照）。
+
+- **2ルート構成**: Codexルート（プロンプト＋Pillow文字合成＋APNG自動合成スクリプト一式）／
+  ChatGPTのみルート（連番静止画生成プロンプト＋無料結合ツール案内）
+- **LINE公式仕様の厳守**: APNG・320×270px以内・5〜20フレーム・ループ1〜4回・4秒以内・300KB以下
+  （`docs/requirements.md` §2.1）
+- **モチーフ選択**: 手持ち画像の添付を基本とし、ない読者には「動物／丸顔／人物」から選ばせる。
+  人物モチーフは表情差分でブレやすいため、プロンプトに「シンプル・ちびキャラ風」等の一貫性維持の指示を必ず入れる
 
 ## 命名規則
 
-- ファイル: kebab-case（例: `video-poster.jpg`）
-- JavaScript変数・関数: camelCase / 定数オブジェクト: `CONTENT`（大文字開始で固定）
+- ファイル: kebab-case（例: `emoji-sample-01.webp`）
+- JavaScript変数・関数: camelCase / CSSクラス: BEM風（`.block__element--modifier`）
 
-## コンテンツの単一の源
+## 配色（変更しないこと。変える場合はユーザー確認）
 
-ページの文章・プロンプト・CTAリンク・動画設定は、すべて `js/content.js` の
-`CONTENT` オブジェクトが単一の真実の源。`index.html` 内の文章は
-JavaScript無効時のフォールバック表示であり、`content.js` を編集した際は
-可能であれば `index.html` 側も合わせて更新する（README.md §6参照）。
+| 用途 | 変数 | 値 |
+|---|---|---|
+| 背景 | `--color-bg` | `#fdfaf7` |
+| 淡いブラッシュピンク | `--color-bg-soft` | `#fbeeec` |
+| メインピンク（くすみローズ） | `--color-primary` | `#cf8a92` |
+| 濃いピンク | `--color-primary-dark` | `#b16d76` |
+| アクセント淡ピンク | `--color-accent-light` | `#f7dfe0` |
+| メイン文字（濃茶） | `--color-text` | `#3d322f` |
+| 補助文字 | `--color-text-muted` | `#8a7972` |
+| ボーダー | `--color-border` | `#f0dfdc` |
+
+大人ピンク×アイボリー系。40代女性が見ても幼く感じない、大人っぽいトーンを保つ。
 
 ## コード品質
 
 - 関数: 100行以下 / ファイル: 700行以下 / 複雑度: 10以下 / 行長: 120文字
+- 700行基準は `style.css` / `script.js` に適用する。`index.html` は掲載文章そのもの
+  （プロンプト全文を含む）を保持するため対象外とし、分割しない（単一性を優先）。
 
-## 開発ルール
+## 表示確認（納品前に必須）
 
-### サーバー起動
-- ローカル確認時は `python3 -m http.server <port>` 等の簡易サーバーを1つのみ起動
-- 別ポートでの重複起動は避ける
+Playwrightで実ビューポートを再現して確認する。
+claude-in-chrome拡張の `resize_window` はOSウィンドウのみでCSSビューポート幅が変わらず、
+モバイル幅の検証には使えない。
 
-### ドキュメント管理
+確認項目: 横スクロールが起きない（320 / 375 / 1280px）／JSエラーなし／
+コピーボタンで「コピーしました！」が出る／目次から各セクションへ移動できる／
+キットZIPのダウンロードボタンが正常に動作する／画像未配置でもレイアウトが崩れない。
+
+## 画像の扱い
+
+- `<img>` に `width` / `height` 属性を付けない。
+  CSS側で `aspect-ratio` + `object-fit: contain` + `height: auto` を使う
+  （Instagramアプリ内ブラウザで縦に歪む不具合の対策）。
+- 縦横比は `style="--ar: 4 / 5;"` のようにインライン変数で指定する。
+
+## 配布導線（このページが前提とする流れ）
+
+LINE登録トリガーの自動配信ではない。実際の導線は
+「リールにコメント → DM → オープンチャット誘導 → オプチャ内の特典まとめからこのページのリンクを受け取る」。
+このページ自体は誰でもURLを知れば閲覧・DLできる公開静的ページとして作る
+（ページ内にLINE登録を必須にするゲートは設けない）。
+
+## ドキュメント管理
+
 許可されたドキュメントのみ作成可能:
+- `README.md`（ページの使い方・公開手順）
 - `docs/requirements.md`（要件定義）
 - `docs/SCOPE_PROGRESS.md`（進捗管理）
-- `README.md`（テンプレートの使い方）
-- `LICENSE.md`（利用方針）
-上記以外のドキュメント作成はユーザー許諾が必要。
 
-### テンプレートリポジトリとしての運用
-- 新しい特典ページは、このリポジトリを「Use this template」で複製してから編集する
-- 元のテンプレートリポジトリ自体は編集しない（README.md §16参照）
+上記以外のドキュメント作成はユーザー許諾が必要。実装済みの記載は積極的に削除する。
 
-## CI/CD設定（ローカルゲート主体 + 軽量Actions）
+## 公開
 
-このプロジェクトはビルド工程のない静的サイトのため、Node/npmのビルド・テストは行わない。
-代わりに「壊れたページがGitHub Pagesに公開されること」を防ぐチェックだけを置く。
-
-### 品質ゲートの二段構え
-
-| 段 | どこで | 何を | タイミング |
-|---|---|---|---|
-| 第一防壁 | ローカル git hook | `pre-commit`: 秘密情報ファイルの混入拒否 / JavaScript構文チェック | commit時に自動 |
-| 最終防壁 | GitHub Actions（`.github/workflows/ci.yml` の `verify`） | JavaScript構文 / 必須ファイル存在 / `index.html` のリンク切れ | main への push・PR時 |
-
-- `prepare-commit-msg` フックがコミットメッセージ冒頭に日時を自動付与する。
-- テストフレームワークは導入していないため `pre-push` フックは置いていない。
-- ローカルフックは `--no-verify` で回避でき、複製先のリポジトリにも引き継がれない。
-  そのため最終的な担保は GitHub Actions 側の `verify` が行う。
-
-### ブランチ戦略
-
-- `main`: 本番（GitHub Pages が公開しているブランチ）
-- `develop`: 開発・編集用の統合ブランチ
-
-### リポジトリ
-
-- URL: https://github.com/mion-ai-mama/instagram-tokuten-template
-- 公開設定: Public（テンプレートリポジトリ）
-- 公開ページ: https://mion-ai-mama.github.io/instagram-tokuten-template/
+- GitHub Pages（`main` ブランチ / `/ (root)`）
+- 公開後、`index.html` の `og:image` と `og:url` を実際の公開URLに書き換える
+- リポジトリ: https://github.com/mion-ai-mama/line-emoji-tokuten
+- 親ディレクトリ `instagram-tokuten-template` とは別リポジトリとして扱う
+  （親の `.gitignore` に `line-emoji-tokuten/` を登録済み）

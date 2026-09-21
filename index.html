@@ -126,61 +126,64 @@
 
       <h3 class="prepare__sub-heading">モチーフを選ぶ</h3>
       <p class="section__desc">
-        手持ちの画像がある人は、その画像をCodex／ChatGPTにそのまま添付すればOKです。<br>
-        ない人は、次の3つから1つ選んで、そのままコピーしてAIに送ってください。
+        選んだモチーフは、下の「Codexで作る」「ChatGPTだけで作る」のプロンプトに自動で反映されます。<br>
+        手持ちの画像がある人は「手持ちの画像を使う」を選んでください。
       </p>
 
-      <div class="motif-grid" id="motif-list">
-        <div class="motif-card">
-          <h4 class="motif-card__title">🐰 動物</h4>
-          <p class="motif-card__desc">うさぎ・ねこ・くまなど、丸みのあるシルエットの動物キャラ。</p>
-          <pre class="motif-card__text" id="motif-animal">## モチーフ：動物キャラ
+      <div class="motif-grid" id="motif-selector" role="radiogroup" aria-label="モチーフを選ぶ">
+        <label class="motif-option">
+          <input type="radio" name="motif" value="animal" checked>
+          <span class="motif-option__body">
+            <span class="motif-option__title">🐰 動物</span>
+            <span class="motif-option__desc">うさぎ・ねこ・くまなど、丸みのあるシルエットの動物キャラ。</span>
+          </span>
+        </label>
+        <label class="motif-option">
+          <input type="radio" name="motif" value="round-face">
+          <span class="motif-option__body">
+            <span class="motif-option__title">😊 丸顔・絵文字風</span>
+            <span class="motif-option__desc">顔だけのシンプルな丸型キャラクター。</span>
+          </span>
+        </label>
+        <label class="motif-option">
+          <input type="radio" name="motif" value="person">
+          <span class="motif-option__body">
+            <span class="motif-option__title">🧑 人物（ちびキャラ）</span>
+            <span class="motif-option__desc">お母さん・お父さんなどを単純化したデフォルメキャラ。</span>
+          </span>
+        </label>
+        <label class="motif-option">
+          <input type="radio" name="motif" value="own">
+          <span class="motif-option__body">
+            <span class="motif-option__title">📷 手持ちの画像を使う</span>
+            <span class="motif-option__desc">Codex／ChatGPTに画像をそのまま添付します。プロンプトにモチーフ説明は含めません。</span>
+          </span>
+        </label>
+      </div>
 
+      <!-- モチーフごとの指示文（JSが下のプロンプトへ自動合成する。表示はされない） -->
+      <template id="motif-text-animal">## モチーフ：動物キャラ
 - 種類はうさぎ・ねこ・くまなど、丸みのあるシルエットの動物を1種類選ぶ
 - 全フレームで「同じ種類・同じ体色・同じ模様」を厳守する
 - 背景は透過（アルファチャンネルあり）にする
-- 輪郭線は太めの一本線で統一し、塗りは平面的な単色〜2色までに抑える（LINEスタンプらしいシンプルさ）</pre>
-          <button type="button" class="btn btn--outline copy-btn" data-copy-target="motif-animal" aria-label="動物モチーフの指示文をコピーする">
-            <span class="copy-btn__label">この指示文をコピーする</span>
-            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
-          </button>
-        </div>
-
-        <div class="motif-card">
-          <h4 class="motif-card__title">😊 丸顔・絵文字風</h4>
-          <p class="motif-card__desc">顔だけのシンプルな丸型キャラクター。</p>
-          <pre class="motif-card__text" id="motif-round-face">## モチーフ：丸顔・絵文字風キャラ
-
+- 輪郭線は太めの一本線で統一し、塗りは平面的な単色〜2色までに抑える（LINEスタンプらしいシンプルさ）</template>
+      <template id="motif-text-round-face">## モチーフ：丸顔・絵文字風キャラ
 - 顔だけのシンプルな丸型キャラクター（絵文字寄りのデザイン）
 - 髪型・輪郭は固定し、表情パーツ（目・眉・口）だけを差し替える
 - 背景は透過にする
-- パーツの位置・大きさは全フレームで統一し、顔の輪郭自体は動かさない</pre>
-          <button type="button" class="btn btn--outline copy-btn" data-copy-target="motif-round-face" aria-label="丸顔モチーフの指示文をコピーする">
-            <span class="copy-btn__label">この指示文をコピーする</span>
-            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
-          </button>
-        </div>
-
-        <div class="motif-card">
-          <h4 class="motif-card__title">🧑 人物（ちびキャラ）</h4>
-          <p class="motif-card__desc">お母さん・お父さんなどを単純化したデフォルメキャラ。</p>
-          <pre class="motif-card__text" id="motif-person">## モチーフ：人物（ちびキャラ）
-
+- パーツの位置・大きさは全フレームで統一し、顔の輪郭自体は動かさない</template>
+      <template id="motif-text-person">## モチーフ：人物（ちびキャラ）
 - お母さん／お父さん／女性／男性など、実在の人物イメージを単純化した「ちびキャラ」で描く
 - リアル頭身ではなく、2〜3頭身のデフォルメされたキャラクターにする
   （リアル頭身は表情差分でフレーム間の顔ブレが起きやすいため禁止）
 - 髪型・服装・体型は全フレームで完全に固定し、表情パーツだけを変える
-- 背景は透過にする</pre>
-          <button type="button" class="btn btn--outline copy-btn" data-copy-target="motif-person" aria-label="人物モチーフの指示文をコピーする">
-            <span class="copy-btn__label">この指示文をコピーする</span>
-            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
-          </button>
-        </div>
-      </div>
+- 背景は透過にする</template>
+      <template id="motif-text-own">## モチーフ：手持ちの画像
+（このメッセージと一緒に、使いたいキャラクターの画像を添付してください）</template>
 
       <div class="note-box">
         <p class="note-box__label">補足</p>
-        <p>人物モチーフは表情差分でフレーム間の顔がブレやすいため、「ちびキャラ風」の指示を必ず含めています。統一感が崩れる場合は、指示文をもう一度送り直してください。</p>
+        <p>人物モチーフは表情差分でフレーム間の顔がブレやすいため、「ちびキャラ風」の指示を必ず含めています。統一感が崩れる場合は、下のプロンプトをもう一度送り直してください。</p>
       </div>
     </div>
   </section>
@@ -195,20 +198,24 @@
         フレーム生成から文字入れ、APNGへの自動合成・仕様チェックまで、キットのスクリプトで進めます。
       </p>
 
+      <a class="btn btn--outline btn--large kit-download" href="https://chatgpt.com/ja-JP/download/" target="_blank" rel="noopener noreferrer">
+        公式サイトからCodexを入手する
+      </a>
+
       <div class="prose">
         <ol class="numbered-steps">
-          <li>上の「モチーフを選ぶ」でコピーした指示文（または手持ちの画像）をCodexに送る</li>
-          <li>続けて、下の指示文を全文コピーしてCodexに送る</li>
+          <li>上のボタンからCodexを入手し、起動する</li>
+          <li>上の「モチーフを選ぶ」で使いたいキャラを選ぶ（手持ちの画像を使う場合はそれを選ぶ）</li>
+          <li>下のプロンプトをコピーしてCodexに貼り付ける（画像を使う場合は、プロンプトと一緒にその画像も送る）</li>
           <li>Codexが `frames/` フォルダに表情差分のPNGを連番で生成する</li>
           <li>（文字を入れたい場合）同梱の <code>add_text_overlay.py</code> でセリフを合成する</li>
           <li>同梱の <code>build_apng.py</code> でAPNGに自動合成し、LINE仕様を自動チェックする</li>
         </ol>
       </div>
 
-      <div class="prompt-box">
-        <pre class="prompt-box__text" id="codex-prompt-text">あなたはこれから、LINE Creators Marketに出品できる「動くLINE絵文字（アニメーションスタンプ）」の
-制作を手伝います。今伝えたキャラクターの見た目（またはさっき添付した画像のキャラクター）を保ったまま、
-以下の手順を順番に実行してください。
+      <!-- モチーフの指示文より後ろの本文（JSが上のモチーフ選択結果と合成して #codex-prompt-text に表示する） -->
+      <template id="codex-task-body">あなたはこれから、LINE Creators Marketに出品できる「動くLINE絵文字（アニメーションスタンプ）」の
+制作を手伝います。上で伝えたキャラクターの見た目を保ったまま、以下の手順を順番に実行してください。
 
 表情セット（5枚以上20枚以内で選ぶ。迷ったら次の5つでOK）：
 1. 通常の笑顔
@@ -228,7 +235,10 @@
 3. 同梱の scripts/build_apng.py を実行し、フレームをAPNGに自動合成する。
 4. build_apng.py はLINEの仕様（キャンバスサイズ・フレーム数・ループ回数・再生時間・
    ファイルサイズ300KB以内）を自動チェックします。エラーが出た場合は指示された箇所を
-   調整してやり直してください。</pre>
+   調整してやり直してください。</template>
+
+      <div class="prompt-box">
+        <pre class="prompt-box__text" id="codex-prompt-text"></pre>
         <button type="button" class="btn btn--primary copy-btn" data-copy-target="codex-prompt-text" aria-label="Codex用の指示文をコピーする">
           <span class="copy-btn__label">この指示文をコピーする</span>
           <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
@@ -253,18 +263,18 @@
 
       <div class="prose">
         <ol class="numbered-steps">
-          <li>上の「モチーフを選ぶ」でコピーした指示文（または手持ちの画像）をChatGPTに送る</li>
-          <li>続けて、下の指示文を全文コピーしてChatGPTに送る</li>
+          <li>上の「モチーフを選ぶ」で使いたいキャラを選ぶ（手持ちの画像を使う場合はそれを選ぶ）</li>
+          <li>下のプロンプトをコピーしてChatGPTに貼り付ける（画像を使う場合は、プロンプトと一緒にその画像も送る）</li>
           <li>表情ごとに1枚ずつ画像を生成してもらい、連番でダウンロードする</li>
           <li>無料のAPNG結合ツールで連番画像をアップロードし、APNGに結合する</li>
           <li>ファイルサイズが300KB以内か確認する</li>
         </ol>
       </div>
 
-      <div class="prompt-box">
-        <pre class="prompt-box__text" id="chatgpt-prompt-text">あなたはこれから、LINE Creators Marketに出品できる「動くLINE絵文字（アニメーションスタンプ）」用の
-表情差分イラストを作る手伝いをします。今伝えたキャラクターの見た目（またはさっき添付した画像のキャラクター）を
-保ったまま、以下の条件を守って、表情差分を1枚ずつ生成してください。
+      <!-- モチーフの指示文より後ろの本文（JSが上のモチーフ選択結果と合成して #chatgpt-prompt-text に表示する） -->
+      <template id="chatgpt-task-body">あなたはこれから、LINE Creators Marketに出品できる「動くLINE絵文字（アニメーションスタンプ）」用の
+表情差分イラストを作る手伝いをします。上で伝えたキャラクターの見た目を保ったまま、
+以下の条件を守って、表情差分を1枚ずつ生成してください。
 
 表情セット（5枚以上。迷ったら次の5つでOK）：
 1. 通常の笑顔
@@ -282,7 +292,10 @@
 
 進め方：
 上の表情セットの数だけ、1枚ずつ順番に生成してください。
-「1. 通常の笑顔」から始めて、できたら「次は2. 大笑いの表情で」と伝えて進めます。</pre>
+「1. 通常の笑顔」から始めて、できたら「次は2. 大笑いの表情で」と伝えて進めます。</template>
+
+      <div class="prompt-box">
+        <pre class="prompt-box__text" id="chatgpt-prompt-text"></pre>
         <button type="button" class="btn btn--primary copy-btn" data-copy-target="chatgpt-prompt-text" aria-label="ChatGPT用の指示文をコピーする">
           <span class="copy-btn__label">この指示文をコピーする</span>
           <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>

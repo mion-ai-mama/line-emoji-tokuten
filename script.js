@@ -52,6 +52,52 @@
   }
 
   /* ------------------------------------------------------------
+     モチーフ選択 → Codex/ChatGPTプロンプトへの自動合成
+     選んだモチーフの指示文（テンプレート）を、各ルートの本文テンプレートの
+     先頭に足して、コピー用の1本のプロンプトを組み立てる。
+  ------------------------------------------------------------ */
+  function getTemplateText(id) {
+    const tpl = document.getElementById(id);
+    return tpl ? tpl.content.textContent.trim() : "";
+  }
+
+  function getSelectedMotif() {
+    const checked = document.querySelector('input[name="motif"]:checked');
+    return checked ? checked.value : "animal";
+  }
+
+  function composePrompt(taskTemplateId, outputId) {
+    const output = document.getElementById(outputId);
+    if (!output) return;
+    const motifText = getTemplateText("motif-text-" + getSelectedMotif());
+    const bodyText = getTemplateText(taskTemplateId);
+    output.textContent = motifText + "\n\n" + bodyText;
+  }
+
+  function updatePrompts() {
+    composePrompt("codex-task-body", "codex-prompt-text");
+    composePrompt("chatgpt-task-body", "chatgpt-prompt-text");
+  }
+
+  function updateMotifSelectionStyle() {
+    document.querySelectorAll(".motif-option").forEach((label) => {
+      const input = label.querySelector('input[name="motif"]');
+      label.classList.toggle("is-selected", !!input && input.checked);
+    });
+  }
+
+  function bindMotifSelector() {
+    const selector = document.getElementById("motif-selector");
+    if (!selector) return;
+    selector.addEventListener("change", () => {
+      updateMotifSelectionStyle();
+      updatePrompts();
+    });
+    updateMotifSelectionStyle();
+    updatePrompts();
+  }
+
+  /* ------------------------------------------------------------
      アコーディオン（うまくいかないとき）
   ------------------------------------------------------------ */
   function bindAccordion() {
@@ -88,6 +134,7 @@
 
   function init() {
     bindCopyDelegation();
+    bindMotifSelector();
     bindAccordion();
     setupRevealAnimation();
   }

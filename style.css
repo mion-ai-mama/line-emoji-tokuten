@@ -550,6 +550,248 @@ button:focus-visible {
 }
 
 /* ============================================================
+   目次
+============================================================ */
+
+.toc-list {
+  list-style: none;
+  counter-reset: toc;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+
+.toc-list li {
+  counter-increment: toc;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.toc-list a {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  padding: 0.9em 1.1em;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.toc-list a::before {
+  content: counter(toc);
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+  background: var(--color-accent-light);
+  color: var(--color-primary-dark);
+  font-size: 0.85rem;
+}
+
+/* ============================================================
+   ルートカード（Codex／ChatGPT分岐）
+============================================================ */
+
+.route-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .route-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.route-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 12px 28px -18px var(--color-card-shadow);
+}
+
+.route-card__title {
+  margin: 0 0 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.route-card__desc {
+  margin: 0 0 1.25rem;
+  color: var(--color-text-muted);
+}
+
+.prepare__sub-heading {
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0 0 0.75rem;
+}
+
+/* ============================================================
+   モチーフカード
+============================================================ */
+
+.motif-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
+  margin: 1.5rem 0;
+}
+
+@media (min-width: 640px) {
+  .motif-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.motif-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: 0 12px 28px -18px var(--color-card-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.motif-card__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.motif-card__desc {
+  margin: 0 0 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.motif-card__text {
+  font-family: inherit;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1rem;
+  margin: 0 0 1rem;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  max-height: 9rem;
+  overflow-y: auto;
+}
+
+.motif-card .copy-btn {
+  margin-top: auto;
+}
+
+/* ============================================================
+   番号付きステップ
+============================================================ */
+
+.numbered-steps {
+  margin: 0 0 1.75rem;
+  padding-left: 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+.numbered-steps li {
+  padding-left: 0.3em;
+}
+
+.numbered-steps code,
+.prose code {
+  background: var(--color-bg-soft);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.9em;
+}
+
+.kit-download {
+  display: flex;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   アコーディオン
+============================================================ */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.accordion-item {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.accordion-item__question {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font: inherit;
+  font-weight: 700;
+  color: var(--color-text);
+  padding: 1.1rem 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.accordion-item__question::after {
+  content: "+";
+  flex: none;
+  color: var(--color-primary);
+  font-size: 1.3rem;
+  font-weight: 400;
+  transition: transform 0.2s ease;
+}
+
+.accordion-item__question[aria-expanded="true"]::after {
+  transform: rotate(45deg);
+}
+
+.accordion-item__answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.accordion-item__answer > p {
+  overflow: hidden;
+  margin: 0;
+  padding: 0 1.3rem;
+  color: var(--color-text-muted);
+}
+
+.accordion-item__question[aria-expanded="true"] + .accordion-item__answer {
+  grid-template-rows: 1fr;
+}
+
+.accordion-item__question[aria-expanded="true"] + .accordion-item__answer > p {
+  padding: 0 1.3rem 1.2rem;
+}
+
+/* ============================================================
    フッター
 ============================================================ */
 

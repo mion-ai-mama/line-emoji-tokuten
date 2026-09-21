@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIで人気動画を分析する方法｜コピペで使える3STEPガイド</title>
-<meta name="description" content="人気の動画をChatGPTに見せるだけで「なぜ伸びたのか」「次の企画」が分かる。AI初心者さんでもすぐ試せる3STEPガイドです。コピペで使えるプロンプト付き。">
+<title>動くLINE絵文字の作り方 完全ガイド｜Codex・ChatGPT対応</title>
+<meta name="description" content="自分の絵がなくてもOK。CodexでもChatGPTだけでも作れる、動くLINE絵文字（アニメーションスタンプ）の作り方を完全ガイド。コピペで使えるプロンプトキット付き。">
 
 <!-- OGP（SNSでシェアされたときの表示設定） -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="AIで人気動画を分析する方法｜コピペで使える3STEPガイド">
-<meta property="og:description" content="人気の動画をChatGPTに見せるだけで「なぜ伸びたのか」「次の企画」が分かる。AI初心者さんでもすぐ試せる3STEPガイドです。">
-<meta property="og:image" content="https://mion-ai-mama.github.io/instagram-tokuten-template/assets/images/video-poster.jpg">
-<meta property="og:url" content="https://mion-ai-mama.github.io/instagram-tokuten-template/">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="動くLINE絵文字の作り方 完全ガイド｜Codex・ChatGPT対応">
+<meta property="og:description" content="自分の絵がなくてもOK。CodexでもChatGPTだけでも作れる、動くLINE絵文字の作り方を完全ガイド。コピペで使えるプロンプトキット付き。">
+<meta property="og:url" content="https://mion-ai-mama.github.io/line-emoji-tokuten/">
 <meta name="theme-color" content="#cf8a92">
 
 <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml">
@@ -29,245 +27,364 @@
   ============================================================ -->
   <section class="hero" id="hero" aria-label="ページ紹介">
     <div class="hero__inner">
-      <p class="hero__label">AI初心者さん向け</p>
+      <p class="hero__label">Codex／ChatGPTどちらでもOK</p>
       <h1 class="hero__title">
-        AIで人気動画を<br>分析する方法
+        動くLINE絵文字の<br>作り方 完全ガイド
       </h1>
       <p class="hero__subtitle">
-        コピペで使える<br>3STEPガイド
+        自分の絵が<br>なくても大丈夫
       </p>
       <p class="hero__desc">
-        人気の動画をChatGPTに見せると、<br>
-        「なぜ伸びたのか」や<br>
-        「次にどんな企画を作ればいいのか」を<br>
-        初心者にも分かりやすく整理してもらえます。
+        手持ちの画像がなくても、<br>
+        モチーフを選ぶだけでOK。<br>
+        コピペで使えるプロンプトキット付きで、<br>
+        LINE公式仕様に沿った動く絵文字が作れます。
       </p>
-      <a class="btn btn--primary btn--large" href="#step1" data-scroll>
-        3STEPを見てみる
+      <a class="btn btn--primary btn--large" href="#prepare">
+        作ってみる
       </a>
     </div>
   </section>
 
   <!-- ============================================================
-       実例動画セクション
+       目次
   ============================================================ -->
-  <section class="section" id="example-video" aria-labelledby="example-video-heading">
+  <nav class="section" id="toc" aria-label="ページ内目次">
     <div class="section__inner reveal">
-      <h2 class="section__heading" id="example-video-heading">実際に作った動画はこちら</h2>
-      <div class="video-card">
-        <video
-          id="example-video-player"
-          class="video-card__player"
-          controls
-          preload="none"
-          playsinline
-          poster="assets/images/video-poster.jpg"
-          aria-label="AIで動画分析を行い制作した実例動画">
-          <source src="assets/videos/example.mp4" type="video/mp4">
-          <p class="video-card__fallback">
-            動画を読み込めませんでした。ブラウザや通信環境をご確認いただくか、時間をおいて再度お試しください。
-          </p>
-        </video>
-        <p class="video-card__caption">
-          この動画は、<br>
-          人気動画の構成や見せ方をAIで分析し、<br>
-          その結果を参考に作成した実例です。<br><br>
-          元の動画をそのまま真似するのではなく、<br>
-          分析したポイントを自分の企画に応用しています。
+      <h2 class="section__heading">目次</h2>
+      <ol class="toc-list">
+        <li><a href="#about">動くLINE絵文字って何？</a></li>
+        <li><a href="#prepare">準備するもの</a></li>
+        <li><a href="#codex">Codexで作る</a></li>
+        <li><a href="#chatgpt">ChatGPTだけで作る</a></li>
+        <li><a href="#apply">LINEへの申請方法</a></li>
+        <li><a href="#trouble">うまくいかないとき</a></li>
+        <li><a href="#info">参考情報・免責事項</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       できること
+  ============================================================ -->
+  <section class="section section--soft" id="about" aria-labelledby="about-heading">
+    <div class="section__inner reveal">
+      <h2 class="section__heading" id="about-heading">動くLINE絵文字って何？</h2>
+      <div class="prose">
+        <p>
+          LINEには、トークで使える「動く絵文字」を自分で作って<br>
+          LINE Creators Marketに出品できる仕組みがあります。
+        </p>
+        <p>
+          このガイドでは、表情違いのイラストをAIに作ってもらい、<br>
+          パラパラ漫画のように動くファイル（APNG形式）にまとめる方法を、<br>
+          Codexが使える人・ChatGPTだけの人、両方の手順で紹介します。
+        </p>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <span class="card__icon" aria-hidden="true">🎨</span>
+          <h3 class="card__title">自分の絵がなくてもOK</h3>
+          <p class="card__desc">動物・丸顔・人物のモチーフから選ぶだけで、AIがキャラクターを提案してくれます。</p>
+        </div>
+        <div class="card">
+          <span class="card__icon" aria-hidden="true">🙂</span>
+          <h3 class="card__title">表情差分を自動で用意</h3>
+          <p class="card__desc">笑う・驚く・困るなどの表情フレームを、AIに1枚ずつ作ってもらいます。</p>
+        </div>
+        <div class="card">
+          <span class="card__icon" aria-hidden="true">📦</span>
+          <h3 class="card__title">LINE公式仕様に自動対応</h3>
+          <p class="card__desc">キャンバスサイズやファイルサイズなど、LINEの仕様を満たしているかキットが自動チェックします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       準備するもの
+  ============================================================ -->
+  <section class="section" id="prepare" aria-labelledby="prepare-heading">
+    <div class="section__inner reveal">
+      <h2 class="section__heading" id="prepare-heading">準備するもの</h2>
+      <p class="section__desc">
+        AIツールと、キャラクターのモチーフを1つ決めるだけで始められます。
+      </p>
+
+      <div class="route-grid">
+        <div class="route-card">
+          <h3 class="route-card__title">Codexが使える人</h3>
+          <p class="route-card__desc">画像生成から文字入れ、APNGへの自動合成まで、同梱スクリプトで一気に進められます。</p>
+          <a class="btn btn--outline" href="#codex">Codexルートへ進む</a>
+        </div>
+        <div class="route-card">
+          <h3 class="route-card__title">ChatGPTだけの人</h3>
+          <p class="route-card__desc">ChatGPTの画像生成と無料のWebツールを組み合わせて作ります。</p>
+          <a class="btn btn--outline" href="#chatgpt">ChatGPTルートへ進む</a>
+        </div>
+      </div>
+
+      <h3 class="prepare__sub-heading">モチーフを選ぶ</h3>
+      <p class="section__desc">
+        手持ちの画像がある人は、その画像をCodex／ChatGPTにそのまま添付すればOKです。<br>
+        ない人は、次の3つから1つ選んで、そのままコピーしてAIに送ってください。
+      </p>
+
+      <div class="motif-grid" id="motif-list">
+        <div class="motif-card">
+          <h4 class="motif-card__title">🐰 動物</h4>
+          <p class="motif-card__desc">うさぎ・ねこ・くまなど、丸みのあるシルエットの動物キャラ。</p>
+          <pre class="motif-card__text" id="motif-animal">## モチーフ：動物キャラ
+
+- 種類はうさぎ・ねこ・くまなど、丸みのあるシルエットの動物を1種類選ぶ
+- 全フレームで「同じ種類・同じ体色・同じ模様」を厳守する
+- 背景は透過（アルファチャンネルあり）にする
+- 輪郭線は太めの一本線で統一し、塗りは平面的な単色〜2色までに抑える（LINEスタンプらしいシンプルさ）</pre>
+          <button type="button" class="btn btn--outline copy-btn" data-copy-target="motif-animal" aria-label="動物モチーフの指示文をコピーする">
+            <span class="copy-btn__label">この指示文をコピーする</span>
+            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
+          </button>
+        </div>
+
+        <div class="motif-card">
+          <h4 class="motif-card__title">😊 丸顔・絵文字風</h4>
+          <p class="motif-card__desc">顔だけのシンプルな丸型キャラクター。</p>
+          <pre class="motif-card__text" id="motif-round-face">## モチーフ：丸顔・絵文字風キャラ
+
+- 顔だけのシンプルな丸型キャラクター（絵文字寄りのデザイン）
+- 髪型・輪郭は固定し、表情パーツ（目・眉・口）だけを差し替える
+- 背景は透過にする
+- パーツの位置・大きさは全フレームで統一し、顔の輪郭自体は動かさない</pre>
+          <button type="button" class="btn btn--outline copy-btn" data-copy-target="motif-round-face" aria-label="丸顔モチーフの指示文をコピーする">
+            <span class="copy-btn__label">この指示文をコピーする</span>
+            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
+          </button>
+        </div>
+
+        <div class="motif-card">
+          <h4 class="motif-card__title">🧑 人物（ちびキャラ）</h4>
+          <p class="motif-card__desc">お母さん・お父さんなどを単純化したデフォルメキャラ。</p>
+          <pre class="motif-card__text" id="motif-person">## モチーフ：人物（ちびキャラ）
+
+- お母さん／お父さん／女性／男性など、実在の人物イメージを単純化した「ちびキャラ」で描く
+- リアル頭身ではなく、2〜3頭身のデフォルメされたキャラクターにする
+  （リアル頭身は表情差分でフレーム間の顔ブレが起きやすいため禁止）
+- 髪型・服装・体型は全フレームで完全に固定し、表情パーツだけを変える
+- 背景は透過にする</pre>
+          <button type="button" class="btn btn--outline copy-btn" data-copy-target="motif-person" aria-label="人物モチーフの指示文をコピーする">
+            <span class="copy-btn__label">この指示文をコピーする</span>
+            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <p class="note-box__label">補足</p>
+        <p>人物モチーフは表情差分でフレーム間の顔がブレやすいため、「ちびキャラ風」の指示を必ず含めています。統一感が崩れる場合は、指示文をもう一度送り直してください。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Codexルート
+  ============================================================ -->
+  <section class="section section--soft" id="codex" aria-labelledby="codex-heading">
+    <div class="section__inner reveal">
+      <h2 class="section__heading" id="codex-heading">Codexで作る</h2>
+      <p class="section__desc">
+        フレーム生成から文字入れ、APNGへの自動合成・仕様チェックまで、キットのスクリプトで進めます。
+      </p>
+
+      <div class="prose">
+        <ol class="numbered-steps">
+          <li>上の「モチーフを選ぶ」でコピーした指示文（または手持ちの画像）をCodexに送る</li>
+          <li>続けて、下の指示文を全文コピーしてCodexに送る</li>
+          <li>Codexが `frames/` フォルダに表情差分のPNGを連番で生成する</li>
+          <li>（文字を入れたい場合）同梱の <code>add_text_overlay.py</code> でセリフを合成する</li>
+          <li>同梱の <code>build_apng.py</code> でAPNGに自動合成し、LINE仕様を自動チェックする</li>
+        </ol>
+      </div>
+
+      <div class="prompt-box">
+        <pre class="prompt-box__text" id="codex-prompt-text">あなたはこれから、LINE Creators Marketに出品できる「動くLINE絵文字（アニメーションスタンプ）」の
+制作を手伝います。今伝えたキャラクターの見た目（またはさっき添付した画像のキャラクター）を保ったまま、
+以下の手順を順番に実行してください。
+
+表情セット（5枚以上20枚以内で選ぶ。迷ったら次の5つでOK）：
+1. 通常の笑顔
+2. 大笑い
+3. 驚き
+4. 困り顔
+5. 照れ
+
+手順：
+1. frames/ フォルダを作り、上記の表情差分を1フレーム=1枚のPNG画像として
+   001.png, 002.png... の連番で生成・保存する。
+   - キャンバスサイズは320×270px以内、かつ長辺270px以上にする
+   - 背景は必ず透過（アルファチャンネルあり）にする
+   - 全フレームでキャラクターの輪郭・配色・サイズ・構図を統一する（表情パーツ以外は動かさない）
+2. （文字を入れたい場合のみ）同梱の scripts/add_text_overlay.py を実行し、
+   frames/ の画像に短いセリフを合成する。
+3. 同梱の scripts/build_apng.py を実行し、フレームをAPNGに自動合成する。
+4. build_apng.py はLINEの仕様（キャンバスサイズ・フレーム数・ループ回数・再生時間・
+   ファイルサイズ300KB以内）を自動チェックします。エラーが出た場合は指示された箇所を
+   調整してやり直してください。</pre>
+        <button type="button" class="btn btn--primary copy-btn" data-copy-target="codex-prompt-text" aria-label="Codex用の指示文をコピーする">
+          <span class="copy-btn__label">この指示文をコピーする</span>
+          <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
+        </button>
+      </div>
+
+      <a class="btn btn--outline btn--large kit-download" href="assets/kit/line-emoji-kit.zip" download>
+        プロンプトキット一式をダウンロード（ZIP）
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ChatGPTのみルート
+  ============================================================ -->
+  <section class="section" id="chatgpt" aria-labelledby="chatgpt-heading">
+    <div class="section__inner reveal">
+      <h2 class="section__heading" id="chatgpt-heading">ChatGPTだけで作る</h2>
+      <p class="section__desc">
+        ChatGPTの画像生成と、無料のオンラインツールを組み合わせて作ります。
+      </p>
+
+      <div class="prose">
+        <ol class="numbered-steps">
+          <li>上の「モチーフを選ぶ」でコピーした指示文（または手持ちの画像）をChatGPTに送る</li>
+          <li>続けて、下の指示文を全文コピーしてChatGPTに送る</li>
+          <li>表情ごとに1枚ずつ画像を生成してもらい、連番でダウンロードする</li>
+          <li>無料のAPNG結合ツールで連番画像をアップロードし、APNGに結合する</li>
+          <li>ファイルサイズが300KB以内か確認する</li>
+        </ol>
+      </div>
+
+      <div class="prompt-box">
+        <pre class="prompt-box__text" id="chatgpt-prompt-text">あなたはこれから、LINE Creators Marketに出品できる「動くLINE絵文字（アニメーションスタンプ）」用の
+表情差分イラストを作る手伝いをします。今伝えたキャラクターの見た目（またはさっき添付した画像のキャラクター）を
+保ったまま、以下の条件を守って、表情差分を1枚ずつ生成してください。
+
+表情セット（5枚以上。迷ったら次の5つでOK）：
+1. 通常の笑顔
+2. 大笑い
+3. 驚き
+4. 困り顔
+5. 照れ
+
+条件：
+・全フレームで「同じキャラクター」に見えるよう、輪郭・配色・構図を統一してください
+　（表情パーツ以外は動かさない）
+・背景は無地の単色（できれば白）にしてください。後工程で透過処理します
+・正方形に近い構図で、キャラクターを画面中央に大きく配置してください
+・1回の生成につき1つの表情だけを描いてください（複数表情を1枚にまとめない）
+
+進め方：
+上の表情セットの数だけ、1枚ずつ順番に生成してください。
+「1. 通常の笑顔」から始めて、できたら「次は2. 大笑いの表情で」と伝えて進めます。</pre>
+        <button type="button" class="btn btn--primary copy-btn" data-copy-target="chatgpt-prompt-text" aria-label="ChatGPT用の指示文をコピーする">
+          <span class="copy-btn__label">この指示文をコピーする</span>
+          <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
+        </button>
+      </div>
+
+      <div class="note-box">
+        <p class="note-box__label">結合・仕上げの手順</p>
+        <p>
+          生成した画像は、ファイル名を001.png, 002.png...の連番にしてから、<br>
+          無料のオンラインAPNG結合ツール（「APNG 結合 無料」などで検索）にアップロードしてください。<br>
+          キャンバスサイズは320×270px以内・長辺270px以上にリサイズし、<br>
+          フレーム間隔は150〜250ms程度、ループ回数は1〜4回に設定します。<br><br>
+          セリフを入れたい場合は、結合ツールや画像編集アプリの文字入れ機能を使ってください
+          （Codexルートほどの精度は保証されません）。
         </p>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       3. メインプロンプト（実例動画の直後に表示）
+       LINEへの申請方法
   ============================================================ -->
-  <section class="section section--soft" id="main-prompt" aria-labelledby="main-prompt-heading">
+  <section class="section section--soft" id="apply" aria-labelledby="apply-heading">
     <div class="section__inner reveal">
-      <h2 class="section__heading" id="main-prompt-heading">この指示文をコピーして使ってください</h2>
-      <p class="section__desc">下の文章をコピーして、<br>スクショと一緒にChatGPTへ送ってください。</p>
-
-      <div class="prompt-box">
-        <pre class="prompt-box__text" id="main-prompt-text">添付したスクショは
-YouTubeで人気の動画です。
-
-以下を分析してください。
-
-・この動画が伸びた理由
-・ターゲット
-・冒頭3秒の工夫
-・構成
-・視聴維持率が高そうなポイント
-・この動画を参考にした新しい企画を10個考えてください。
-
-初心者にも分かるように解説してください。</pre>
-        <button
-          type="button"
-          class="btn btn--primary copy-btn"
-          data-copy-target="main-prompt-text"
-          aria-label="メインプロンプトの指示文をコピーする">
-          <span class="copy-btn__label">この指示文をコピーする</span>
-          <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       4〜6. STEP（steps-container の中身は js/content.js の steps
-       配列から自動生成されます。ここにあるHTMLは、JavaScriptが
-       読み込めなかった場合に表示される初期表示用です）
-  ============================================================ -->
-  <div id="steps-container">
-    <section class="section step" id="step1" aria-labelledby="step1-heading">
-      <div class="section__inner reveal">
-        <p class="step__number">STEP 1</p>
-        <h2 class="step__title" id="step1-heading">気になる人気動画を見つける</h2>
-        <div class="prose">
-          <p>YouTubeやInstagramで、次のような動画を探しましょう。</p>
-          <ul class="check-list">
-            <li>最後まで見てしまった動画</li>
-            <li>再生回数が多い動画</li>
-            <li>コメントや反応が多い動画</li>
-            <li>自分の発信テーマに近い動画</li>
-            <li>なぜか気になって何度も見た動画</li>
-          </ul>
-          <p>そのまま真似するのではなく、「なぜ気になったのか」を考える参考として選びましょう。</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--soft step" id="step2" aria-labelledby="step2-heading">
-      <div class="section__inner reveal">
-        <p class="step__number">STEP 2</p>
-        <h2 class="step__title" id="step2-heading">動画のスクショを撮る</h2>
-        <div class="prose">
-          <p>動画の流れが分かるように、3〜5枚ほどスクショを撮ります。</p>
-          <ul class="check-list">
-            <li>動画のタイトルやサムネイル</li>
-            <li>冒頭の場面</li>
-            <li>内容が大きく動く場面</li>
-            <li>途中の重要な場面</li>
-            <li>最後のまとめや案内部分</li>
-          </ul>
-        </div>
-        <div class="note-box">
-          <p class="note-box__label">補足</p>
-          <p>YouTubeのURLだけでは分析できない場合があるため、スクショを送る方法がおすすめです。</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section step" id="step3" aria-labelledby="step3-heading">
-      <div class="section__inner reveal">
-        <p class="step__number">STEP 3</p>
-        <h2 class="step__title" id="step3-heading">スクショと指示文を<br>ChatGPTに送る</h2>
-        <div class="prose">
-          <p>ChatGPTを開いたら、<br>先ほど撮ったスクショを添付します。</p>
-          <p>そのあと、<br>このページにある指示文をコピーして送ってください。</p>
-          <p>難しい設定は必要ありません。</p>
-          <p>スクショを添付して、<br>指示文を貼り付けて送るだけです。</p>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ============================================================
-       7. 結果をよくするコツ
-  ============================================================ -->
-  <section class="section" id="tips" aria-labelledby="tips-heading">
-    <div class="section__inner reveal">
-      <h2 class="section__heading" id="tips-heading">さらに分かりやすい答えを<br>出してもらうコツ</h2>
-      <div class="card-grid">
-        <div class="card">
-          <span class="card__icon" aria-hidden="true">📝</span>
-          <h3 class="card__title">自分の目的を伝える</h3>
-          <p class="card__desc">「Instagramリールの企画に使いたい」など、何に使いたいのかを伝えると、より目的に合った答えが出やすくなります。</p>
-        </div>
-        <div class="card">
-          <span class="card__icon" aria-hidden="true">🙋</span>
-          <h3 class="card__title">誰向けかを伝える</h3>
-          <p class="card__desc">「40代・50代のAI初心者向け」など、届けたい相手を伝えると、企画の方向性が具体的になります。</p>
-        </div>
-        <div class="card">
-          <span class="card__icon" aria-hidden="true">💬</span>
-          <h3 class="card__title">難しい場合は聞き直す</h3>
-          <p class="card__desc">答えが難しいと感じたら、「もっと簡単な言葉で説明してください」と追加で伝えて大丈夫です。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       8. 追加で使える質問5選
-  ============================================================ -->
-  <section class="section section--soft" id="extra-questions" aria-labelledby="extra-questions-heading">
-    <div class="section__inner reveal">
-      <h2 class="section__heading" id="extra-questions-heading">もっと深く分析したいときの<br>追加質問5選</h2>
-      <p class="section__desc">最初の分析結果を見たあと、<br>気になる質問を追加で送ってみてください。</p>
-
-      <div class="question-list" id="extra-questions-list">
-        <div class="question-card">
-          <pre class="question-card__text" id="question-1">この動画が伸びた一番大きな理由を、
-初心者にも分かるように3つ教えてください。</pre>
-          <button type="button" class="btn btn--outline copy-btn" data-copy-target="question-1" aria-label="追加質問1をコピーする">
-            <span class="copy-btn__label">コピーする</span>
-            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
-          </button>
-        </div>
-        <div class="question-card">
-          <pre class="question-card__text" id="question-2">この動画の内容を、
-40代・50代の初心者向けに変えるとしたら、
-どのような企画になりますか？</pre>
-          <button type="button" class="btn btn--outline copy-btn" data-copy-target="question-2" aria-label="追加質問2をコピーする">
-            <span class="copy-btn__label">コピーする</span>
-            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
-          </button>
-        </div>
-        <div class="question-card">
-          <pre class="question-card__text" id="question-3">この動画をInstagramリールにする場合、
-30秒以内の構成を考えてください。</pre>
-          <button type="button" class="btn btn--outline copy-btn" data-copy-target="question-3" aria-label="追加質問3をコピーする">
-            <span class="copy-btn__label">コピーする</span>
-            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
-          </button>
-        </div>
-        <div class="question-card">
-          <pre class="question-card__text" id="question-4">このテーマを参考にしながら、
-内容が重ならない新しい企画を10個考えてください。</pre>
-          <button type="button" class="btn btn--outline copy-btn" data-copy-target="question-4" aria-label="追加質問4をコピーする">
-            <span class="copy-btn__label">コピーする</span>
-            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
-          </button>
-        </div>
-        <div class="question-card">
-          <pre class="question-card__text" id="question-5">この動画の良い部分と、
-そのまま真似しない方がよい部分を教えてください。</pre>
-          <button type="button" class="btn btn--outline copy-btn" data-copy-target="question-5" aria-label="追加質問5をコピーする">
-            <span class="copy-btn__label">コピーする</span>
-            <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       9. 注意点
-  ============================================================ -->
-  <section class="section" id="caution" aria-labelledby="caution-heading">
-    <div class="section__inner reveal">
-      <h2 class="section__heading" id="caution-heading">人気動画を参考にするときの注意点</h2>
+      <h2 class="section__heading" id="apply-heading">LINEへの申請方法</h2>
       <div class="prose">
-        <p>参考にするのは、テーマの見せ方や構成、伝え方のヒントです。<br>文章・画像・動画をそのまま使うのは避け、自分らしい企画に変えていきましょう。</p>
+        <p>
+          完成したAPNGファイルは、「LINE Creators Market」で公式サイトを検索し、<br>
+          個人クリエイターとして登録・申請することで出品できます（登録・申請は無料、審査があります）。
+        </p>
+      </div>
+      <ul class="check-list">
+        <li>フォーマット：APNG</li>
+        <li>キャンバスサイズ：320×270px以内（どちらかが270px以上）</li>
+        <li>フレーム数：5〜20フレーム</li>
+        <li>ループ回数：1〜4回</li>
+        <li>再生時間：4秒以内</li>
+        <li>ファイルサイズ：1個あたり300KB以下</li>
+      </ul>
+      <p class="section__desc">
+        これらの数値は <code>build_apng.py</code> が自動でチェックしてくれます。
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       うまくいかないとき
+  ============================================================ -->
+  <section class="section" id="trouble" aria-labelledby="trouble-heading">
+    <div class="section__inner reveal">
+      <h2 class="section__heading" id="trouble-heading">うまくいかないとき</h2>
+
+      <div class="accordion" id="trouble-accordion">
+        <div class="accordion-item">
+          <button type="button" class="accordion-item__question" aria-expanded="false">
+            キャラクターの見た目がフレームごとにブレる
+          </button>
+          <div class="accordion-item__answer">
+            <p>モチーフの指示文をもう一度送り直し、「輪郭・配色・構図を統一する」旨を強調してください。人物モチーフの場合は、より簡略化した「ちびキャラ」で描き直すよう伝えると安定しやすくなります。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-item__question" aria-expanded="false">
+            APNGのファイルサイズが300KBを超える
+          </button>
+          <div class="accordion-item__answer">
+            <p>フレーム数を減らす、キャンバスサイズを小さくする、イラストの色数を減らす、のいずれかを試してください。<code>build_apng.py</code>がエラーで教えてくれます。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-item__question" aria-expanded="false">
+            文字入れの文字が読みにくい
+          </button>
+          <div class="accordion-item__answer">
+            <p><code>add_text_overlay.py</code>の<code>--font-size</code>の数値を調整してください。背景が明るい部分に文字が重なる場合は、文字の位置を変える（画像下部以外に配置する）のも有効です。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-item__question" aria-expanded="false">
+            日本語フォントが手元にない
+          </button>
+          <div class="accordion-item__answer">
+            <p>Google FontsでNoto Sans JPなど、商用利用可の日本語フォントを無料でダウンロードし、そのファイルパスを<code>--font</code>に指定してください。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-item__question" aria-expanded="false">
+            LINE Creators Marketの審査に通らない
+          </button>
+          <div class="accordion-item__answer">
+            <p>他者のキャラクターやイラストに酷似していないか、仕様（サイズ・枚数・ファイルサイズ）を満たしているかを見直してください。審査基準はLINE Creators Market公式サイトの最新情報をご確認ください。</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       10. 最後の案内（CTA）
+       ご案内（CTA）
   ============================================================ -->
-  <section class="section" id="cta" aria-labelledby="cta-heading">
+  <section class="section section--soft" id="cta" aria-labelledby="cta-heading">
     <div class="section__inner reveal">
       <div class="cta-card">
         <h2 class="cta-card__heading" id="cta-heading">AIをもっと仕事や暮らしに<br>活かしてみたい方へ</h2>
@@ -288,14 +405,36 @@ YouTubeで人気の動画です。
     </div>
   </section>
 
+  <!-- ============================================================
+       参考情報・免責事項
+  ============================================================ -->
+  <section class="section" id="info" aria-labelledby="info-heading">
+    <div class="section__inner reveal">
+      <h2 class="section__heading" id="info-heading">参考情報・免責事項</h2>
+      <div class="prose">
+        <p>
+          本キット・本ページは情報提供を目的としており、生成したイラストの権利関係や<br>
+          LINE Creators Marketの審査結果を保証するものではありません。
+        </p>
+        <p>
+          最新のLINE公式仕様・出品ルールは、LINE Creators Market公式サイトを検索してご確認ください。
+        </p>
+        <p>
+          配布キット（プロンプト・スクリプト）はオリジナルの新規作成物です。<br>
+          生成AIで作成したイラストの著作権・商用利用条件は、利用するAIサービスの利用規約に従ってください。
+        </p>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <!-- ============================================================
-     11. フッター
+     フッター
 ============================================================ -->
 <footer class="footer">
   <p>© MION</p>
-  <p>このページの内容の無断転載・複製はご遠慮ください。</p>
+  <p>このページ・配布キットの無断転載・複製はご遠慮ください。</p>
 </footer>
 
 <script src="script.js"></script>

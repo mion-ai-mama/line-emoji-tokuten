@@ -9,6 +9,8 @@ Thumbs.db
 # 一時ファイル
 *.log
 .appgenius_temp/
+__pycache__/
+*.pyc
 
 # 機密情報（このプロジェクトは環境変数を使わないが、誤コミット防止の保険）
 .env

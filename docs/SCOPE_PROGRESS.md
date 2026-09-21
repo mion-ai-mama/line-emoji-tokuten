@@ -27,7 +27,7 @@
 | 9 | フロントエンド実装(API統合) | Agent 9 | スキップ（API連携なし） |
 | 10 | E2Eテスト | Agent 10 | [ ] |
 | 11 | ローカル動作確認 | Agent 11 | [ ] |
-| 12 | デプロイ | Agent 12 | [ ] |
+| 12 | デプロイ | Agent 12 | [x] GitHub Pages公開済み（main / root）。https://mion-ai-mama.github.io/line-emoji-tokuten/ で200・横スクロール0件・JSエラー0件をPlaywrightで確認済み |
 
 ## ページ管理表
 
@@ -60,4 +60,4 @@
 - [x] ページ本文（`index.html`）の執筆
 - [ ] スクリーンショット・完成例画像の準備（`#about`セクションは現状テキスト＋アイコンのみ。完成イメージ画像は未着手）
 - [x] `README.md`のプロジェクト固有情報への更新（`CLAUDE.md`は元から固有内容だったため対象外）
-- [ ] GitHub Pages公開設定
+- [x] GitHub Pages公開設定（main / root。https://mion-ai-mama.github.io/line-emoji-tokuten/ で公開確認済み）

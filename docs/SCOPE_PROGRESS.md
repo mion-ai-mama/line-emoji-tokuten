@@ -36,9 +36,9 @@
 | P-001 | ファーストビュー | [x] |
 | P-002 | 目次 | [x] |
 | P-003 | できること | [x] |
-| P-004 | 準備するもの（Codex/ChatGPT分岐・モチーフ選択） | [x] |
-| P-005 | Codexルート（手順＋キットDLボタン） | [x] |
-| P-006 | ChatGPTのみルート（手順＋プロンプト＋結合ツール案内） | [x] |
+| P-004 | 準備するもの（Codex/ChatGPT分岐・8個セット内容一覧） | [x] |
+| P-005 | Codexルート（Codex入手ボタン＋手順＋マスタープロンプト＋キットDLボタン） | [x] |
+| P-006 | ChatGPTのみルート（コード実行要件の注記＋手順＋マスタープロンプト＋キットDLボタン） | [x] |
 | P-007 | LINEへの申請方法 | [x] |
 | P-008 | うまくいかないとき（アコーディオン） | [x] |
 | P-009 | ご案内（AIマネタイズの教科書。オープンチャット誘導はなし＝この特典自体がオープンチャット経由配布のため） | [x] |
@@ -46,13 +46,17 @@
 
 ## 配布キット管理表（このプロジェクト固有の成果物）
 
+> 2026-09-21改訂: 「1個だけ手作業で作る」設計から「8個セットを会話駆動で一括生成する」設計に刷新。
+> K-001〜K-003（単品用プロンプト・モチーフ別ファイル）は役目を終えたため削除し、K-004〜K-006に置き換えた。
+
 | ID | 内容 | 状態 |
 |----|------|------|
-| K-001 | Codex用プロンプトキット一式（表情差分生成＋Pillow文字合成＋APNG自動合成スクリプト） | [x] `assets/kit/prompts/codex-master-prompt.md` + `assets/kit/scripts/{build_apng.py,add_text_overlay.py}` |
-| K-002 | ChatGPTのみルート用プロンプト（連番静止画生成） | [x] `assets/kit/prompts/chatgpt-master-prompt.md` |
-| K-003 | モチーフ別デフォルト提案の指示文（動物／丸顔／人物・一貫性を保つ指示を含む） | [x] `assets/kit/prompts/motif-{animal,round-face,person}.md` |
+| K-004 | 8個セットの構成（正本JSON。番号・意味・フレーム数・動きの説明） | [x] `assets/kit/prompts/8-emoji-set-plan.json` |
+| K-005 | グリッド画像一括処理パイプライン（切り出し・中央配置・背景透過・APNG合成・タブ画像・ZIP作成） | [x] `assets/kit/scripts/emoji_pipeline.py`（`build_apng.py`を内部利用） |
+| K-006 | Codex用／ChatGPT用マスタープロンプト（キャラ候補A/B/C提案＋会話コマンド駆動） | [x] `assets/kit/prompts/{codex,chatgpt}-emoji-set-prompt.md` |
 
 いずれも競合ファイルを一切含まない、完全新規のオリジナル作成物とする。
+`emoji_pipeline.py`は合成テスト用グリッド画像で`all`コマンドの動作を確認済み（180×180・96×74のPNG出力、ZIP20MB制限チェックを含む）。
 
 ## 残作業（素材・コンテンツの配置）
 

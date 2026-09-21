@@ -24,10 +24,10 @@ HTML / CSS / JavaScript だけで作られた静的サイトで、ビルド作�
 ページに含まれる主な機能は次のとおりです。
 
 - ページ内目次から各セクションへ移動できる
-- モチーフ（動物／丸顔・絵文字風／人物）ごとに、AIへ送る指示文をコピーできる
-- Codexルート／ChatGPTルートそれぞれに、コピー用の指示文がある
+- Codexルート／ChatGPTルートそれぞれに、8個セットを会話駆動で一括生成するマスタープロンプトがある
+  （キャラクターはページ上で選ばず、プロンプトを送った後にAIが候補A/B/Cを提案する）
 - 「うまくいかないとき」はアコーディオン形式
-- Codex用の配布キット（プロンプト＋Pythonスクリプト一式）をZIPでダウンロードできる
+- 配布キット（構成JSON＋Pythonパイプライン＋マスタープロンプト一式）をZIPでダウンロードできる
 
 ---
 
@@ -47,9 +47,10 @@ HTML / CSS / JavaScript だけで作られた静的サイトで、ビルド作�
     ├── images/cta-banner.png   「AIマネタイズの教科書」バナー（既存ポリシー通り固定）
     └── kit/                    配布キット本体（§6参照）
         ├── line-emoji-kit.zip  ダウンロードボタンからリンクしているZIP（要再生成、§6）
-        ├── prompts/            Codex用・ChatGPT用マスタープロンプト／モチーフ別指示文
-        └── scripts/            build_apng.py（APNG自動合成＋LINE仕様チェック）
-                                 add_text_overlay.py（Pillowでの文字合成）
+        ├── prompts/            8-emoji-set-plan.json／Codex用・ChatGPT用マスタープロンプト
+        └── scripts/            emoji_pipeline.py（グリッド切り出し→APNG合成→ZIP作成）
+                                 build_apng.py（emoji_pipeline.pyが内部利用）
+                                 add_text_overlay.py（任意の文字入れ用。今回のセットでは未使用）
 ```
 
 ---
@@ -107,19 +108,21 @@ python3 -m http.server 8000
 
 ## 6. 配布キット（`assets/kit/`）の中身と更新方法
 
-このページ固有の成果物として、Codex／ChatGPT用のプロンプトとPythonスクリプトを
-1つのZIPにまとめて配布しています。
+このページ固有の成果物として、8個セットを会話駆動で一括生成するための
+構成JSON・Pythonパイプライン・マスタープロンプトを1つのZIPにまとめて配布しています。
 
 | ファイル | 役割 |
 |---|---|
-| `prompts/motif-{animal,round-face,person}.md` | モチーフ別の指示文（`index.html`のモチーフカードと同内容） |
-| `prompts/codex-master-prompt.md` | Codexへの指示文（`index.html`の「Codexで作る」と同内容） |
-| `prompts/chatgpt-master-prompt.md` | ChatGPTへの指示文（`index.html`の「ChatGPTだけで作る」と同内容） |
-| `scripts/build_apng.py` | PNG連番→APNG自動合成＋LINE仕様の自動バリデーション |
-| `scripts/add_text_overlay.py` | Pillowでフレームにセリフを文字合成 |
+| `prompts/8-emoji-set-plan.json` | 8個セットの構成の正本（番号・意味・フレーム数・動きの説明） |
+| `prompts/codex-emoji-set-prompt.md` | Codexへの指示文（`index.html`の「Codexで作る」と同内容） |
+| `prompts/chatgpt-emoji-set-prompt.md` | ChatGPTへの指示文（`index.html`の「ChatGPTだけで作る」と同内容） |
+| `scripts/emoji_pipeline.py` | グリッド画像の切り出し・中央配置・背景透過・APNG合成・タブ画像作成・ZIP作成を一括実行 |
+| `scripts/build_apng.py` | `emoji_pipeline.py`が内部で使うAPNG合成＋LINE仕様バリデーション |
+| `scripts/add_text_overlay.py` | Pillowでフレームに文字を合成する任意ツール（今回の8個セットでは未使用。文字入れをしたい場合に利用） |
 
-**`prompts/`配下の文章を変更した場合は、`index.html`内の対応箇所も忘れずに書き換えてください**
-（キットとページ本文は別ファイルとして重複管理しているため、片方だけ更新すると内容がズレます）。
+**`prompts/`配下の内容を変更した場合は、`index.html`内の対応箇所（マスタープロンプトの`<pre>`）も
+忘れずに書き換えてください**（キットとページ本文は別ファイルとして重複管理しているため、
+片方だけ更新すると内容がズレます）。
 
 内容を更新したら、ZIPを作り直してダウンロードボタンに反映させます。
 

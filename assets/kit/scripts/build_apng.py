@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""LINEアニメーションスタンプ仕様に沿ってPNG連番をAPNGへ合成する。
+"""LINE動く絵文字の仕様に沿ってPNG連番をAPNGへ合成する。
 
 使い方:
     python build_apng.py --frames-dir ./frames --output ./output.png \
@@ -14,9 +14,7 @@ from pathlib import Path
 from apng import APNG
 from PIL import Image
 
-MAX_WIDTH = 320
-MAX_HEIGHT = 270
-MIN_LONG_SIDE = 270
+CANVAS_SIZE = (180, 180)
 MIN_FRAMES = 5
 MAX_FRAMES = 20
 MIN_LOOP = 1
@@ -44,18 +42,13 @@ def validate_canvas(paths: list[Path]) -> tuple[int, int]:
     sizes = {Image.open(p).size for p in paths}
     if len(sizes) != 1:
         raise SystemExit(f"フレームごとにサイズが違います: {sorted(sizes)}")
-    width, height = sizes.pop()
-    if width > MAX_WIDTH or height > MAX_HEIGHT:
+    size = sizes.pop()
+    if size != CANVAS_SIZE:
         raise SystemExit(
-            f"キャンバスサイズが上限超過です: {width}x{height}"
-            f"（上限 {MAX_WIDTH}x{MAX_HEIGHT}）"
+            f"キャンバスサイズが仕様外です: {size[0]}x{size[1]}"
+            f"（動く絵文字は {CANVAS_SIZE[0]}x{CANVAS_SIZE[1]} 固定にしてください）"
         )
-    if max(width, height) < MIN_LONG_SIDE:
-        raise SystemExit(
-            f"キャンバスサイズが小さすぎます: {width}x{height}"
-            f"（長辺は{MIN_LONG_SIDE}px以上にしてください）"
-        )
-    return width, height
+    return size
 
 
 def validate_timing(frame_count: int, duration_ms: int, loop: int) -> None:

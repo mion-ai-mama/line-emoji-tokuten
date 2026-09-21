@@ -35,10 +35,10 @@
         自分の絵が<br>なくても大丈夫
       </p>
       <p class="hero__desc">
-        手持ちの画像がなくても、<br>
-        モチーフを選ぶだけでOK。<br>
+        自分の絵がなくても、<br>
+        プロンプトを送ればAIがキャラを提案。<br>
         コピペで使えるプロンプトキット付きで、<br>
-        LINE公式仕様に沿った動く絵文字が作れます。
+        LINE公式仕様に沿った動く絵文字セットが作れます。
       </p>
       <a class="btn btn--primary btn--large" href="#prepare">
         作ってみる
@@ -73,24 +73,24 @@
       <div class="prose">
         <p>
           LINEには、トークで使える「動く絵文字」を自分で作って<br>
-          LINE Creators Marketに出品できる仕組みがあります。
+          LINE Creators Marketに出品できる仕組みがあります（8〜40個の「セット」で出品）。
         </p>
         <p>
-          このガイドでは、表情違いのイラストをAIに作ってもらい、<br>
-          パラパラ漫画のように動くファイル（APNG形式）にまとめる方法を、<br>
+          このガイドでは、AIとの会話でキャラクターを決め、<br>
+          あいさつ・ありがとう・OKなど8種類を1セットとして一括生成する方法を、<br>
           Codexが使える人・ChatGPTだけの人、両方の手順で紹介します。
         </p>
       </div>
       <div class="card-grid">
         <div class="card">
           <span class="card__icon" aria-hidden="true">🎨</span>
-          <h3 class="card__title">自分の絵がなくてもOK</h3>
-          <p class="card__desc">動物・丸顔・人物のモチーフから選ぶだけで、AIがキャラクターを提案してくれます。</p>
+          <h3 class="card__title">キャラはAIが提案</h3>
+          <p class="card__desc">プロンプトを送るだけで、AIがキャラクター候補を3つ提案。会話で選ぶだけで進みます。</p>
         </div>
         <div class="card">
           <span class="card__icon" aria-hidden="true">🙂</span>
-          <h3 class="card__title">表情差分を自動で用意</h3>
-          <p class="card__desc">笑う・驚く・困るなどの表情フレームを、AIに1枚ずつ作ってもらいます。</p>
+          <h3 class="card__title">8個をまとめて生成</h3>
+          <p class="card__desc">あいさつ・ありがとう・OKなど8種類を、同じキャラクターのまま一括で作ります。</p>
         </div>
         <div class="card">
           <span class="card__icon" aria-hidden="true">📦</span>
@@ -108,82 +108,42 @@
     <div class="section__inner reveal">
       <h2 class="section__heading" id="prepare-heading">準備するもの</h2>
       <p class="section__desc">
-        AIツールと、キャラクターのモチーフを1つ決めるだけで始められます。
+        AIツール（Codex または ChatGPT）と、下のキット一式があれば始められます。<br>
+        キャラクターは、プロンプトを送った後にAIが提案してくれるので、今は決めなくて大丈夫です。
       </p>
 
       <div class="route-grid">
         <div class="route-card">
           <h3 class="route-card__title">Codexが使える人</h3>
-          <p class="route-card__desc">画像生成から文字入れ、APNGへの自動合成まで、同梱スクリプトで一気に進められます。</p>
+          <p class="route-card__desc">キャラ提案から画像生成・APNG合成・ZIP作成まで、Codexが会話の中で一気に進めます。</p>
           <a class="btn btn--outline" href="#codex">Codexルートへ進む</a>
         </div>
         <div class="route-card">
           <h3 class="route-card__title">ChatGPTだけの人</h3>
-          <p class="route-card__desc">ChatGPTの画像生成と無料のWebツールを組み合わせて作ります。</p>
+          <p class="route-card__desc">ChatGPTの「コード実行」機能を使い、同じ流れを1つのチャットの中だけで完結させます。</p>
           <a class="btn btn--outline" href="#chatgpt">ChatGPTルートへ進む</a>
         </div>
       </div>
 
-      <h3 class="prepare__sub-heading">モチーフを選ぶ</h3>
+      <h3 class="prepare__sub-heading">今回作る8個のセット内容</h3>
       <p class="section__desc">
-        選んだモチーフは、下の「Codexで作る」「ChatGPTだけで作る」のプロンプトに自動で反映されます。<br>
-        手持ちの画像がある人は「手持ちの画像を使う」を選んでください。
+        LINEの動く絵文字は8〜40個のセットで出品します。<br>
+        このガイドでは、まず次の8種類を1セットとして作ります（あとから内容を変えることもできます）。
       </p>
-
-      <div class="motif-grid" id="motif-selector" role="radiogroup" aria-label="モチーフを選ぶ">
-        <label class="motif-option">
-          <input type="radio" name="motif" value="animal" checked>
-          <span class="motif-option__body">
-            <span class="motif-option__title">🐰 動物</span>
-            <span class="motif-option__desc">うさぎ・ねこ・くまなど、丸みのあるシルエットの動物キャラ。</span>
-          </span>
-        </label>
-        <label class="motif-option">
-          <input type="radio" name="motif" value="round-face">
-          <span class="motif-option__body">
-            <span class="motif-option__title">😊 丸顔・絵文字風</span>
-            <span class="motif-option__desc">顔だけのシンプルな丸型キャラクター。</span>
-          </span>
-        </label>
-        <label class="motif-option">
-          <input type="radio" name="motif" value="person">
-          <span class="motif-option__body">
-            <span class="motif-option__title">🧑 人物（ちびキャラ）</span>
-            <span class="motif-option__desc">お母さん・お父さんなどを単純化したデフォルメキャラ。</span>
-          </span>
-        </label>
-        <label class="motif-option">
-          <input type="radio" name="motif" value="own">
-          <span class="motif-option__body">
-            <span class="motif-option__title">📷 手持ちの画像を使う</span>
-            <span class="motif-option__desc">Codex／ChatGPTに画像をそのまま添付します。プロンプトにモチーフ説明は含めません。</span>
-          </span>
-        </label>
-      </div>
-
-      <!-- モチーフごとの指示文（JSが下のプロンプトへ自動合成する。表示はされない） -->
-      <template id="motif-text-animal">## モチーフ：動物キャラ
-- 種類はうさぎ・ねこ・くまなど、丸みのあるシルエットの動物を1種類選ぶ
-- 全フレームで「同じ種類・同じ体色・同じ模様」を厳守する
-- 背景は透過（アルファチャンネルあり）にする
-- 輪郭線は太めの一本線で統一し、塗りは平面的な単色〜2色までに抑える（LINEスタンプらしいシンプルさ）</template>
-      <template id="motif-text-round-face">## モチーフ：丸顔・絵文字風キャラ
-- 顔だけのシンプルな丸型キャラクター（絵文字寄りのデザイン）
-- 髪型・輪郭は固定し、表情パーツ（目・眉・口）だけを差し替える
-- 背景は透過にする
-- パーツの位置・大きさは全フレームで統一し、顔の輪郭自体は動かさない</template>
-      <template id="motif-text-person">## モチーフ：人物（ちびキャラ）
-- お母さん／お父さん／女性／男性など、実在の人物イメージを単純化した「ちびキャラ」で描く
-- リアル頭身ではなく、2〜3頭身のデフォルメされたキャラクターにする
-  （リアル頭身は表情差分でフレーム間の顔ブレが起きやすいため禁止）
-- 髪型・服装・体型は全フレームで完全に固定し、表情パーツだけを変える
-- 背景は透過にする</template>
-      <template id="motif-text-own">## モチーフ：手持ちの画像
-（このメッセージと一緒に、使いたいキャラクターの画像を添付してください）</template>
+      <ul class="check-list">
+        <li>001 こんにちは（手を振る）</li>
+        <li>002 ありがとう（お辞儀）</li>
+        <li>003 OK・了解（うなずく）</li>
+        <li>004 大笑い</li>
+        <li>005 ごめんね（頭を下げる）</li>
+        <li>006 がんばる（ガッツポーズ）</li>
+        <li>007 おやすみ（あくび→目を閉じる）</li>
+        <li>008 びっくり</li>
+      </ul>
 
       <div class="note-box">
         <p class="note-box__label">補足</p>
-        <p>人物モチーフは表情差分でフレーム間の顔がブレやすいため、「ちびキャラ風」の指示を必ず含めています。統一感が崩れる場合は、下のプロンプトをもう一度送り直してください。</p>
+        <p>8種類の内容は、キット内の <code>8-emoji-set-plan.json</code> が正本です。テーマを変えたい場合はこのファイルのmeaning・motionを書き換えてください（frames・ループ・再生時間の仕様は変えないでください）。</p>
       </div>
     </div>
   </section>
@@ -195,7 +155,7 @@
     <div class="section__inner reveal">
       <h2 class="section__heading" id="codex-heading">Codexで作る</h2>
       <p class="section__desc">
-        フレーム生成から文字入れ、APNGへの自動合成・仕様チェックまで、キットのスクリプトで進めます。
+        キャラ提案から画像生成、APNG合成・ZIP作成まで、Codexが会話の中で一気に進めます。
       </p>
 
       <a class="btn btn--outline btn--large kit-download" href="https://chatgpt.com/ja-JP/download/" target="_blank" rel="noopener noreferrer">
@@ -205,40 +165,69 @@
       <div class="prose">
         <ol class="numbered-steps">
           <li>上のボタンからCodexを入手し、起動する</li>
-          <li>上の「モチーフを選ぶ」で使いたいキャラを選ぶ（手持ちの画像を使う場合はそれを選ぶ）</li>
-          <li>下のプロンプトをコピーしてCodexに貼り付ける（画像を使う場合は、プロンプトと一緒にその画像も送る）</li>
-          <li>Codexが `frames/` フォルダに表情差分のPNGを連番で生成する</li>
-          <li>（文字を入れたい場合）同梱の <code>add_text_overlay.py</code> でセリフを合成する</li>
-          <li>同梱の <code>build_apng.py</code> でAPNGに自動合成し、LINE仕様を自動チェックする</li>
+          <li>下の「プロンプトキット一式をダウンロード」から3ファイルを取得し、作業フォルダに置く</li>
+          <li>下のプロンプトを全文コピーしてCodexに貼り付ける</li>
+          <li>Codexが提案するキャラ候補A/B/Cから選ぶ（または自分の画像を送る）</li>
+          <li>「マスター画像生成」→「グリッド生成」→「zip」の順に送る</li>
+          <li>気になる番号があれば「003だけ修正」→「zip更新」で直せる</li>
         </ol>
       </div>
 
-      <!-- モチーフの指示文より後ろの本文（JSが上のモチーフ選択結果と合成して #codex-prompt-text に表示する） -->
-      <template id="codex-task-body">あなたはこれから、LINE Creators Marketに出品できる「動くLINE絵文字（アニメーションスタンプ）」の
-制作を手伝います。上で伝えたキャラクターの見た目を保ったまま、以下の手順を順番に実行してください。
-
-表情セット（5枚以上20枚以内で選ぶ。迷ったら次の5つでOK）：
-1. 通常の笑顔
-2. 大笑い
-3. 驚き
-4. 困り顔
-5. 照れ
-
-手順：
-1. frames/ フォルダを作り、上記の表情差分を1フレーム=1枚のPNG画像として
-   001.png, 002.png... の連番で生成・保存する。
-   - キャンバスサイズは320×270px以内、かつ長辺270px以上にする
-   - 背景は必ず透過（アルファチャンネルあり）にする
-   - 全フレームでキャラクターの輪郭・配色・サイズ・構図を統一する（表情パーツ以外は動かさない）
-2. （文字を入れたい場合のみ）同梱の scripts/add_text_overlay.py を実行し、
-   frames/ の画像に短いセリフを合成する。
-3. 同梱の scripts/build_apng.py を実行し、フレームをAPNGに自動合成する。
-4. build_apng.py はLINEの仕様（キャンバスサイズ・フレーム数・ループ回数・再生時間・
-   ファイルサイズ300KB以内）を自動チェックします。エラーが出た場合は指示された箇所を
-   調整してやり直してください。</template>
-
       <div class="prompt-box">
-        <pre class="prompt-box__text" id="codex-prompt-text"></pre>
+        <pre class="prompt-box__text" id="codex-prompt-text"># Codexへの指示文（このまま全文貼り付け）
+
+## 事前準備
+
+1. 公式サイトからCodexを入手し、起動する
+2. キットの 8-emoji-set-plan.json / emoji_pipeline.py / build_apng.py を
+   作業フォルダに置く（3ファイルとも同じフォルダに置くこと。emoji_pipeline.pyが
+   build_apng.pyを読み込みます）
+3. 下の指示文を全文コピーして、Codexに送る
+
+---
+
+あなたはこれから、動くLINE絵文字セット（8個）の制作を最後まで実行する担当です。
+
+説明だけで終わらず、必要な場面では実際に画像生成・コード実行を行い、
+最終的にダウンロード可能なZIPファイル（output/line-emoji-set.zip）まで完成させてください。
+
+作業フォルダにある以下のファイルを使用します。
+
+- 8-emoji-set-plan.json（8個の構成の正本。番号・意味・フレーム数・動きの説明はここから読む）
+- emoji_pipeline.py（グリッド画像の切り出し・APNG合成・ZIP作成はこの実装を優先する）
+- build_apng.py（emoji_pipeline.pyが内部で使う。直接実行はしない）
+
+## 仕様（LINE公式・動く絵文字）
+
+- キャンバスサイズ：180×180px固定
+- 1個あたりのフレーム数：5〜20フレーム（8-emoji-set-plan.jsonのframesに従う。通常6）
+- ループ回数：1〜4回、再生時間4秒以内
+- ファイルサイズ：1個あたり300KB以下
+- 背景：透過必須
+- セット内の個数：8個（今回の構成）
+
+## 最重要：新規制作の最初の応答
+
+まだキャラクターが決まっていない場合は、手順説明だけを返してはいけません。
+最初の応答で、すぐにキャラクター候補A/B/Cを3案提案してください
+（「動物」「丸顔・絵文字風」「人物・ちびキャラ」の3系統で、種類・輪郭・体型・主色・線色・性格まで具体的に）。
+
+ユーザーが「別の」と言った場合は新しい3案を、A/B/Cを選んだ場合はそのキャラクターを
+以後ずっと固定して使ってください。自分の画像が送られた場合はそれを最優先します。
+
+## 毎ターン操作を判定
+
+- 「マスター画像生成」→ 採用済みキャラクターの基準画像を1枚生成し、以後の参照として固定する
+- 「グリッド生成」→ 8-emoji-set-plan.jsonの8個×6フレームに沿って、キャラの見た目を保ったまま
+  1枚のグリッド画像（8行×6列）として生成し、grid.pngに保存する
+- 「zip」→ 画像生成は使わず、
+  python emoji_pipeline.py all --grid grid.png --plan 8-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip
+  を実際に実行する
+- 「003だけ修正」→ 指定番号の6コマだけをマスター画像を参照して再生成する（8個全体は作り直さない）
+- 「zip更新」→ 直近で再生成した番号だけを反映してZIPを作り直す
+
+各応答の最後に「現在／今回できたこと／次の操作」を短く示し、未実行の処理を完成と書かないでください。
+LINEへのアップロードや審査申請はユーザーが行います。実行したと装わないでください。</pre>
         <button type="button" class="btn btn--primary copy-btn" data-copy-target="codex-prompt-text" aria-label="Codex用の指示文をコピーする">
           <span class="copy-btn__label">この指示文をコピーする</span>
           <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
@@ -258,61 +247,91 @@
     <div class="section__inner reveal">
       <h2 class="section__heading" id="chatgpt-heading">ChatGPTだけで作る</h2>
       <p class="section__desc">
-        ChatGPTの画像生成と、無料のオンラインツールを組み合わせて作ります。
+        ChatGPTの「コード実行」機能を使い、キャラ提案からZIP作成までを1つのチャットで完結させます。
       </p>
+
+      <div class="note-box">
+        <p class="note-box__label">必要な環境</p>
+        <p>この方法は、ChatGPTで「コード実行（Data Analysis／Code Interpreter）」が使えるプラン・環境が必要です。使えない場合は「Codexで作る」をご利用ください。</p>
+      </div>
 
       <div class="prose">
         <ol class="numbered-steps">
-          <li>上の「モチーフを選ぶ」で使いたいキャラを選ぶ（手持ちの画像を使う場合はそれを選ぶ）</li>
-          <li>下のプロンプトをコピーしてChatGPTに貼り付ける（画像を使う場合は、プロンプトと一緒にその画像も送る）</li>
-          <li>表情ごとに1枚ずつ画像を生成してもらい、連番でダウンロードする</li>
-          <li>無料のAPNG結合ツールで連番画像をアップロードし、APNGに結合する</li>
-          <li>ファイルサイズが300KB以内か確認する</li>
+          <li>下の「プロンプトキット一式をダウンロード」から3ファイルを取得する</li>
+          <li>ChatGPTで新規チャットを開き、3ファイルをすべて添付する</li>
+          <li>下のプロンプトを全文コピーして、最初のメッセージとして送る</li>
+          <li>ChatGPTが提案するキャラ候補A/B/Cから選ぶ（または自分の画像を送る）</li>
+          <li>「マスター画像生成」→「グリッド生成」→「zip」の順に送る</li>
+          <li>気になる番号があれば「003だけ修正」→「zip更新」で直せる</li>
         </ol>
       </div>
 
-      <!-- モチーフの指示文より後ろの本文（JSが上のモチーフ選択結果と合成して #chatgpt-prompt-text に表示する） -->
-      <template id="chatgpt-task-body">あなたはこれから、LINE Creators Marketに出品できる「動くLINE絵文字（アニメーションスタンプ）」用の
-表情差分イラストを作る手伝いをします。上で伝えたキャラクターの見た目を保ったまま、
-以下の条件を守って、表情差分を1枚ずつ生成してください。
-
-表情セット（5枚以上。迷ったら次の5つでOK）：
-1. 通常の笑顔
-2. 大笑い
-3. 驚き
-4. 困り顔
-5. 照れ
-
-条件：
-・全フレームで「同じキャラクター」に見えるよう、輪郭・配色・構図を統一してください
-　（表情パーツ以外は動かさない）
-・背景は無地の単色（できれば白）にしてください。後工程で透過処理します
-・正方形に近い構図で、キャラクターを画面中央に大きく配置してください
-・1回の生成につき1つの表情だけを描いてください（複数表情を1枚にまとめない）
-
-進め方：
-上の表情セットの数だけ、1枚ずつ順番に生成してください。
-「1. 通常の笑顔」から始めて、できたら「次は2. 大笑いの表情で」と伝えて進めます。</template>
-
       <div class="prompt-box">
-        <pre class="prompt-box__text" id="chatgpt-prompt-text"></pre>
+        <pre class="prompt-box__text" id="chatgpt-prompt-text"># ChatGPTへの指示文（新規チャットで、このまま全文貼り付け）
+
+## 事前準備
+
+1. ChatGPTで新しいチャットを開く
+2. 次の3ファイルをすべて添付する
+   - 8-emoji-set-plan.json
+   - emoji_pipeline.py
+   - build_apng.py
+3. 下の指示文を全文コピーして、最初のメッセージとして送る
+
+---
+
+あなたはこの会話内で、動くLINE絵文字セット（8個）の制作を最後まで実行する担当です。
+
+説明だけで終わらず、必要な場面では実際に画像生成・コード実行を行い、
+最終的にダウンロード可能なZIPファイル（line-emoji-set.zip）まで完成させてください。
+別チャットへの移動や、長いプロンプトの再入力をユーザーに求めないでください。
+
+この会話に添付された以下のファイルを使用します。
+
+- 8-emoji-set-plan.json（8個の構成の正本。番号・意味・フレーム数・動きの説明はここから読む）
+- emoji_pipeline.py（グリッド画像の切り出し・APNG合成・ZIP作成はこの実装を優先する）
+- build_apng.py（emoji_pipeline.pyが内部で使う。直接実行はしない）
+
+## 仕様（LINE公式・動く絵文字）
+
+- キャンバスサイズ：180×180px固定
+- 1個あたりのフレーム数：5〜20フレーム（8-emoji-set-plan.jsonのframesに従う。通常6）
+- ループ回数：1〜4回、再生時間4秒以内
+- ファイルサイズ：1個あたり300KB以下
+- 背景：透過必須
+- セット内の個数：8個（今回の構成）
+
+## 最重要：新規制作の最初の応答
+
+まだキャラクターが決まっていない場合は、手順説明だけを返してはいけません。
+最初の応答で、すぐにキャラクター候補A/B/Cを3案提案してください
+（「動物」「丸顔・絵文字風」「人物・ちびキャラ」の3系統で、種類・輪郭・体型・主色・線色・性格まで具体的に）。
+
+ユーザーが「別の」と言った場合は新しい3案を、A/B/Cを選んだ場合はそのキャラクターを
+以後ずっと固定して使ってください。自分の画像が送られた場合はそれを最優先します。
+
+## 毎ターン操作を判定
+
+- 「マスター画像生成」→ 採用済みキャラクターの基準画像を1枚、実際に生成し、以後の参照として固定する
+- 「グリッド生成」→ 8-emoji-set-plan.jsonの8個×6フレームに沿って、キャラの見た目を保ったまま
+  1枚のグリッド画像（8行×6列）として生成し、grid.pngに保存する
+- 「zip」→ 画像生成機能は使わず、
+  python emoji_pipeline.py all --grid grid.png --plan 8-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip
+  相当の処理を実際に実行する
+- 「003だけ修正」→ 指定番号の6コマだけをマスター画像を参照して再生成する（8個全体は作り直さない）
+- 「zip更新」→ 直近で再生成した番号だけを反映してZIPを作り直す
+
+各応答の最後に「現在／今回できたこと／次の操作」を短く示し、未実行の処理を完成と書かないでください。
+LINEへのアップロードや審査申請はユーザーが行います。実行したと装わないでください。</pre>
         <button type="button" class="btn btn--primary copy-btn" data-copy-target="chatgpt-prompt-text" aria-label="ChatGPT用の指示文をコピーする">
           <span class="copy-btn__label">この指示文をコピーする</span>
           <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
         </button>
       </div>
 
-      <div class="note-box">
-        <p class="note-box__label">結合・仕上げの手順</p>
-        <p>
-          生成した画像は、ファイル名を001.png, 002.png...の連番にしてから、<br>
-          無料のオンラインAPNG結合ツール（「APNG 結合 無料」などで検索）にアップロードしてください。<br>
-          キャンバスサイズは320×270px以内・長辺270px以上にリサイズし、<br>
-          フレーム間隔は150〜250ms程度、ループ回数は1〜4回に設定します。<br><br>
-          セリフを入れたい場合は、結合ツールや画像編集アプリの文字入れ機能を使ってください
-          （Codexルートほどの精度は保証されません）。
-        </p>
-      </div>
+      <a class="btn btn--outline btn--large kit-download" href="assets/kit/line-emoji-kit.zip" download>
+        プロンプトキット一式をダウンロード（ZIP）
+      </a>
     </div>
   </section>
 
@@ -330,14 +349,18 @@
       </div>
       <ul class="check-list">
         <li>フォーマット：APNG</li>
-        <li>キャンバスサイズ：320×270px以内（どちらかが270px以上）</li>
-        <li>フレーム数：5〜20フレーム</li>
-        <li>ループ回数：1〜4回</li>
-        <li>再生時間：4秒以内</li>
+        <li>キャンバスサイズ：180×180px固定</li>
+        <li>フレーム数：1個あたり5〜20フレーム</li>
+        <li>ループ回数：1〜4回（再生時間4秒を超えない範囲）</li>
         <li>ファイルサイズ：1個あたり300KB以下</li>
+        <li>背景：透過必須</li>
+        <li>セット内の個数：8〜40個（1個単位で調整可）</li>
+        <li>メイン画像：セットの中から4個を選ぶ</li>
+        <li>トークルームタブ画像：96×74pxを1個</li>
+        <li>提出用ZIP：20MB以内</li>
       </ul>
       <p class="section__desc">
-        これらの数値は <code>build_apng.py</code> が自動でチェックしてくれます。
+        これらの数値は <code>emoji_pipeline.py</code>（内部で<code>build_apng.py</code>）が自動でチェックしてくれます。
       </p>
     </div>
   </section>
@@ -352,10 +375,26 @@
       <div class="accordion" id="trouble-accordion">
         <div class="accordion-item">
           <button type="button" class="accordion-item__question" aria-expanded="false">
-            キャラクターの見た目がフレームごとにブレる
+            ChatGPTで「コード実行ができません」と言われる
           </button>
           <div class="accordion-item__answer">
-            <p>モチーフの指示文をもう一度送り直し、「輪郭・配色・構図を統一する」旨を強調してください。人物モチーフの場合は、より簡略化した「ちびキャラ」で描き直すよう伝えると安定しやすくなります。</p>
+            <p>お使いのプラン・環境ではコード実行（Data Analysis／Code Interpreter）が使えない可能性があります。「Codexで作る」ルートに切り替えるか、コード実行が使えるプランをご確認ください。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-item__question" aria-expanded="false">
+            キャラクターの見た目がグリッド内でブレる
+          </button>
+          <div class="accordion-item__answer">
+            <p>「マスター画像生成」で作った基準画像をもう一度参照するよう伝え、「グリッド生成」をやり直してください。人物モチーフの場合は、より簡略化した「ちびキャラ」で描き直すよう伝えると安定しやすくなります。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-item__question" aria-expanded="false">
+            グリッド画像の背景が透過にならない
+          </button>
+          <div class="accordion-item__answer">
+            <p><code>emoji_pipeline.py</code>は、背景が透過されていない場合に白背景を自動で透過処理します。背景が白以外（グラデーションや模様など）の場合は、「背景を無地の白にして」と伝えて生成し直してください。</p>
           </div>
         </div>
         <div class="accordion-item">
@@ -363,23 +402,15 @@
             APNGのファイルサイズが300KBを超える
           </button>
           <div class="accordion-item__answer">
-            <p>フレーム数を減らす、キャンバスサイズを小さくする、イラストの色数を減らす、のいずれかを試してください。<code>build_apng.py</code>がエラーで教えてくれます。</p>
+            <p><code>8-emoji-set-plan.json</code>のframesを減らす、キャラクターの色数を減らす、のいずれかを試してください。<code>emoji_pipeline.py</code>がエラーで教えてくれます。</p>
           </div>
         </div>
         <div class="accordion-item">
           <button type="button" class="accordion-item__question" aria-expanded="false">
-            文字入れの文字が読みにくい
+            8個の内容（意味・動き）を変えたい
           </button>
           <div class="accordion-item__answer">
-            <p><code>add_text_overlay.py</code>の<code>--font-size</code>の数値を調整してください。背景が明るい部分に文字が重なる場合は、文字の位置を変える（画像下部以外に配置する）のも有効です。</p>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <button type="button" class="accordion-item__question" aria-expanded="false">
-            日本語フォントが手元にない
-          </button>
-          <div class="accordion-item__answer">
-            <p>Google FontsでNoto Sans JPなど、商用利用可の日本語フォントを無料でダウンロードし、そのファイルパスを<code>--font</code>に指定してください。</p>
+            <p>キット内の<code>8-emoji-set-plan.json</code>のmeaning（意味）・motion（動きの説明）を書き換えてから「グリッド生成」をやり直してください。framesの数値は5〜20の範囲で統一する必要があります。</p>
           </div>
         </div>
         <div class="accordion-item">

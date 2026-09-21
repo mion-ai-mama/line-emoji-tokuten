@@ -434,6 +434,13 @@ button:focus-visible {
   line-height: 1.8;
 }
 
+#codex-prompt-text,
+#chatgpt-prompt-text {
+  max-height: 22rem;
+  overflow-y: auto;
+  font-size: 0.82rem;
+}
+
 .copy-btn {
   width: 100%;
   position: relative;
@@ -635,64 +642,6 @@ button:focus-visible {
   font-size: 1.15rem;
   font-weight: 800;
   margin: 0 0 0.75rem;
-}
-
-/* ============================================================
-   モチーフ選択（ラジオボタン）
-============================================================ */
-
-.motif-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.9rem;
-  margin: 1.5rem 0;
-}
-
-@media (min-width: 640px) {
-  .motif-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.motif-option {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-  background: #fff;
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 1.1rem 1.3rem;
-  cursor: pointer;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.motif-option.is-selected {
-  border-color: var(--color-primary);
-  box-shadow: 0 12px 28px -18px var(--color-card-shadow);
-}
-
-.motif-option input[type="radio"] {
-  flex: none;
-  margin-top: 0.3em;
-  width: 1.1em;
-  height: 1.1em;
-  accent-color: var(--color-primary);
-}
-
-.motif-option__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.motif-option__title {
-  font-weight: 800;
-  font-size: 1rem;
-}
-
-.motif-option__desc {
-  color: var(--color-text-muted);
-  font-size: 0.88rem;
 }
 
 /* ============================================================

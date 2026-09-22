@@ -175,6 +175,11 @@
         </ol>
       </div>
 
+      <div class="note-box">
+        <p class="note-box__label">途中で止まってしまったら</p>
+        <p>生成の返事が来ないまま止まってしまったり、区切りのいいところで止まってしまったりしても、壊れたわけではありません。「続けて」とだけ送れば、続きから再開できます。</p>
+      </div>
+
       <div class="prompt-box">
         <pre class="prompt-box__text" id="codex-prompt-text"># Codexへの指示文（このまま全文貼り付け）
 
@@ -228,8 +233,11 @@
   1枚画像を作ってから後で切り分ける、というやり方をしない）。001〜008を1個ずつ順番に、
   その番号のmeaning・motionだけで生成し、distinctness_noteを参照してそれまでに生成した
   他の番号と腕の位置・手の形・体の傾きが同じに見えないようにする。生成のたびに
-  strips/00X.pngとして保存し、「00X個目を生成しました」と報告してから次に進む
-  （8個まとめて生成してから報告、はしない）
+  strips/00X.pngとして保存し、「00X個目を生成しました」と進捗を書く。これをユーザーの
+  返信を待たずに1回の応答内で001〜008まで続けて8回実行する（1個できたら止めて次を待つ、
+  はしない。初心者は途中で止まると「できない」と誤解してやめてしまうため）。途中でミスに
+  気づいても完全に止めず、そこだけやり直して8個とも完成させる。本当に続行できない技術的
+  理由がある場合のみ途中で止めて理由を伝える
 - 「zip」→ 画像生成は使わず、次を順に実際に実行する。
   1) python emoji_pipeline.py slice-items --strips-dir strips --plan 8-emoji-set-plan.json --out-dir output
   2) python emoji_pipeline.py build --plan 8-emoji-set-plan.json --out-dir output
@@ -294,6 +302,11 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
         </ol>
       </div>
 
+      <div class="note-box">
+        <p class="note-box__label">途中で止まってしまったら</p>
+        <p>生成の返事が来ないまま止まってしまったり、区切りのいいところで止まってしまったりしても、壊れたわけではありません。「続けて」とだけ送れば、続きから再開できます。</p>
+      </div>
+
       <div class="prompt-box">
         <pre class="prompt-box__text" id="chatgpt-prompt-text"># ChatGPTへの指示文（新規チャットで、このまま全文貼り付け）
 
@@ -349,8 +362,11 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
   1枚画像を作ってから後で切り分ける、というやり方をしない）。001〜008を1個ずつ順番に、
   その番号のmeaning・motionだけで生成し、distinctness_noteを参照してそれまでに生成した
   他の番号と腕の位置・手の形・体の傾きが同じに見えないようにする。生成のたびに
-  strips/00X.pngとして保存し、「00X個目を生成しました」と報告してから次に進む
-  （8個まとめて生成してから報告、はしない）
+  strips/00X.pngとして保存し、「00X個目を生成しました」と進捗を書く。これをユーザーの
+  返信を待たずに1回の応答内で001〜008まで続けて8回実行する（1個できたら止めて次を待つ、
+  はしない。初心者は途中で止まると「できない」と誤解してやめてしまうため）。途中でミスに
+  気づいても完全に止めず、そこだけやり直して8個とも完成させる。本当に続行できない技術的
+  理由がある場合のみ途中で止めて理由を伝える
 - 「zip」→ 画像生成機能は使わず、次を順に実際に実行する。
   1) python emoji_pipeline.py slice-items --strips-dir strips --plan 8-emoji-set-plan.json --out-dir output
   2) python emoji_pipeline.py build --plan 8-emoji-set-plan.json --out-dir output

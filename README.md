@@ -14,18 +14,19 @@ HTML / CSS / JavaScript だけで作られた静的サイトで、ビルド作�
 
 | 項目 | 内容 |
 |---|---|
-| ページタイトル | LINE絵文字40個セットの作り方 完全ガイド |
+| ページタイトル | 動くLINE絵文字の作り方 完全ガイド |
 | サブタイトル | 自分の絵がなくても大丈夫（Codex・ChatGPT対応） |
 | 想定読者 | AI初心者・副業志向・「絵が描けない」不安がある層（スマートフォン閲覧が中心） |
-| 目的 | LINE公式仕様に沿った「LINE絵文字（静止画40個セット）」を、Codex／ChatGPTどちらでも作れるように案内する |
+| 目的 | LINE公式仕様に沿った絵文字40個セットを、Codex（動く絵文字＝APNG）／ChatGPT（静止絵文字＝PNG）どちらでも作れるように案内する |
 | 技術 | HTML5 / CSS3 / Vanilla JavaScript（外部フレームワーク不使用） |
 | 公開 | GitHub Pages（静的ファイルの配信のみ） |
 
 ページに含まれる主な機能は次のとおりです。
 
 - ページ内目次から各セクションへ移動できる
-- Codexルート／ChatGPTルートそれぞれに、40個セットを会話駆動で一括生成するマスタープロンプトがある
-  （キャラクターはページ上で選ばず、プロンプトを送った後にAIが候補A/B/Cを提案する）
+- Codexルート（動く絵文字）／ChatGPTルート（静止絵文字）それぞれに、40個セットを会話駆動で
+  一括生成するマスタープロンプトがある（キャラクターはページ上で選ばず、プロンプトを送った後に
+  AIが候補A/B/Cを提案する）
 - 「うまくいかないとき」はアコーディオン形式
 - 配布キット（構成JSON＋Pythonパイプライン＋マスタープロンプト一式）をZIPでダウンロードできる
 
@@ -46,10 +47,12 @@ HTML / CSS / JavaScript だけで作られた静的サイトで、ビルド作�
     ├── favicon/favicon.svg
     ├── images/cta-banner.png   「AIマネタイズの教科書」バナー（既存ポリシー通り固定）
     └── kit/                    配布キット本体（§6参照）
-        ├── core-files.zip      添付・作業フォルダ用の必須2ファイルのみ（メインのDLボタン）
-        ├── line-emoji-kit.zip  プロンプト控え等も含む完全版（任意・サブリンク）
-        ├── prompts/            40-emoji-set-plan.json／Codex用・ChatGPT用マスタープロンプト
-        └── scripts/            emoji_pipeline.py（グリッド切り出し→レビュー→ZIP作成）
+        ├── codex-kit.zip       Codexルート（動く絵文字）用の必須3ファイルのみ（Codexセクションのメインボタン）
+        ├── line-emoji-kit.zip  全ルール分のプロンプト・スクリプトを含む完全版（任意・サブリンク）
+        ├── prompts/            40-emoji-animated-plan.json（Codex用）／40-emoji-set-plan.json（ChatGPT用）
+        │                        ／codex-emoji-set-prompt.md／chatgpt-smartphone-prompt.md
+        └── scripts/            emoji_pipeline_animated.py＋build_apng.py（Codex＝動く絵文字用）
+                                 emoji_pipeline.py（ChatGPT＝静止絵文字用）
                                  add_text_overlay.py（任意の文字入れ用。今回のセットでは未使用）
 ```
 
@@ -109,28 +112,36 @@ python3 -m http.server 8000
 ## 6. 配布キット（`assets/kit/`）の中身と更新方法
 
 このページ固有の成果物として、40個セットを会話駆動で一括生成するための
-構成JSON・Pythonパイプライン・マスタープロンプトを配布しています。ZIPは2種類あります。
+構成JSON・Pythonパイプライン・マスタープロンプトを配布しています。**ルートによって
+作られるものが違う**（Codex＝動く絵文字／ChatGPT＝静止絵文字）ため、必要なファイルも別です。
 
 | ZIP | 中身 | 用途 |
 |---|---|---|
-| `core-files.zip` | `40-emoji-set-plan.json` / `emoji_pipeline.py`の2つのみ | ページのメインのダウンロードボタン。Codex/ChatGPTに添付・配置する必須ファイルだけを渡す |
-| `line-emoji-kit.zip` | 上記2つ＋プロンプトの控え（`.md`）＋`add_text_overlay.py`等 | ページ内のサブリンク（任意）。全ファイルの完全版 |
+| `codex-kit.zip` | `40-emoji-animated-plan.json` / `emoji_pipeline_animated.py` / `build_apng.py`の3つ | Codexセクションのメインのダウンロードボタン。作業フォルダに置く必須ファイルだけを渡す |
+| `line-emoji-kit.zip` | 上記3つ＋ChatGPT用の2ファイル＋プロンプトの控え（`.md`）＋`add_text_overlay.py`等 | ページ内のサブリンク（任意）。全ルート分を含む完全版 |
 
-> 2026-09-22追記: 当初は「動くLINE絵文字（8個・APNG）」として構築していたが、
-> ChatGPTの画像生成が複数個のポーズを混同する・直前の生成を引きずる等の不具合が
-> 実機検証で繰り返し発生し、信頼度の高い自動生成が困難と判断したため、
-> **「LINE絵文字40個セット（静止画）」に全面刷新**した。競合LPの静止画40個方式が
-> 実機検証で高い成功率だったことを踏まえた判断。APNG合成（`build_apng.py`）は
-> 不要になったため削除した。
+ChatGPTルート（静止絵文字・「パソコンがない人はこちら」）はファイルの添付自体が不要なので、
+ダウンロードボタンはありません（`chatgpt-smartphone-prompt.md`に必要な中身を埋め込み済み）。
+
+> 2026-09-22改訂（2回目）: 「動くLINE絵文字（8個・APNG）」→「静止画40個」に刷新したあと、
+> 競合の実際のLP（一次情報を確認せず断片的なスクリーンショットだけで判断していたのが原因で
+> 見落としていた）を確認したところ、競合のメインルートはCodexによる**動く絵文字**であり、
+> 静止画はスマホ向けの副次ルートに過ぎないことが判明した。競合のCodex用プロンプトが
+> 「目・口は完全開閉の2状態のみ」「1ループはちょうど1/2/3/4秒（半端な秒数は審査で弾かれる）」
+> という非常に厳格な検証ルールを持っていたことを参考に、**Codexルートを動く絵文字（APNG）に
+> 作り直した**（`emoji_pipeline_animated.py`＋`build_apng.py`を復元）。ChatGPTルートは
+> 静止絵文字のまま維持し、競合と同じ「Codex＝動く／ChatGPT＝静止画」という役割分担にした。
 
 | ファイル | 役割 |
 |---|---|
-| `prompts/40-emoji-set-plan.json` | 40個セットの構成の正本（番号・意味・説明。表情20／生活シーン10／単独アイコン3／ふきだし文字7） |
+| `prompts/40-emoji-animated-plan.json` | Codex用・40個セットの構成の正本（意味・動き・10フレーム・1秒ループ×3回の設定） |
+| `prompts/40-emoji-set-plan.json` | ChatGPT用・40個セットの構成の正本（意味・見た目の説明のみ、静止画） |
 | `prompts/codex-emoji-set-prompt.md` | Codexへの指示文（`index.html`の「Codexで作る」と同内容） |
-| `prompts/chatgpt-emoji-set-prompt.md` | ChatGPTへの指示文（`index.html`の「ChatGPTだけで作る」と同内容） |
-| `prompts/chatgpt-smartphone-prompt.md` | スマホ完結ルート用の指示文（`40-emoji-set-plan.json`と`emoji_pipeline.py`の中身を埋め込み済み。ファイル添付が一切不要。`index.html`の「パソコンがない人はこちら」と同内容） |
-| `scripts/emoji_pipeline.py` | グリッド画像の切り出し・中央配置・背景透過・レビュー・ZIP作成を一括実行 |
-| `scripts/add_text_overlay.py` | Pillowでフレームに文字を合成する任意ツール（今回の40個セットでは未使用。文字入れをしたい場合に利用） |
+| `prompts/chatgpt-smartphone-prompt.md` | ChatGPTへの指示文（`40-emoji-set-plan.json`と`emoji_pipeline.py`の中身を埋め込み済み。ファイル添付が一切不要。`index.html`の「パソコンがない人はこちら」と同内容） |
+| `scripts/emoji_pipeline_animated.py` | Codex用。帯画像の切り出し・APNG合成（`build_apng.py`利用）・レビュー・ZIP作成を一括実行 |
+| `scripts/build_apng.py` | `emoji_pipeline_animated.py`が内部で使うAPNG合成＋LINE仕様バリデーション（Pillow単体・外部パッケージ不要） |
+| `scripts/emoji_pipeline.py` | ChatGPT用。グリッド画像の切り出し・中央配置・背景透過・レビュー・ZIP作成を一括実行 |
+| `scripts/add_text_overlay.py` | Pillowでフレームに文字を合成する任意ツール（今回のセットでは未使用） |
 
 **`prompts/`配下の内容を変更した場合は、`index.html`内の対応箇所（マスタープロンプトの`<pre>`）も
 忘れずに書き換えてください**（キットとページ本文は別ファイルとして重複管理しているため、
@@ -150,8 +161,8 @@ python3 -m http.server 8000
 ```bash
 cd assets/kit
 rm -rf scripts/__pycache__
-rm -f core-files.zip line-emoji-kit.zip
-zip -j core-files.zip prompts/40-emoji-set-plan.json scripts/emoji_pipeline.py
+rm -f codex-kit.zip line-emoji-kit.zip
+zip -j codex-kit.zip prompts/40-emoji-animated-plan.json scripts/emoji_pipeline_animated.py scripts/build_apng.py
 zip -j line-emoji-kit.zip prompts/*.json prompts/*.md scripts/*.py scripts/*.txt
 ```
 

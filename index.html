@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LINE絵文字40個セットの作り方 完全ガイド｜Codex・ChatGPT対応</title>
-<meta name="description" content="自分の絵がなくてもOK。CodexでもChatGPTだけでも作れる、LINE絵文字40個セットの作り方を完全ガイド。コピペで使えるプロンプトキット付き。">
+<title>動くLINE絵文字の作り方 完全ガイド｜Codex・ChatGPT対応</title>
+<meta name="description" content="自分の絵がなくてもOK。Codexで動くLINE絵文字（APNG）40個セット、ChatGPTだけでも静止絵文字40個セットが作れる完全ガイド。コピペで使えるプロンプトキット付き。">
 
 <!-- OGP（SNSでシェアされたときの表示設定） -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="LINE絵文字40個セットの作り方 完全ガイド｜Codex・ChatGPT対応">
-<meta property="og:description" content="自分の絵がなくてもOK。CodexでもChatGPTだけでも作れる、LINE絵文字40個セットの作り方を完全ガイド。コピペで使えるプロンプトキット付き。">
+<meta property="og:title" content="動くLINE絵文字の作り方 完全ガイド｜Codex・ChatGPT対応">
+<meta property="og:description" content="自分の絵がなくてもOK。Codexで動くLINE絵文字（APNG）40個セット、ChatGPTだけでも静止絵文字40個セットが作れる完全ガイド。コピペで使えるプロンプトキット付き。">
 <meta property="og:url" content="https://mion-ai-mama.github.io/line-emoji-tokuten/">
 <meta name="theme-color" content="#cf8a92">
 
@@ -29,7 +29,7 @@
     <div class="hero__inner">
       <p class="hero__label">Codex／ChatGPTどちらでもOK</p>
       <h1 class="hero__title">
-        LINE絵文字40個セットの<br>作り方 完全ガイド
+        動くLINE絵文字の<br>作り方 完全ガイド
       </h1>
       <p class="hero__subtitle">
         自分の絵が<br>なくても大丈夫
@@ -38,7 +38,8 @@
         自分の絵がなくても、<br>
         プロンプトを送ればAIがキャラを提案。<br>
         コピペで使えるプロンプトキット付きで、<br>
-        LINE公式仕様に沿った絵文字40個セットが作れます。
+        LINE公式仕様に沿った動く絵文字40個セットが作れます。<br>
+        パソコンがない人は静止絵文字で作れます。
       </p>
       <a class="btn btn--primary btn--large" href="#prepare">
         作ってみる
@@ -75,12 +76,14 @@
         <p>
           LINEには、トークで使える「絵文字」を自分で作って<br>
           LINE Creators Marketに出品できる仕組みがあります（8〜40個の「セット」で出品）。<br>
-          このガイドで作るのは<strong>動かない絵文字（静止画）</strong>です。
+          <strong>動く絵文字（アニメーション）</strong>と<strong>動かない絵文字（静止画）</strong>の
+          2種類があります。
         </p>
         <p>
           このガイドでは、AIとの会話でキャラクターを決め、<br>
-          表情・生活シーン・アイコン・ふきだし文字の40種類を1セットとして一括生成する方法を、<br>
-          Codexが使える人・ChatGPTだけの人、両方の手順で紹介します。
+          表情・生活シーン・アイコン・ふきだし文字の40種類を1セットとして一括生成する方法を紹介します。<br>
+          <strong>Codexが使える人は動く絵文字</strong>、<strong>ChatGPTだけの人は静止絵文字</strong>が作れます
+          （パソコンの有無で分かれます。詳しくは下の「準備するもの」参照）。
         </p>
       </div>
       <div class="card-grid">
@@ -117,12 +120,12 @@
       <div class="route-grid">
         <div class="route-card">
           <h3 class="route-card__title">Codexが使える人</h3>
-          <p class="route-card__desc">キャラ提案から画像生成・ZIP作成まで、Codexが会話の中で一気に進めます。</p>
+          <p class="route-card__desc"><strong>動く絵文字（APNG）</strong>が作れます。キャラ提案から画像生成・コマの組み立て・ZIP作成まで、Codexが会話の中で一気に進めます。パソコン（Mac／Windows）が必要です。</p>
           <a class="btn btn--outline" href="#codex">Codexルートへ進む</a>
         </div>
         <div class="route-card">
           <h3 class="route-card__title">ChatGPTだけの人</h3>
-          <p class="route-card__desc">ファイルのダウンロード・添付は一切不要。ChatGPTアプリだけで完結します（パソコンでもスマホでもOK）。</p>
+          <p class="route-card__desc">できあがるのは<strong>静止絵文字</strong>です。ファイルのダウンロード・添付は一切不要。ChatGPTアプリだけで完結します（パソコンでもスマホでもOK）。</p>
           <a class="btn btn--outline" href="#smartphone">ChatGPTルートへ進む</a>
         </div>
       </div>
@@ -142,7 +145,7 @@
 
       <div class="note-box">
         <p class="note-box__label">補足</p>
-        <p>40種類の内容は、キット内の <code>40-emoji-set-plan.json</code> が正本です。テーマを変えたい場合はこのファイルのmeaning・descriptionを書き換えてください。</p>
+        <p>40種類の内容は、キット内の構成ファイルが正本です（Codexルート＝<code>40-emoji-animated-plan.json</code>、ChatGPTルート＝<code>40-emoji-set-plan.json</code>）。テーマを変えたい場合はこのファイルのmeaning・motion／descriptionを書き換えてください。</p>
       </div>
     </div>
   </section>
@@ -152,26 +155,37 @@
   ============================================================ -->
   <section class="section section--soft" id="codex" aria-labelledby="codex-heading">
     <div class="section__inner reveal">
-      <h2 class="section__heading" id="codex-heading">Codexで作る</h2>
+      <h2 class="section__heading" id="codex-heading">Codexで作る（動く絵文字）</h2>
       <p class="section__desc">
-        キャラ提案から画像生成、ZIP作成まで、Codexが会話の中で一気に進めます。
+        Codexなら、<strong>動く絵文字（APNG）</strong>40個セットが作れます。
+        キャラ提案から画像生成、コマの組み立て、ZIP作成まで、Codexが会話の中で一気に進めます。
       </p>
 
       <a class="btn btn--outline btn--large kit-download" href="https://chatgpt.com/ja-JP/download/" target="_blank" rel="noopener noreferrer">
         公式サイトからCodexを入手する
       </a>
 
+      <div class="note-box">
+        <p class="note-box__label">必要なもの</p>
+        <p>ChatGPTの有料プラン（Plus以上）に入っていればCodexは追加課金なしで使えます。パソコン（Mac／Windows）が必要です。スマホやタブレットでは動きません。パソコンがない場合は「パソコンがない人はこちら」をご利用ください（できあがるのは静止画になります）。</p>
+      </div>
+
       <div class="prose">
         <ol class="numbered-steps">
           <li>上のボタンからCodexを入手し、起動する</li>
-          <li>下の「必要な2ファイルをダウンロード」からZIPを取得し、解凍した2ファイルすべてを作業フォルダに置く</li>
+          <li>下の「必要な3ファイルをダウンロード」からZIPを取得し、解凍した3ファイルすべてを作業フォルダに置く</li>
           <li>下のプロンプトを全文コピーしてCodexに貼り付ける</li>
           <li>Codexが提案するキャラ候補A/B/Cから選ぶ（または自分の画像を送る）</li>
           <li>「マスター画像生成」と送る（キャラの基準画像ができます）</li>
-          <li>できあがったら、続けて「40個生成」と送る（40個を1枚にまとめて生成します）</li>
+          <li>できあがったら、続けて「40個生成」と送る（40個を1個ずつ個別に生成します）</li>
           <li>できあがったら、続けて「zip」と送る（見分けの確認をしてからZIPが完成します）</li>
           <li>気になる番号があれば「029だけ修正」と送る（直ったら「zip更新」と送る）</li>
         </ol>
+      </div>
+
+      <div class="note-box">
+        <p class="note-box__label">途中で許可を求められたら</p>
+        <p>画像を加工する道具が足りないときなど、「これを入れてもいいですか」と確認されることがあります。作業に必要なものを追加しているだけなので、そのまま許可して進めて大丈夫です。</p>
       </div>
 
       <div class="note-box">
@@ -185,30 +199,45 @@
 ## 事前準備
 
 1. 公式サイトからCodexを入手し、起動する
-2. キットの 40-emoji-set-plan.json / emoji_pipeline.py を
-   作業フォルダに置く（2ファイルとも同じフォルダに置くこと）
+2. キットの 40-emoji-animated-plan.json / emoji_pipeline_animated.py / build_apng.py を
+   作業フォルダに置く（3ファイルとも同じフォルダに置くこと。emoji_pipeline_animated.pyが
+   build_apng.pyを読み込みます）
 3. 下の指示文を全文コピーして、Codexに送る
 
 ---
 
-あなたはこれから、LINE静止絵文字セット（40個）の制作を最後まで実行する担当です。
+あなたはこれから、動くLINE絵文字セット（40個・APNG）の制作を最後まで実行する担当です。
 
 説明だけで終わらず、必要な場面では実際に画像生成・コード実行を行い、
 最終的にダウンロード可能なZIPファイル（output/line-emoji-set.zip）まで完成させてください。
 
 作業フォルダにある以下のファイルを使用します。
 
-- 40-emoji-set-plan.json（40個の構成の正本。番号・意味・説明はここから読む）
-- emoji_pipeline.py（グリッド画像の切り出し・レビュー・ZIP作成はこの実装を優先する）
+- 40-emoji-animated-plan.json（40個の構成の正本。番号・意味・動き・フレーム数・ループ設定はここから読む）
+- emoji_pipeline_animated.py（帯画像の切り出し・APNG合成・レビュー・ZIP作成はこの実装を優先する）
+- build_apng.py（emoji_pipeline_animated.pyが内部で使う。直接実行はしない）
 
-## 仕様（LINE公式・静止絵文字）
+40個は1枚にまとめず1個ずつ個別に画像生成します（まとめて生成すると複数個が似たポーズに
+引っ張られる、直前の生成を引きずる、といった問題が過去の検証で確認されているため）。
+
+## 仕様（LINE公式・動く絵文字）
 
 - キャンバスサイズ：180×180px固定
-- ファイル形式：PNG（静止画。アニメーションではない）
-- ファイルサイズ：1個あたり1MB以下
+- フォーマット：APNG（拡張子は.pngのまま）
+- 1個あたりのフレーム数：10フレーム固定。1フレーム100ms×10＝ちょうど1.0秒のループ
+- ループ回数：3回（合計3.0秒）。1ループの秒数が半端（例：1.2秒）だと審査で弾かれるため、
+  フレーム数・表示時間・ループ回数は勝手に変更しない
+- ファイルサイズ：1個あたり300KB以下
 - 背景：透過必須
 - セット内の個数：40個（今回の構成）
-- トークルームタブ画像：96×74pxを1個
+- トークルームタブ画像：96×74pxの静止PNGを1個
+
+## 目・口の絶対条件：必ず守る
+
+目は各フレームで必ず「完全に開く」か「完全に閉じる」のどちらかにする。半目・薄目・閉じかけの
+中間状態は一切作らない。瞬きや開閉は1ループにつき最大1回、完全開眼⇔完全閉眼を直接切り替える。
+口も同様に、必要な場合は「完成した開口」と「完成した閉口」の2状態だけを使い、閉じかけの
+中間コマは作らない。滑らかにするために半目・半開きの口を補間しない。
 
 ## 最重要：新規制作の最初の応答
 
@@ -218,37 +247,44 @@
 
 ユーザーが「別の」と言った場合は新しい3案を、A/B/Cを選んだ場合はそのキャラクターを
 以後ずっと固定して使ってください。自分の画像が送られた場合はそれを最優先します。
+キャラクターの確認・承認はここ1回だけです。以後は「次に進めますか」と確認を挟まず、
+完成まで自律的に進めてください。
 
 ## 毎ターン操作を判定
 
 - 「マスター画像生成」→ 採用済みキャラクターの基準画像を1枚生成し、以後の参照として固定する
-- 「40個生成」→ 40-emoji-set-plan.jsonのitems（40個）に沿って、キャラの見た目を保ったまま
-  1枚の画像（8行×5列）として生成し、grid.pngに保存する。031〜033はキャラを出さずアイコンのみ、
-  034〜040は吹き出し＋文字のみにする。distinctness_noteを参照し、紛らわしいペアを混同しない。
-  時間がかかっても40個描き終えるまで応答を止めない（初心者は途中で止まると「できない」と
-  誤解してやめてしまうため）。本当に続行できない技術的理由がある場合のみ途中で止めて理由を伝える
+- 「40個生成」→ 画像生成ツールをちょうど40回呼び出す。1回につき必ず1個だけを描かせる
+  （40個分をまとめて1回のツール呼び出しで一括生成することは禁止）。001〜040を1個ずつ順番に、
+  その番号のmeaning・motionだけで生成し、【目・口の絶対条件】を厳守し、distinctness_noteを
+  参照してそれまでに生成した他の番号と腕の位置・手の形・体の傾きが同じに見えないようにする。
+  生成のたびにstrips/0XX.pngとして保存し、進捗を書く。これをユーザーの返信を待たずに
+  1回の応答（タスク）の中で001〜040まで続けて40回実行する。あなたは長時間の自律実行が
+  できるエージェントなので、途中で確認を挟んで停止しない
 - 「zip」→ 画像生成は使わず、次を順に実際に実行する。
-  1) python emoji_pipeline.py slice --grid grid.png --plan 40-emoji-set-plan.json --out-dir output
-  2) python emoji_pipeline.py tab --source output/001.png --out output/tab.png
-  3) python emoji_pipeline.py review --plan 40-emoji-set-plan.json --out-dir output
+  1) python emoji_pipeline_animated.py slice-items --strips-dir strips --plan 40-emoji-animated-plan.json --out-dir output
+  2) python emoji_pipeline_animated.py build --plan 40-emoji-animated-plan.json --out-dir output
+  （フレーム数・キャンバスサイズ・ループ秒数・ファイルサイズが自動検査される。エラーの番号は
+  「0XX修正」で再生成してやり直す）
+  3) python emoji_pipeline_animated.py tab --source output/frames/001/01.png --out output/tab.png
+  4) python emoji_pipeline_animated.py review --plan 40-emoji-animated-plan.json --out-dir output
   （output/review/001.png〜040.pngができる。これを実際に見て、checklist_TO_FILL.jsonの
-  checks（meaning_matches / no_semantic_duplicate等）を正直にtrue/falseで埋め、
-  observationに見た内容を書く。省略・虚偽記入は禁止）
-  4) python emoji_pipeline.py pack --plan 40-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip --review output/review/checklist_TO_FILL.json
+  checks（meaning_matches / no_semantic_duplicate / eye_mouth_binary_states_only等）を
+  正直にtrue/falseで埋め、observationに見た内容を書く。省略・虚偽記入は禁止）
+  5) python emoji_pipeline_animated.py pack --plan 40-emoji-animated-plan.json --out-dir output --zip output/line-emoji-set.zip --review output/review/checklist_TO_FILL.json
   （packはchecklistにfalse・未記入があるとエラーで停止しZIPを作らない。エラーの番号は
-  「00X修正」で再生成し3〜4をやり直す。最大2回。直らなければ番号を挙げて案内する）
+  「0XX修正」で再生成し1〜5をやり直す。最大2回。直らなければ番号を挙げて案内する）
 - 「029だけ修正」「015をもっと怒らせて」→ 指定番号だけをマスター画像を参照して単独で
-  再生成し、output/029.pngを上書きする（40個全体は作り直さない）。番号を複数指定された
+  再生成し、strips/029.pngを上書きする（40個全体は作り直さない）。番号を複数指定された
   場合も1個ずつ個別再生成する。「もっと怒らせて」等の修正内容が添えられていれば実際に
-  反映し、40-emoji-set-plan.jsonのdescriptionにも書き加えて引き継ぐ。再生成した番号は
+  反映し、40-emoji-animated-plan.jsonのmotionにも書き加えて引き継ぐ。再生成した番号は
   checklistのその行をnullに戻す
 - 「zip更新」→ 直近で再生成した番号だけを反映してZIPを作り直す
 
 生成が途中で止まってしまった場合、ユーザーから「続けて」と送られたら続きから再開する
-（最初からやり直さない）。
+（最初からやり直さない）。画像を加工する道具が足りないと確認されたら、そのまま許可して進める。
 
-相手はプログラミングをしない読者です。ファイル名・コード上の変数名・エラー文の原文
-（emoji_pipeline.py、grid.png、no_semantic_duplicate、ModuleNotFoundError等）を
+相手はプログラミングをしない読者です。パッケージ名・ファイル名・コード上の変数名・エラー文の原文
+（emoji_pipeline_animated.py、strips/001.png、no_semantic_duplicate、eye_mouth_binary_states_only等）を
 そのまま出さず、日常の言葉に言い換えてください。各応答の最後に「現在／今回できたこと／次の操作」を
 平易な言葉で短く示し、未実行の処理を完成と書かないでください。
 LINEへのアップロードや審査申請はユーザーが行います。実行したと装わないでください。</pre>
@@ -258,8 +294,8 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
         </button>
       </div>
 
-      <a class="btn btn--outline btn--large kit-download" href="assets/kit/core-files.zip" download>
-        必要な2ファイルをダウンロード（ZIP）
+      <a class="btn btn--outline btn--large kit-download" href="assets/kit/codex-kit.zip" download>
+        必要な3ファイルをダウンロード（ZIP）
       </a>
       <p class="kit-extra-link">
         <a href="assets/kit/line-emoji-kit.zip" download>プロンプトの控え等を含む完全版はこちら（任意）</a>
@@ -279,8 +315,9 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
         <strong>プロンプトをコピーして貼るだけ</strong>で始まります（パソコンでもスマホでもOK）。
       </p>
       <p class="section__desc">
-        できあがるのは、Codexルートと同じ<strong>動かない絵文字（静止画）</strong>です。
-        どちらで作っても内容は同じ40個セットになります。
+        こちらでできあがるのは<strong>動かない絵文字（静止画）</strong>です。
+        動く絵文字は、コマを作って1本のアニメーションにまとめる作業が必要なため、
+        どうしてもパソコン（Codexルート）が必要になります。
       </p>
 
       <div class="note-box">
@@ -699,8 +736,9 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
           </li>
           <li>
             <strong>LINEの仕様を満たしているか確認する</strong><br>
-            キャンバスサイズ・ファイルサイズ・背景の透過などは<code>emoji_pipeline.py</code>が
-            自動でチェックしていますが、下の「LINEへの申請方法」の一覧と見比べておくと安心です。
+            キャンバスサイズ・ファイルサイズ・背景の透過（動く絵文字の場合はループの秒数も）は
+            キット内のパイプラインが自動でチェックしていますが、下の「LINEへの申請方法」の
+            一覧と見比べておくと安心です。
           </li>
         </ol>
       </div>
@@ -715,10 +753,32 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
       <h2 class="section__heading" id="apply-heading">LINEへの申請方法</h2>
       <div class="prose">
         <p>
-          完成したPNGファイルは、「LINE Creators Market」で公式サイトを検索し、<br>
-          個人クリエイターとして登録・申請することで出品できます（登録・申請は無料、審査があります）。
+          完成したファイルは、「LINE Creators Market」で公式サイトを検索し、<br>
+          個人クリエイターとして登録・申請することで出品できます（登録・申請は無料、審査があります）。<br>
+          「新規登録」の画面で、<strong>動く絵文字なら「アニメーション絵文字」、静止絵文字なら「絵文字」</strong>を
+          選んでください。種類を選び直すと入力がやり直しになることがあるので注意してください。
         </p>
       </div>
+
+      <h3 class="prepare__sub-heading">Codexルート（動く絵文字）の仕様</h3>
+      <ul class="check-list">
+        <li>フォーマット：APNG（拡張子は.pngのまま）</li>
+        <li>キャンバスサイズ：180×180px固定</li>
+        <li>フレーム数：5〜20フレーム（キットでは10フレーム固定）</li>
+        <li>ループ：1ループがちょうど1・2・3・4秒のどれか（1.2秒のような半端な秒数は審査で弾かれます）。再生回数は1〜4回、合計4秒以内</li>
+        <li>ファイルサイズ：1個あたり300KB以下</li>
+        <li>背景：透過必須</li>
+        <li>セット内の個数：8〜40個（1個単位で調整可）</li>
+        <li>メイン画像：セットの中から4個を選ぶ（ストア掲載用）</li>
+        <li>トークルームタブ画像：96×74pxの静止PNGを1個</li>
+        <li>提出用ZIP：20MB以内</li>
+      </ul>
+      <p class="section__desc">
+        これらの数値は <code>emoji_pipeline_animated.py</code>（内部で<code>build_apng.py</code>）が
+        自動でチェックしてくれます。
+      </p>
+
+      <h3 class="prepare__sub-heading">ChatGPTルート（静止絵文字）の仕様</h3>
       <ul class="check-list">
         <li>フォーマット：PNG（静止画）</li>
         <li>キャンバスサイズ：180×180px固定</li>
@@ -748,7 +808,7 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
             ChatGPTで「コード実行ができません」と言われる
           </button>
           <div class="accordion-item__answer">
-            <p>お使いのプラン・環境ではコード実行（Data Analysis／Code Interpreter）が使えない可能性があります。「Codexで作る」ルートに切り替えるか、コード実行が使えるプランをご確認ください。</p>
+            <p>お使いのプラン・環境ではコード実行（Data Analysis／Code Interpreter）が使えない可能性があります。コード実行が使えるプランをご確認いただくか、パソコンがあれば「Codexで作る」ルートに切り替えてください（Codexルートは動く絵文字になります。静止絵文字ではなく動く絵文字にしたい場合はこちらがおすすめです）。</p>
           </div>
         </div>
         <div class="accordion-item">
@@ -764,23 +824,39 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
             40個のうち複数個が同じポーズに見える
           </button>
           <div class="accordion-item__answer">
-            <p>「zip」の工程で行う目視レビュー（<code>checklist_TO_FILL.json</code>のno_semantic_duplicate）で気づけるようになっています。指摘された番号を「00X修正」で再生成してください。それでも似てしまう場合は<code>40-emoji-set-plan.json</code>のdescriptionで、その番号だけ手の位置や小物を大きく変えると直りやすいです。</p>
+            <p>「zip」の工程で行う目視レビュー（no_semantic_duplicateのチェック）で気づけるようになっています。指摘された番号を「0X0だけ修正」で再生成してください。それでも似てしまう場合は、構成ファイル（Codexルートは<code>40-emoji-animated-plan.json</code>、ChatGPTルートは<code>40-emoji-set-plan.json</code>）のmotion／descriptionで、その番号だけ手の位置や小物を大きく変えると直りやすいです。</p>
           </div>
         </div>
         <div class="accordion-item">
           <button type="button" class="accordion-item__question" aria-expanded="false">
-            グリッド画像の背景が透過にならない
+            動く絵文字なのに、目や口が中途半端に開いたコマがある
           </button>
           <div class="accordion-item__answer">
-            <p><code>emoji_pipeline.py</code>は、背景が透過されていない場合に白背景を自動で透過処理します。背景が白以外（グラデーションや模様など）の場合は、「背景を無地の白にして」と伝えて生成し直してください。</p>
+            <p>Codexルートでは「目・口は完全に開くか完全に閉じるかのどちらか」という絶対条件を指示していますが、それでも半端なコマが混ざることがあります。レビュー工程の<code>eye_mouth_binary_states_only</code>で気づけるようになっているので、指摘された番号を「0X0だけ修正」で再生成してください。</p>
           </div>
         </div>
         <div class="accordion-item">
           <button type="button" class="accordion-item__question" aria-expanded="false">
-            PNGのファイルサイズが1MBを超える
+            動く絵文字の再生時間（1.2秒など）でLINEに弾かれる
           </button>
           <div class="accordion-item__answer">
-            <p>キャラクターの色数や模様の細かさを減らして生成し直してください。<code>emoji_pipeline.py</code>がエラーで教えてくれます。</p>
+            <p>LINEの審査は、1ループの再生時間が<strong>ちょうど1・2・3・4秒</strong>でないと通しません。キットは10フレーム×100ms＝ちょうど1.0秒のループで固定しているため、この数値を書き換えないかぎり起こらないはずです。もし変更していた場合は元の設定に戻してください。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-item__question" aria-expanded="false">
+            画像の背景が透過にならない
+          </button>
+          <div class="accordion-item__answer">
+            <p>キット内のパイプラインは、背景が透過されていない場合に白背景を自動で透過処理します。背景が白以外（グラデーションや模様など）の場合は、「背景を無地の白にして」と伝えて生成し直してください。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-item__question" aria-expanded="false">
+            ファイルサイズの上限を超える
+          </button>
+          <div class="accordion-item__answer">
+            <p>キャラクターの色数や模様の細かさを減らして生成し直してください。上限はCodexルート（動く絵文字）が1個300KB、ChatGPTルート（静止絵文字）が1個1MBです。パイプラインがエラーで教えてくれます。</p>
           </div>
         </div>
         <div class="accordion-item">
@@ -788,7 +864,7 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
             40個の内容（意味・見た目）を変えたい
           </button>
           <div class="accordion-item__answer">
-            <p>キット内の<code>40-emoji-set-plan.json</code>のmeaning（意味）・description（見た目の説明）を書き換えてから「40個生成」をやり直してください。</p>
+            <p>キット内の構成ファイル（Codexルートは<code>40-emoji-animated-plan.json</code>、ChatGPTルートは<code>40-emoji-set-plan.json</code>）のmeaning（意味）・motion／description（動き・見た目の説明）を書き換えてから「40個生成」をやり直してください。</p>
           </div>
         </div>
         <div class="accordion-item">

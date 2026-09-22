@@ -133,9 +133,9 @@
       <ul class="check-list">
         <li>001 こんにちは（手を振る）</li>
         <li>002 ありがとう（お辞儀）</li>
-        <li>003 OK・了解（うなずく）</li>
+        <li>003 OK・了解（OKサイン）</li>
         <li>004 大笑い</li>
-        <li>005 ごめんね（頭を下げる）</li>
+        <li>005 ごめんね（うなだれる）</li>
         <li>006 がんばる（ガッツポーズ）</li>
         <li>007 おやすみ（あくび→目を閉じる）</li>
         <li>008 びっくり</li>
@@ -221,7 +221,9 @@
 
 - 「マスター画像生成」→ 採用済みキャラクターの基準画像を1枚生成し、以後の参照として固定する
 - 「グリッド生成」→ 8-emoji-set-plan.jsonの8個×6フレームに沿って、キャラの見た目を保ったまま
-  1枚のグリッド画像（8行×6列）として生成し、grid.pngに保存する
+  1枚のグリッド画像（8行×6列）として生成し、grid.pngに保存する。8行はdistinctness_noteに
+  従い、腕の位置・手の形・体の傾きのいずれかが必ず他の行と違うようにする（似た行があれば
+  その行だけ再生成する）
 - 「zip」→ 画像生成は使わず、
   python emoji_pipeline.py all --grid grid.png --plan 8-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip
   を実際に実行する
@@ -321,7 +323,9 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
 
 - 「マスター画像生成」→ 採用済みキャラクターの基準画像を1枚、実際に生成し、以後の参照として固定する
 - 「グリッド生成」→ 8-emoji-set-plan.jsonの8個×6フレームに沿って、キャラの見た目を保ったまま
-  1枚のグリッド画像（8行×6列）として生成し、grid.pngに保存する
+  1枚のグリッド画像（8行×6列）として生成し、grid.pngに保存する。8行はdistinctness_noteに
+  従い、腕の位置・手の形・体の傾きのいずれかが必ず他の行と違うようにする（似た行があれば
+  その行だけ再生成する）
 - 「zip」→ 画像生成機能は使わず、
   python emoji_pipeline.py all --grid grid.png --plan 8-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip
   相当の処理を実際に実行する

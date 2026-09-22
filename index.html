@@ -169,8 +169,8 @@
           <li>下のプロンプトを全文コピーしてCodexに貼り付ける</li>
           <li>Codexが提案するキャラ候補A/B/Cから選ぶ（または自分の画像を送る）</li>
           <li>「マスター画像生成」と送る（キャラの基準画像ができます）</li>
-          <li>できあがったら、続けて「グリッド生成」と送る（8個×6コマの画像ができます）</li>
-          <li>できあがったら、続けて「zip」と送る（ここでZIPが完成します）</li>
+          <li>できあがったら、続けて「8個生成」と送る（8個を1個ずつ個別に生成します）</li>
+          <li>できあがったら、続けて「zip」と送る（見分けの確認をしてからZIPが完成します）</li>
           <li>気になる番号があれば「003だけ修正」と送る（直ったら「zip更新」と送る）</li>
         </ol>
       </div>
@@ -196,8 +196,11 @@
 作業フォルダにある以下のファイルを使用します。
 
 - 8-emoji-set-plan.json（8個の構成の正本。番号・意味・フレーム数・動きの説明はここから読む）
-- emoji_pipeline.py（グリッド画像の切り出し・APNG合成・ZIP作成はこの実装を優先する）
+- emoji_pipeline.py（フレームの切り出し・APNG合成・レビュー・ZIP作成はこの実装を優先する）
 - build_apng.py（emoji_pipeline.pyが内部で使う。直接実行はしない）
+
+8個は1枚にまとめず1個ずつ個別に画像生成します（まとめて生成すると複数個が似たポーズに
+引っ張られる問題が確認されているため）。
 
 ## 仕様（LINE公式・動く絵文字）
 
@@ -220,14 +223,24 @@
 ## 毎ターン操作を判定
 
 - 「マスター画像生成」→ 採用済みキャラクターの基準画像を1枚生成し、以後の参照として固定する
-- 「グリッド生成」→ 8-emoji-set-plan.jsonの8個×6フレームに沿って、キャラの見た目を保ったまま
-  1枚のグリッド画像（8行×6列）として生成し、grid.pngに保存する。8行はdistinctness_noteに
-  従い、腕の位置・手の形・体の傾きのいずれかが必ず他の行と違うようにする（似た行があれば
-  その行だけ再生成する）
-- 「zip」→ 画像生成は使わず、
-  python emoji_pipeline.py all --grid grid.png --plan 8-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip
-  を実際に実行する
-- 「003だけ修正」→ 指定番号の6コマだけをマスター画像を参照して再生成する（8個全体は作り直さない）
+- 「8個生成」→ 8-emoji-set-plan.jsonの8個を、1個ずつ順番に個別の画像生成で作る（1回の生成で
+  1個だけ、6コマを横一列に並べた帯画像。8個を1枚にまとめない）。各回、distinctness_noteを
+  参照し、それまでに生成した他の番号と腕の位置・手の形・体の傾きが同じに見えないようにする。
+  生成した帯画像はstrips/001.png〜strips/008.pngに保存する
+- 「zip」→ 画像生成は使わず、次を順に実際に実行する。
+  1) python emoji_pipeline.py slice-items --strips-dir strips --plan 8-emoji-set-plan.json --out-dir output
+  2) python emoji_pipeline.py build --plan 8-emoji-set-plan.json --out-dir output
+  3) python emoji_pipeline.py tab --source output/001.png --out output/tab.png
+  4) python emoji_pipeline.py review --plan 8-emoji-set-plan.json --out-dir output
+  （output/review/001.png〜008.pngができる。これを1枚ずつ実際に見て、
+  checklist_TO_FILL.jsonのchecks（motion_matches_plan / no_semantic_duplicate等）を
+  正直にtrue/falseで埋め、observationに見た内容を書く。省略・虚偽記入は禁止）
+  5) python emoji_pipeline.py pack --plan 8-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip --review output/review/checklist_TO_FILL.json
+  （packはchecklistにfalse・未記入があるとエラーで停止しZIPを作らない。エラーの番号は
+  「00X修正」で再生成し4〜5をやり直す。最大2回。直らなければ番号を挙げて案内する）
+- 「003だけ修正」→ 指定番号の帯画像だけをマスター画像を参照して再生成し、strips/00X.pngを
+  上書きする（8個全体は作り直さない）。「004と005を作り直して」のように番号を複数指定された
+  場合も、番号ごとに1個ずつ個別再生成する。再生成した番号はchecklistのその行をnullに戻す
 - 「zip更新」→ 直近で再生成した番号だけを反映してZIPを作り直す
 
 各応答の最後に「現在／今回できたこと／次の操作」を短く示し、未実行の処理を完成と書かないでください。
@@ -269,8 +282,8 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
           <li>下のプロンプトを全文コピーして、最初のメッセージとして送る</li>
           <li>ChatGPTが提案するキャラ候補A/B/Cから選ぶ（または自分の画像を送る）</li>
           <li>「マスター画像生成」と送る（キャラの基準画像ができます）</li>
-          <li>できあがったら、続けて「グリッド生成」と送る（8個×6コマの画像ができます）</li>
-          <li>できあがったら、続けて「zip」と送る（ここでZIPが完成します）</li>
+          <li>できあがったら、続けて「8個生成」と送る（8個を1個ずつ個別に生成します）</li>
+          <li>できあがったら、続けて「zip」と送る（見分けの確認をしてからZIPが完成します）</li>
           <li>気になる番号があれば「003だけ修正」と送る（直ったら「zip更新」と送る）</li>
         </ol>
       </div>
@@ -298,8 +311,11 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
 この会話に添付された以下のファイルを使用します。
 
 - 8-emoji-set-plan.json（8個の構成の正本。番号・意味・フレーム数・動きの説明はここから読む）
-- emoji_pipeline.py（グリッド画像の切り出し・APNG合成・ZIP作成はこの実装を優先する）
+- emoji_pipeline.py（フレームの切り出し・APNG合成・レビュー・ZIP作成はこの実装を優先する）
 - build_apng.py（emoji_pipeline.pyが内部で使う。直接実行はしない）
+
+8個は1枚にまとめず1個ずつ個別に画像生成します（まとめて生成すると複数個が似たポーズに
+引っ張られる問題が確認されているため）。
 
 ## 仕様（LINE公式・動く絵文字）
 
@@ -322,14 +338,24 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
 ## 毎ターン操作を判定
 
 - 「マスター画像生成」→ 採用済みキャラクターの基準画像を1枚、実際に生成し、以後の参照として固定する
-- 「グリッド生成」→ 8-emoji-set-plan.jsonの8個×6フレームに沿って、キャラの見た目を保ったまま
-  1枚のグリッド画像（8行×6列）として生成し、grid.pngに保存する。8行はdistinctness_noteに
-  従い、腕の位置・手の形・体の傾きのいずれかが必ず他の行と違うようにする（似た行があれば
-  その行だけ再生成する）
-- 「zip」→ 画像生成機能は使わず、
-  python emoji_pipeline.py all --grid grid.png --plan 8-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip
-  相当の処理を実際に実行する
-- 「003だけ修正」→ 指定番号の6コマだけをマスター画像を参照して再生成する（8個全体は作り直さない）
+- 「8個生成」→ 8-emoji-set-plan.jsonの8個を、1個ずつ順番に個別の画像生成で作る（1回の生成で
+  1個だけ、6コマを横一列に並べた帯画像。8個を1枚にまとめない）。各回、distinctness_noteを
+  参照し、それまでに生成した他の番号と腕の位置・手の形・体の傾きが同じに見えないようにする。
+  生成した帯画像はstrips/001.png〜strips/008.pngに保存する
+- 「zip」→ 画像生成機能は使わず、次を順に実際に実行する。
+  1) python emoji_pipeline.py slice-items --strips-dir strips --plan 8-emoji-set-plan.json --out-dir output
+  2) python emoji_pipeline.py build --plan 8-emoji-set-plan.json --out-dir output
+  3) python emoji_pipeline.py tab --source output/001.png --out output/tab.png
+  4) python emoji_pipeline.py review --plan 8-emoji-set-plan.json --out-dir output
+  （output/review/001.png〜008.pngができる。これを1枚ずつ実際に見て、
+  checklist_TO_FILL.jsonのchecks（motion_matches_plan / no_semantic_duplicate等）を
+  正直にtrue/falseで埋め、observationに見た内容を書く。省略・虚偽記入は禁止）
+  5) python emoji_pipeline.py pack --plan 8-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip --review output/review/checklist_TO_FILL.json
+  （packはchecklistにfalse・未記入があるとエラーで停止しZIPを作らない。エラーの番号は
+  「00X修正」で再生成し4〜5をやり直す。最大2回。直らなければ番号を挙げて案内する）
+- 「003だけ修正」→ 指定番号の帯画像だけをマスター画像を参照して再生成し、strips/00X.pngを
+  上書きする（8個全体は作り直さない）。「004と005を作り直して」のように番号を複数指定された
+  場合も、番号ごとに1個ずつ個別再生成する。再生成した番号はchecklistのその行をnullに戻す
 - 「zip更新」→ 直近で再生成した番号だけを反映してZIPを作り直す
 
 各応答の最後に「現在／今回できたこと／次の操作」を短く示し、未実行の処理を完成と書かないでください。
@@ -397,15 +423,23 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
         </div>
         <div class="accordion-item">
           <button type="button" class="accordion-item__question" aria-expanded="false">
-            キャラクターの見た目がグリッド内でブレる
+            キャラクターの見た目が個体差でブレる
           </button>
           <div class="accordion-item__answer">
-            <p>「マスター画像生成」で作った基準画像をもう一度参照するよう伝え、「グリッド生成」をやり直してください。人物モチーフの場合は、より簡略化した「ちびキャラ」で描き直すよう伝えると安定しやすくなります。</p>
+            <p>「マスター画像生成」で作った基準画像をもう一度参照するよう伝え、ブレている番号を「00X修正」で再生成してください。人物モチーフの場合は、より簡略化した「ちびキャラ」で描き直すよう伝えると安定しやすくなります。</p>
           </div>
         </div>
         <div class="accordion-item">
           <button type="button" class="accordion-item__question" aria-expanded="false">
-            グリッド画像の背景が透過にならない
+            8個のうち複数個が同じポーズに見える
+          </button>
+          <div class="accordion-item__answer">
+            <p>「zip」の工程で行う目視レビュー（<code>checklist_TO_FILL.json</code>のno_semantic_duplicate）で気づけるようになっています。指摘された番号を「00X修正」で再生成してください。8個は1個ずつ個別に生成する方式のため、まとめて生成していた頃より起きにくくなっていますが、それでも似てしまう場合は<code>8-emoji-set-plan.json</code>のmotionで、その番号だけ腕の位置を大きく変える（体の横に垂らす／真横に開く等、他とは違う系統にする）と直りやすいです。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-item__question" aria-expanded="false">
+            帯画像（1個ぶんの6コマ）の背景が透過にならない
           </button>
           <div class="accordion-item__answer">
             <p><code>emoji_pipeline.py</code>は、背景が透過されていない場合に白背景を自動で透過処理します。背景が白以外（グラデーションや模様など）の場合は、「背景を無地の白にして」と伝えて生成し直してください。</p>
@@ -424,7 +458,7 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
             8個の内容（意味・動き）を変えたい
           </button>
           <div class="accordion-item__answer">
-            <p>キット内の<code>8-emoji-set-plan.json</code>のmeaning（意味）・motion（動きの説明）を書き換えてから「グリッド生成」をやり直してください。framesの数値は5〜20の範囲で統一する必要があります。</p>
+            <p>キット内の<code>8-emoji-set-plan.json</code>のmeaning（意味）・motion（動きの説明）を書き換えてから「8個生成」をやり直してください。framesの数値は5〜20の範囲で統一する必要があります。</p>
           </div>
         </div>
         <div class="accordion-item">

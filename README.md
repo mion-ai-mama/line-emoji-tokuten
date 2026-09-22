@@ -1,4 +1,4 @@
-# 動くLINE絵文字の作り方 完全ガイド
+# LINE絵文字40個セットの作り方 完全ガイド
 
 Instagramリール特典として配布する、スマホ対応の1ページ完結ガイドです。
 HTML / CSS / JavaScript だけで作られた静的サイトで、ビルド作業は必要ありません。
@@ -14,17 +14,17 @@ HTML / CSS / JavaScript だけで作られた静的サイトで、ビルド作�
 
 | 項目 | 内容 |
 |---|---|
-| ページタイトル | 動くLINE絵文字の作り方 完全ガイド |
+| ページタイトル | LINE絵文字40個セットの作り方 完全ガイド |
 | サブタイトル | 自分の絵がなくても大丈夫（Codex・ChatGPT対応） |
 | 想定読者 | AI初心者・副業志向・「絵が描けない」不安がある層（スマートフォン閲覧が中心） |
-| 目的 | LINE公式仕様に沿った「動くLINE絵文字（アニメーションスタンプ）」を、Codex／ChatGPTどちらでも作れるように案内する |
+| 目的 | LINE公式仕様に沿った「LINE絵文字（静止画40個セット）」を、Codex／ChatGPTどちらでも作れるように案内する |
 | 技術 | HTML5 / CSS3 / Vanilla JavaScript（外部フレームワーク不使用） |
 | 公開 | GitHub Pages（静的ファイルの配信のみ） |
 
 ページに含まれる主な機能は次のとおりです。
 
 - ページ内目次から各セクションへ移動できる
-- Codexルート／ChatGPTルートそれぞれに、8個セットを会話駆動で一括生成するマスタープロンプトがある
+- Codexルート／ChatGPTルートそれぞれに、40個セットを会話駆動で一括生成するマスタープロンプトがある
   （キャラクターはページ上で選ばず、プロンプトを送った後にAIが候補A/B/Cを提案する）
 - 「うまくいかないとき」はアコーディオン形式
 - 配布キット（構成JSON＋Pythonパイプライン＋マスタープロンプト一式）をZIPでダウンロードできる
@@ -46,11 +46,10 @@ HTML / CSS / JavaScript だけで作られた静的サイトで、ビルド作�
     ├── favicon/favicon.svg
     ├── images/cta-banner.png   「AIマネタイズの教科書」バナー（既存ポリシー通り固定）
     └── kit/                    配布キット本体（§6参照）
-        ├── core-files.zip      添付・作業フォルダ用の必須3ファイルのみ（メインのDLボタン）
+        ├── core-files.zip      添付・作業フォルダ用の必須2ファイルのみ（メインのDLボタン）
         ├── line-emoji-kit.zip  プロンプト控え等も含む完全版（任意・サブリンク）
-        ├── prompts/            8-emoji-set-plan.json／Codex用・ChatGPT用マスタープロンプト
-        └── scripts/            emoji_pipeline.py（グリッド切り出し→APNG合成→ZIP作成）
-                                 build_apng.py（emoji_pipeline.pyが内部利用）
+        ├── prompts/            40-emoji-set-plan.json／Codex用・ChatGPT用マスタープロンプト
+        └── scripts/            emoji_pipeline.py（グリッド切り出し→レビュー→ZIP作成）
                                  add_text_overlay.py（任意の文字入れ用。今回のセットでは未使用）
 ```
 
@@ -109,27 +108,28 @@ python3 -m http.server 8000
 
 ## 6. 配布キット（`assets/kit/`）の中身と更新方法
 
-このページ固有の成果物として、8個セットを会話駆動で一括生成するための
+このページ固有の成果物として、40個セットを会話駆動で一括生成するための
 構成JSON・Pythonパイプライン・マスタープロンプトを配布しています。ZIPは2種類あります。
 
 | ZIP | 中身 | 用途 |
 |---|---|---|
-| `core-files.zip` | `8-emoji-set-plan.json` / `emoji_pipeline.py` / `build_apng.py`の3つのみ | ページのメインのダウンロードボタン。Codex/ChatGPTに添付・配置する必須ファイルだけを渡す |
-| `line-emoji-kit.zip` | 上記3つ＋プロンプトの控え（`.md`）＋`add_text_overlay.py`等 | ページ内のサブリンク（任意）。全ファイルの完全版 |
+| `core-files.zip` | `40-emoji-set-plan.json` / `emoji_pipeline.py`の2つのみ | ページのメインのダウンロードボタン。Codex/ChatGPTに添付・配置する必須ファイルだけを渡す |
+| `line-emoji-kit.zip` | 上記2つ＋プロンプトの控え（`.md`）＋`add_text_overlay.py`等 | ページ内のサブリンク（任意）。全ファイルの完全版 |
 
-> 2026-09-22追記: 当初はkit一式（7ファイル）を1つのZIPにまとめていたが、
-> ユーザーが実機で試したところ「7ファイルの中からどの3つを選べばいいか分かりにくい」
-> というフィードバックがあったため、**必須3ファイルだけの`core-files.zip`を主導線にし、
-> 完全版は任意のサブリンクに格下げ**した。
+> 2026-09-22追記: 当初は「動くLINE絵文字（8個・APNG）」として構築していたが、
+> ChatGPTの画像生成が複数個のポーズを混同する・直前の生成を引きずる等の不具合が
+> 実機検証で繰り返し発生し、信頼度の高い自動生成が困難と判断したため、
+> **「LINE絵文字40個セット（静止画）」に全面刷新**した。競合LPの静止画40個方式が
+> 実機検証で高い成功率だったことを踏まえた判断。APNG合成（`build_apng.py`）は
+> 不要になったため削除した。
 
 | ファイル | 役割 |
 |---|---|
-| `prompts/8-emoji-set-plan.json` | 8個セットの構成の正本（番号・意味・フレーム数・動きの説明） |
+| `prompts/40-emoji-set-plan.json` | 40個セットの構成の正本（番号・意味・説明。表情20／生活シーン10／単独アイコン3／ふきだし文字7） |
 | `prompts/codex-emoji-set-prompt.md` | Codexへの指示文（`index.html`の「Codexで作る」と同内容） |
 | `prompts/chatgpt-emoji-set-prompt.md` | ChatGPTへの指示文（`index.html`の「ChatGPTだけで作る」と同内容） |
-| `scripts/emoji_pipeline.py` | グリッド画像の切り出し・中央配置・背景透過・APNG合成・タブ画像作成・ZIP作成を一括実行 |
-| `scripts/build_apng.py` | `emoji_pipeline.py`が内部で使うAPNG合成＋LINE仕様バリデーション |
-| `scripts/add_text_overlay.py` | Pillowでフレームに文字を合成する任意ツール（今回の8個セットでは未使用。文字入れをしたい場合に利用） |
+| `scripts/emoji_pipeline.py` | グリッド画像の切り出し・中央配置・背景透過・レビュー・ZIP作成を一括実行 |
+| `scripts/add_text_overlay.py` | Pillowでフレームに文字を合成する任意ツール（今回の40個セットでは未使用。文字入れをしたい場合に利用） |
 
 **`prompts/`配下の内容を変更した場合は、`index.html`内の対応箇所（マスタープロンプトの`<pre>`）も
 忘れずに書き換えてください**（キットとページ本文は別ファイルとして重複管理しているため、
@@ -143,7 +143,7 @@ python3 -m http.server 8000
 cd assets/kit
 rm -rf scripts/__pycache__
 rm -f core-files.zip line-emoji-kit.zip
-zip -j core-files.zip prompts/8-emoji-set-plan.json scripts/emoji_pipeline.py scripts/build_apng.py
+zip -j core-files.zip prompts/40-emoji-set-plan.json scripts/emoji_pipeline.py
 zip -j line-emoji-kit.zip prompts/*.json prompts/*.md scripts/*.py scripts/*.txt
 ```
 
@@ -162,7 +162,7 @@ zip -j line-emoji-kit.zip prompts/*.json prompts/*.md scripts/*.py scripts/*.txt
 ## 8. 掲載情報の日付
 
 - 掲載情報の基準日：`docs/requirements.md`の作成日（2026年9月21日）
-- LINE Creators Marketの仕様（キャンバスサイズ・フレーム数など）は変更される可能性があるため、
+- LINE Creators Marketの仕様（キャンバスサイズ・ファイルサイズなど）は変更される可能性があるため、
   更新した場合は`index.html`の「LINEへの申請方法」セクションと`docs/requirements.md`§2.1の
   両方を合わせて更新してください。
 
@@ -171,7 +171,7 @@ zip -j line-emoji-kit.zip prompts/*.json prompts/*.md scripts/*.py scripts/*.txt
 ## 9. 更新時に確認すべき公式情報
 
 LINE Creators Marketの出品仕様・審査基準は変更されることがあります。
-更新前に、LINE Creators Market公式サイトで最新のアニメーションスタンプ制作ガイドラインを
+更新前に、LINE Creators Market公式サイトで最新の絵文字制作ガイドラインを
 検索して確認してください（本READMEには変更されやすい外部URLを直接記載していません）。
 
 ---

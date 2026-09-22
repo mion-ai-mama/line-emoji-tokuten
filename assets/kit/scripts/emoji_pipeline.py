@@ -1,36 +1,30 @@
 #!/usr/bin/env python3
-"""動くLINE絵文字セットを、生成した画像から一括処理するパイプライン。
+"""LINE静止絵文字セット（40個）を、1枚のグリッド画像から一括処理するパイプライン。
 
 ChatGPTのコード実行機能（Code Interpreter）内で、この会話にアップロードされた
-構成JSON（例: 8-emoji-set-plan.json）と組み合わせて使うことを想定している。
+構成JSON（40-emoji-set-plan.json）と組み合わせて使うことを想定している。
 
-推奨フロー（1個ずつ個別生成。8個を1枚にまとめて生成するより見分けやすくなる）:
-    1. 8個それぞれを、マスター画像を参照しながら1個ずつ「1行×6列」の帯画像として
-       個別に画像生成し、strips/001.png 〜 strips/008.png として保存する
-    2. slice-items  strips/配下の8枚から、絵文字ごとのフレームを切り出す
-    3. build        切り出したフレームから、絵文字ごとに1本のAPNGを作る（build_apng.pyを利用）
-    4. tab          トークルームタブ画像（96x74）を1個作る
-    5. review       8個それぞれの帯画像とチェックリスト雛形（checklist_TO_FILL.json）を作る。
-                     packの前に必ず実行し、雛形の各checksを実際に目視確認してtrue/falseで埋める
-    6. pack         review済みのchecklist（--review）を検証したうえでAPNG一式とタブ画像をZIPにまとめる。
-                     checksが埋まっていない・falseの項目があれば停止しZIPを作らない
+推奨フロー:
+    1. マスター画像を参照しながら、40個を8行×5列の1枚のグリッド画像として
+       一括生成し、grid.pngとして保存する
+    2. slice     grid.pngから40個ぶんを切り出し、180x180で中央配置する
+    3. tab       トークルームタブ画像（96x74）を1個作る
+    4. review    40個それぞれのプレビュー画像とチェックリスト雛形を作る。
+                 packの前に必ず実行し、雛形の各checksを実際に目視確認してtrue/falseで埋める
+    5. pack      review済みのchecklist（--review）を検証したうえでZIPにまとめる。
+                 checksが埋まっていない・falseの項目があれば停止しZIPを作らない
 
 サブコマンド一覧:
-    slice-items  strips/{番号}.png（1個ぶんの1行×6列）から個別にフレームを切り出す（推奨）
-    slice        1枚の8行×6列グリッド画像から一括でフレームを切り出す（旧方式・互換用）
-    build        切り出したフレームから、絵文字ごとに1本のAPNGを作る
-    tab          トークルームタブ画像（96x74）を1個作る
-    review       レビュー用の帯画像とchecklist_TO_FILL.jsonを作る
-    pack         review済みのchecklistを検証したうえでZIPにまとめる
-    all          slice -> build -> tab -> review を一括実行する（旧方式・互換用。packは別途）
+    slice   グリッド画像から40個を切り出し、180x180で中央配置する
+    tab     トークルームタブ画像（96x74）を1個作る
+    review  レビュー用画像とchecklist_TO_FILL.jsonを作る
+    pack    review済みのchecklistを検証したうえでZIPにまとめる
+    all     slice -> tab -> review を一括実行する（packは別途、目視確認後に実行する）
 
-使い方の例（推奨フロー）:
-    python emoji_pipeline.py slice-items --strips-dir strips --plan 8-emoji-set-plan.json --out-dir output
-    python emoji_pipeline.py build --plan 8-emoji-set-plan.json --out-dir output
-    python emoji_pipeline.py tab --source output/001.png --out output/tab.png
-    python emoji_pipeline.py review --plan 8-emoji-set-plan.json --out-dir output
+使い方の例:
+    python emoji_pipeline.py all --grid grid.png --plan 40-emoji-set-plan.json --out-dir output
     （output/review/checklist_TO_FILL.json を目視確認して埋めたあと）
-    python emoji_pipeline.py pack --plan 8-emoji-set-plan.json --out-dir output \\
+    python emoji_pipeline.py pack --plan 40-emoji-set-plan.json --out-dir output \\
         --zip output/line-emoji-set.zip --review output/review/checklist_TO_FILL.json
 """
 from __future__ import annotations
@@ -43,29 +37,27 @@ from pathlib import Path
 
 from PIL import Image
 
-import build_apng
-
-CANVAS_SIZE = build_apng.CANVAS_SIZE
+CANVAS_SIZE = (180, 180)
 USABLE_SIZE = 152
 BG_COLOR_TOLERANCE = 18
 MAX_ZIP_SIZE_BYTES = 20 * 1024 * 1024
+MAX_FILE_SIZE_BYTES = 1024 * 1024
 TAB_SIZE = (96, 74)
 REVIEW_CHECK_NAMES = (
-    "motion_matches_plan",
+    "meaning_matches",
     "no_semantic_duplicate",
-    "hand_and_arm_shape_correct",
     "no_clipping_or_cropping",
     "readable",
+    "background_transparent",
 )
 
 
 def load_plan(plan_path: Path) -> dict:
     plan = json.loads(plan_path.read_text(encoding="utf-8"))
-    frame_counts = {item["frames"] for item in plan["items"]}
-    if len(frame_counts) != 1:
+    expected = plan["grid_rows"] * plan["grid_cols"]
+    if len(plan["items"]) != expected:
         raise SystemExit(
-            "このパイプラインは、全アイテムのフレーム数が同じであることを前提にしています。"
-            f" 構成JSONのframesを揃えてください: {sorted(frame_counts)}"
+            f"itemsの数（{len(plan['items'])}）がgrid_rows×grid_cols（{expected}）と一致しません。"
         )
     return plan
 
@@ -104,55 +96,35 @@ def center_on_canvas(image: Image.Image) -> Image.Image:
     return canvas
 
 
-def _slice_row(row_image: Image.Image, cols: int, item_dir: Path) -> None:
-    item_dir.mkdir(parents=True, exist_ok=True)
-    cell_w = row_image.width / cols
-    for col in range(cols):
-        box = (round(col * cell_w), 0, round((col + 1) * cell_w), row_image.height)
-        cell = row_image.crop(box)
+def slice_grid(grid_path: Path, plan: dict, out_dir: Path) -> None:
+    grid = Image.open(grid_path).convert("RGBA")
+    items = plan["items"]
+    cols = plan["grid_cols"]
+    rows = plan["grid_rows"]
+    cell_w = grid.width / cols
+    cell_h = grid.height / rows
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for index, item in enumerate(items):
+        row, col = divmod(index, cols)
+        box = (
+            round(col * cell_w),
+            round(row * cell_h),
+            round((col + 1) * cell_w),
+            round((row + 1) * cell_h),
+        )
+        cell = grid.crop(box)
         cell = remove_near_background(cell)
         cell = crop_to_content(cell)
         cell = center_on_canvas(cell)
-        cell.save(item_dir / f"{col + 1:02d}.png")
-
-
-def slice_grid(grid_path: Path, plan: dict, out_dir: Path) -> None:
-    """1枚の8行×6列グリッド画像から一括でフレームを切り出す（旧方式・互換用）。"""
-    grid = Image.open(grid_path).convert("RGBA")
-    items = plan["items"]
-    cols = items[0]["frames"]
-    rows = len(items)
-    cell_h = grid.height / rows
-    for row, item in enumerate(items):
-        box = (0, round(row * cell_h), grid.width, round((row + 1) * cell_h))
-        row_image = grid.crop(box)
-        _slice_row(row_image, cols, out_dir / "frames" / item["number"])
-    print(f"✅ 切り出し完了: {rows}個 × {cols}フレーム → {out_dir / 'frames'}")
-
-
-def slice_items(strips_dir: Path, plan: dict, out_dir: Path) -> None:
-    """strips/{番号}.png（1個ぶんの1行×6列の帯画像）から個別にフレームを切り出す（推奨）。"""
-    items = plan["items"]
-    missing = [it["number"] for it in items if not (strips_dir / f"{it['number']}.png").exists()]
-    if missing:
-        raise SystemExit(f"帯画像が見つかりません（{strips_dir}）: {missing}")
-    for item in items:
-        strip = Image.open(strips_dir / f"{item['number']}.png").convert("RGBA")
-        _slice_row(strip, item["frames"], out_dir / "frames" / item["number"])
-    print(f"✅ 切り出し完了: {len(items)}個 → {out_dir / 'frames'}")
-
-
-def build_items(plan: dict, out_dir: Path) -> None:
-    for item in plan["items"]:
-        frame_dir = out_dir / "frames" / item["number"]
-        frame_paths = sorted(frame_dir.glob("*.png"))
-        build_apng.validate_frame_count(frame_paths)
-        build_apng.validate_canvas(frame_paths)
-        build_apng.validate_timing(len(frame_paths), plan["frame_duration_ms"], plan["loop_count"])
         output_path = out_dir / f"{item['number']}.png"
-        build_apng.build_apng(frame_paths, output_path, plan["frame_duration_ms"], plan["loop_count"])
-        build_apng.validate_file_size(output_path)
-        print(f"✅ {item['number']}（{item['meaning']}）を作成: {output_path}")
+        cell.save(output_path)
+        size = output_path.stat().st_size
+        if size > MAX_FILE_SIZE_BYTES:
+            raise SystemExit(
+                f"{item['number']}.pngが上限を超えています: {size / 1024:.1f}KB"
+                f"（上限 {MAX_FILE_SIZE_BYTES / 1024:.0f}KB。色数を減らして再生成してください）"
+            )
+    print(f"✅ 切り出し完了: {rows}行×{cols}列 → {len(items)}個 → {out_dir}")
 
 
 def make_tab(source_path: Path, out_path: Path) -> None:
@@ -168,30 +140,21 @@ def make_tab(source_path: Path, out_path: Path) -> None:
     print(f"✅ タブ画像を作成: {out_path}")
 
 
-def _build_review_strip(item: dict, out_dir: Path, review_dir: Path) -> None:
-    frame_dir = out_dir / "frames" / item["number"]
-    frame_paths = sorted(frame_dir.glob("*.png"))
-    if not frame_paths:
-        raise SystemExit(f"レビュー画像を作れません。先にslice-items/sliceを実行してください: {item['number']}")
-    thumbs = [Image.open(p).convert("RGBA").resize((90, 90), Image.LANCZOS) for p in frame_paths]
-    strip = Image.new("RGBA", (90 * len(thumbs), 90), (255, 255, 255, 255))
-    for i, thumb in enumerate(thumbs):
-        strip.paste(thumb, (90 * i, 0), thumb)
-    strip.convert("RGB").save(review_dir / f"{item['number']}.png")
-
-
 def make_review(plan: dict, out_dir: Path) -> None:
-    """8個それぞれの帯画像とチェックリスト雛形（checklist_TO_FILL.json）を作る。"""
+    """40個それぞれのプレビュー画像とチェックリスト雛形（checklist_TO_FILL.json）を作る。"""
     review_dir = out_dir / "review"
     review_dir.mkdir(parents=True, exist_ok=True)
     checklist = {"items": []}
     for item in plan["items"]:
-        _build_review_strip(item, out_dir, review_dir)
+        source_path = out_dir / f"{item['number']}.png"
+        if not source_path.exists():
+            raise SystemExit(f"レビュー画像を作れません。先にsliceを実行してください: {item['number']}")
+        Image.open(source_path).convert("RGBA").save(review_dir / f"{item['number']}.png")
         checklist["items"].append(
             {
                 "number": item["number"],
                 "meaning": item["meaning"],
-                "motion": item["motion"],
+                "description": item["description"],
                 "checks": {name: None for name in REVIEW_CHECK_NAMES},
                 "observation": "",
             }
@@ -201,7 +164,7 @@ def make_review(plan: dict, out_dir: Path) -> None:
     print(f"✅ レビュー用画像とチェックリスト雛形を作成: {review_dir}")
     print("次に、review/{番号}.png を1枚ずつ実際に見て、checklist_TO_FILL.jsonのchecksを")
     print("true/falseで埋め、observationに具体的な観察を書いてください（省略・虚偽記入は禁止）。")
-    print("特にno_semantic_duplicateは、他の番号と腕の位置・手の形が同じに見えないかを見て判定すること。")
+    print("特にno_semantic_duplicateは、他の番号と表情・手の位置・小物が同じに見えないかを見て判定すること。")
 
 
 def load_checklist(checklist_path: Path, plan: dict) -> dict:
@@ -252,19 +215,10 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p_slice_items = sub.add_parser("slice-items", help="1個ずつの帯画像からフレームを切り出す（推奨）")
-    p_slice_items.add_argument("--strips-dir", type=Path, required=True)
-    p_slice_items.add_argument("--plan", type=Path, required=True)
-    p_slice_items.add_argument("--out-dir", type=Path, required=True)
-
-    p_slice = sub.add_parser("slice", help="1枚のグリッド画像からフレームごとに切り出す（旧方式）")
+    p_slice = sub.add_parser("slice", help="グリッド画像から40個を切り出す")
     p_slice.add_argument("--grid", type=Path, required=True)
     p_slice.add_argument("--plan", type=Path, required=True)
     p_slice.add_argument("--out-dir", type=Path, required=True)
-
-    p_build = sub.add_parser("build", help="フレームからAPNGを作る")
-    p_build.add_argument("--plan", type=Path, required=True)
-    p_build.add_argument("--out-dir", type=Path, required=True)
 
     p_tab = sub.add_parser("tab", help="タブ画像を作る")
     p_tab.add_argument("--source", type=Path, required=True)
@@ -280,7 +234,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     p_pack.add_argument("--zip", type=Path, required=True)
     p_pack.add_argument("--review", type=Path, required=True)
 
-    p_all = sub.add_parser("all", help="slice -> build -> tab -> review を一括実行（旧方式）")
+    p_all = sub.add_parser("all", help="slice -> tab -> review を一括実行")
     p_all.add_argument("--grid", type=Path, required=True)
     p_all.add_argument("--plan", type=Path, required=True)
     p_all.add_argument("--out-dir", type=Path, required=True)
@@ -291,12 +245,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 def main(argv: list[str]) -> int:
     args = parse_args(argv)
 
-    if args.command == "slice-items":
-        slice_items(args.strips_dir, load_plan(args.plan), args.out_dir)
-    elif args.command == "slice":
+    if args.command == "slice":
         slice_grid(args.grid, load_plan(args.plan), args.out_dir)
-    elif args.command == "build":
-        build_items(load_plan(args.plan), args.out_dir)
     elif args.command == "tab":
         make_tab(args.source, args.out)
     elif args.command == "review":
@@ -306,7 +256,6 @@ def main(argv: list[str]) -> int:
     elif args.command == "all":
         plan = load_plan(args.plan)
         slice_grid(args.grid, plan, args.out_dir)
-        build_items(plan, args.out_dir)
         make_tab(args.out_dir / f"{plan['items'][0]['number']}.png", args.out_dir / "tab.png")
         make_review(plan, args.out_dir)
 

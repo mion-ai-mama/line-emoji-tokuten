@@ -11,8 +11,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from apng import APNG
-from PIL import Image
+from PIL import Image, PngImagePlugin
 
 CANVAS_SIZE = (180, 180)
 MIN_FRAMES = 5
@@ -65,11 +64,20 @@ def validate_timing(frame_count: int, duration_ms: int, loop: int) -> None:
 
 
 def build_apng(paths: list[Path], output: Path, duration_ms: int, loop: int) -> None:
-    apng = APNG()
-    for path in paths:
-        apng.append_file(str(path), delay=duration_ms, delay_den=1000)
-    apng.num_plays = loop
-    apng.save(str(output))
+    """Pillow単体でAPNGを書き出す（外部パッケージapngは使わない）。
+    ChatGPTのコード実行環境にはapngパッケージが入っておらずpip installもできないため、
+    どの環境でも標準で入っているPillowの save_all=True によるAPNG書き出しに一本化している。"""
+    frames = [Image.open(p).convert("RGBA") for p in paths]
+    frames[0].save(
+        output,
+        format="PNG",
+        save_all=True,
+        append_images=frames[1:],
+        duration=duration_ms,
+        loop=loop,
+        disposal=PngImagePlugin.Disposal.OP_BACKGROUND,
+        blend=PngImagePlugin.Blend.OP_SOURCE,
+    )
 
 
 def validate_file_size(output: Path) -> None:

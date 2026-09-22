@@ -39,6 +39,8 @@
 | P-004 | 準備するもの（Codex/ChatGPT分岐・40個セット内容一覧） | [x] |
 | P-005 | Codexルート（Codex入手ボタン＋手順＋マスタープロンプト＋キットDLボタン） | [x] |
 | P-006 | ChatGPTのみルート（コード実行要件の注記＋手順＋マスタープロンプト＋キットDLボタン） | [x] |
+| P-006.5 | パソコンがない人はこちら（スマホ完結ルート。ファイル添付不要・プロンプト1つに埋め込み） | [x] |
+| P-006.6 | 40個そろったら（申請前の目視チェック手順・番号＋修正内容を指定する使い方の案内） | [x] |
 | P-007 | LINEへの申請方法 | [x] |
 | P-008 | うまくいかないとき（アコーディオン） | [x] |
 | P-009 | ご案内（AIマネタイズの教科書。オープンチャット誘導はなし＝この特典自体がオープンチャット経由配布のため） | [x] |
@@ -60,6 +62,7 @@
 | K-004 | 40個セットの構成（正本JSON。番号・意味・説明。表情20／生活シーン10／単独アイコン3／ふきだし文字7） | [x] `assets/kit/prompts/40-emoji-set-plan.json` |
 | K-005 | グリッド画像一括処理パイプライン（切り出し・中央配置・背景透過・レビュー・ZIP作成） | [x] `assets/kit/scripts/emoji_pipeline.py`（APNG合成は撤去。review→pack --reviewの目視確認ゲート付き） |
 | K-006 | Codex用／ChatGPT用マスタープロンプト（キャラ候補A/B/C提案＋会話コマンド駆動） | [x] `assets/kit/prompts/{codex,chatgpt}-emoji-set-prompt.md` |
+| K-007 | スマホ完結用マスタープロンプト（40-emoji-set-plan.json・emoji_pipeline.pyの中身を埋め込み、ファイル添付を不要にしたもの） | [x] `assets/kit/prompts/chatgpt-smartphone-prompt.md` |
 
 > 2026-09-21追記: 配布ZIPを`prompts/`・`scripts/`のフォルダ分け構成から**フラット構成**に変更。
 > ユーザーが実機で解凍したところ2フォルダに分かれて見え、ページの「3ファイルを添付」という
@@ -83,4 +86,14 @@
 - [ ] スクリーンショット・完成例画像の準備（`#about`セクションは現状テキスト＋アイコンのみ。完成イメージ画像は未着手）
 - [x] `README.md`のプロジェクト固有情報への更新（`CLAUDE.md`は元から固有内容だったため対象外）
 - [x] GitHub Pages公開設定（main / root。https://mion-ai-mama.github.io/line-emoji-tokuten/ で公開確認済み）
-- [ ] スマホ完結ルート（ファイル添付不要・プロンプト1つで完結）の追加検討（ユーザー要望・未着手）
+- [x] スマホ完結ルート（ファイル添付不要・プロンプト1つで完結）を追加。`40-emoji-set-plan.json`と
+  `emoji_pipeline.py`の中身をプロンプト本文に埋め込み、Playwrightなしでもclaude-in-chromeで
+  ローカル確認済み（コピー機能・埋め込みJSON/Pythonの構文・no_semantic_duplicate等のcheckが
+  正しく動作。`<`/`>`を含むPythonコードをHTMLの`<pre>`にそのまま埋め込んでも破綻しないことを
+  実機で確認）
+- [x] 「40個そろったら」セクションを追加（申請前に自分の目で見比べる／番号＋修正内容を指定する使い方の案内）
+- [x] バグ修正: `#smartphone-prompt-text`にスクロール制限CSS（`max-height`/`overflow-y`）が
+  漏れており、埋め込みコード480行分がそのままセクションの高さになって13,377pxに達し、
+  スクロール演出（IntersectionObserver, threshold 0.15）が永久に発火しない
+  ＝セクション全体が非表示になる不具合が発生していた。`style.css`の該当セレクタに
+  `#smartphone-prompt-text`を追加して解消（claude-in-chromeで実機確認済み）

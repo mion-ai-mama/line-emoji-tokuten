@@ -128,12 +128,20 @@ python3 -m http.server 8000
 | `prompts/40-emoji-set-plan.json` | 40個セットの構成の正本（番号・意味・説明。表情20／生活シーン10／単独アイコン3／ふきだし文字7） |
 | `prompts/codex-emoji-set-prompt.md` | Codexへの指示文（`index.html`の「Codexで作る」と同内容） |
 | `prompts/chatgpt-emoji-set-prompt.md` | ChatGPTへの指示文（`index.html`の「ChatGPTだけで作る」と同内容） |
+| `prompts/chatgpt-smartphone-prompt.md` | スマホ完結ルート用の指示文（`40-emoji-set-plan.json`と`emoji_pipeline.py`の中身を埋め込み済み。ファイル添付が一切不要。`index.html`の「パソコンがない人はこちら」と同内容） |
 | `scripts/emoji_pipeline.py` | グリッド画像の切り出し・中央配置・背景透過・レビュー・ZIP作成を一括実行 |
 | `scripts/add_text_overlay.py` | Pillowでフレームに文字を合成する任意ツール（今回の40個セットでは未使用。文字入れをしたい場合に利用） |
 
 **`prompts/`配下の内容を変更した場合は、`index.html`内の対応箇所（マスタープロンプトの`<pre>`）も
 忘れずに書き換えてください**（キットとページ本文は別ファイルとして重複管理しているため、
 片方だけ更新すると内容がズレます）。
+
+**`40-emoji-set-plan.json` / `emoji_pipeline.py`の中身を変更した場合は、
+`prompts/chatgpt-smartphone-prompt.md`に埋め込んだコピー、および`index.html`の
+「パソコンがない人はこちら」セクションに埋め込んだコピーも書き換えてください**
+（スマホ完結ルートはファイル添付をなくすため、この2ファイルの中身をプロンプト本文に
+そのまま埋め込んでいる。正本は`prompts/40-emoji-set-plan.json`と`scripts/emoji_pipeline.py`で、
+埋め込みコピーは常にこの2つと一致させる）。
 
 どちらのZIPも**フォルダ分けせず1階層に展開**する構成です（`-j`でサブフォルダを潰して固める）。
 

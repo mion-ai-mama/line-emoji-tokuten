@@ -435,7 +435,8 @@ button:focus-visible {
 }
 
 #codex-prompt-text,
-#chatgpt-prompt-text {
+#chatgpt-prompt-text,
+#smartphone-prompt-text {
   max-height: 22rem;
   overflow-y: auto;
   font-size: 0.82rem;

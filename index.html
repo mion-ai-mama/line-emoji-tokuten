@@ -57,6 +57,8 @@
         <li><a href="#prepare">準備するもの</a></li>
         <li><a href="#codex">Codexで作る</a></li>
         <li><a href="#chatgpt">ChatGPTだけで作る</a></li>
+        <li><a href="#smartphone">パソコンがない人はこちら</a></li>
+        <li><a href="#review">40個そろったら</a></li>
         <li><a href="#apply">LINEへの申請方法</a></li>
         <li><a href="#trouble">うまくいかないとき</a></li>
         <li><a href="#info">参考情報・免責事項</a></li>
@@ -122,6 +124,11 @@
           <h3 class="route-card__title">ChatGPTだけの人</h3>
           <p class="route-card__desc">ChatGPTの「コード実行」機能を使い、同じ流れを1つのチャットの中だけで完結させます。</p>
           <a class="btn btn--outline" href="#chatgpt">ChatGPTルートへ進む</a>
+        </div>
+        <div class="route-card">
+          <h3 class="route-card__title">パソコンがない人</h3>
+          <p class="route-card__desc">スマホのChatGPTアプリだけで完結します。ファイルのダウンロード・添付は一切不要です。</p>
+          <a class="btn btn--outline" href="#smartphone">スマホ完結ルートへ進む</a>
         </div>
       </div>
 
@@ -235,9 +242,11 @@
   4) python emoji_pipeline.py pack --plan 40-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip --review output/review/checklist_TO_FILL.json
   （packはchecklistにfalse・未記入があるとエラーで停止しZIPを作らない。エラーの番号は
   「00X修正」で再生成し3〜4をやり直す。最大2回。直らなければ番号を挙げて案内する）
-- 「029だけ修正」→ 指定番号だけをマスター画像を参照して単独で再生成し、output/029.pngを
-  上書きする（40個全体は作り直さない）。番号を複数指定された場合も1個ずつ個別再生成する。
-  再生成した番号はchecklistのその行をnullに戻す
+- 「029だけ修正」「015をもっと怒らせて」→ 指定番号だけをマスター画像を参照して単独で
+  再生成し、output/029.pngを上書きする（40個全体は作り直さない）。番号を複数指定された
+  場合も1個ずつ個別再生成する。「もっと怒らせて」等の修正内容が添えられていれば実際に
+  反映し、40-emoji-set-plan.jsonのdescriptionにも書き加えて引き継ぐ。再生成した番号は
+  checklistのその行をnullに戻す
 - 「zip更新」→ 直近で再生成した番号だけを反映してZIPを作り直す
 
 生成が途中で止まってしまった場合、ユーザーから「続けて」と送られたら続きから再開する
@@ -356,9 +365,11 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
   4) python emoji_pipeline.py pack --plan 40-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip --review output/review/checklist_TO_FILL.json
   （packはchecklistにfalse・未記入があるとエラーで停止しZIPを作らない。エラーの番号は
   「00X修正」で再生成し3〜4をやり直す。最大2回。直らなければ番号を挙げて案内する）
-- 「029だけ修正」→ 指定番号だけをマスター画像を参照して単独で再生成し、output/029.pngを
-  上書きする（40個全体は作り直さない）。番号を複数指定された場合も1個ずつ個別再生成する。
-  再生成した番号はchecklistのその行をnullに戻す
+- 「029だけ修正」「015をもっと怒らせて」→ 指定番号だけをマスター画像を参照して単独で
+  再生成し、output/029.pngを上書きする（40個全体は作り直さない）。番号を複数指定された
+  場合も1個ずつ個別再生成する。「もっと怒らせて」等の修正内容が添えられていれば実際に
+  反映し、40-emoji-set-plan.jsonのdescriptionにも書き加えて引き継ぐ。再生成した番号は
+  checklistのその行をnullに戻す
 - 「zip更新」→ 直近で再生成した番号だけを反映してZIPを作り直す
 
 生成が途中で止まってしまった場合、ユーザーから「続けて」と送られたら続きから再開する
@@ -381,6 +392,442 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
       <p class="kit-extra-link">
         <a href="assets/kit/line-emoji-kit.zip" download>プロンプトの控え等を含む完全版はこちら（任意）</a>
       </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       パソコンがない人（スマホ完結）
+  ============================================================ -->
+  <section class="section section--soft" id="smartphone" aria-labelledby="smartphone-heading">
+    <div class="section__inner reveal">
+      <h2 class="section__heading" id="smartphone-heading">パソコンがない人はこちら</h2>
+      <p class="section__desc">
+        ここまでの手順は、ZIPのダウンロード・解凍・ファイルの添付など、パソコンでの操作を
+        前提にしています。パソコンがない人のために、<strong>ファイルの添付が一切不要な専用プロンプト</strong>
+        を用意しました。スマホでChatGPTのアプリを開いて、下のボタンでコピーして貼るだけで始まります。
+      </p>
+
+      <div class="note-box">
+        <p class="note-box__label">必要な環境</p>
+        <p>この方法は、ChatGPTで「コード実行（Data Analysis／Code Interpreter）」が使えるプラン・環境が必要です。</p>
+      </div>
+
+      <div class="prose">
+        <ol class="numbered-steps">
+          <li>スマホでChatGPTのアプリを開き、新しいチャットを開く</li>
+          <li>下のプロンプトを全文コピーして、そのまま最初のメッセージとして送る（ファイルの添付は不要）</li>
+          <li>ChatGPTが提案するキャラ候補A/B/Cから選ぶ（または自分の画像を送る）</li>
+          <li>「マスター画像生成」と送る（キャラの基準画像ができます）</li>
+          <li>できあがったら、続けて「40個生成」と送る（40個を1枚にまとめて生成します）</li>
+          <li>できあがったら、続けて「zip」と送る（見分けの確認をしてからZIPが完成します）</li>
+          <li>気になる番号があれば「029だけ修正」と送る（直ったら「zip更新」と送る）</li>
+        </ol>
+      </div>
+
+      <div class="note-box">
+        <p class="note-box__label">途中で止まってしまったら</p>
+        <p>生成の返事が来ないまま止まってしまったり、区切りのいいところで止まってしまったりしても、壊れたわけではありません。「続けて」とだけ送れば、続きから再開できます。</p>
+      </div>
+
+      <div class="prompt-box">
+        <pre class="prompt-box__text" id="smartphone-prompt-text"># スマホだけで作る（ChatGPTアプリ用・ファイルの添付は不要）
+
+## 事前準備
+
+1. スマホでChatGPTのアプリを開き、新しいチャットを開く
+2. 下の指示文を全文コピーして、そのまま最初のメッセージとして送るだけ
+   （ファイルのダウンロード・解凍・添付は一切不要です。必要な中身はすべてこの指示文の中に入っています）
+
+※ この方法は、ChatGPTで「コード実行（Data Analysis／Code Interpreter）」が使えるプラン・環境が必要です。
+
+---
+
+あなたはこの会話内で、LINE静止絵文字セット（40個）の制作を最後まで実行する担当です。
+
+説明だけで終わらず、必要な場面では実際に画像生成・コード実行を行い、
+最終的にダウンロード可能なZIPファイル（line-emoji-set.zip）まで完成させてください。
+
+別チャットへの移動や、長いプロンプトの再入力をユーザーに求めないでください。
+
+## 最初にやること：作業ファイルの準備
+
+ユーザーはファイルを添付していません。まず、以下の2つの内容を、書かれているファイル名の
+まま一字一句そのままコード実行環境に保存してください（内容を書き換えたり要約したりしない）。
+
+40-emoji-set-plan.json として保存する内容：
+
+```json
+{
+  "canvas": { "width": 180, "height": 180 },
+  "grid_layout": "8行×5列の1枚画像（40個・静止画）",
+  "grid_rows": 8,
+  "grid_cols": 5,
+  "distinctness_note": "40個は4つのグループ（表情20・生活シーン10・単独アイコン3・ふきだし文字7）に分かれており、グループが違うだけでも見た目は大きく異なる。同じグループ内で特に紛らわしいペアに注意する：002（合掌して前傾＝ありがとう）と030（両手を合わせて拝む＝お願い、こちらは眉を下げた困り顔・少し前かがみでねだる表情にする）／009（両足は地面につけたまま両手だけ上げる＝うれしい）と028（両手両足を広げて跳ねる＝ジャンプ、こちらは足が地面から離れている）／004（前かがみで片手を膝に置いて大笑い）と013（腕組みでほっぺを膨らませて怒る、手の位置が全く違う）。各項目は表情・手の位置・小物のうち複数を変えて他と重ならないようにする。",
+  "items": [
+    { "number": "001", "category": "expression", "meaning": "こんにちは", "description": "片手を顔の横で左右に振る。もう片方の手は体の横。にっこり笑顔。" },
+    { "number": "002", "category": "expression", "meaning": "ありがとう", "description": "両手のひらを胸の前で合わせ（合掌）、上半身を軽く前に倒す。おだやかな笑顔。" },
+    { "number": "003", "category": "expression", "meaning": "OK・了解", "description": "片手でOKサイン（親指と人差し指で輪を作る）を頬の高さに。もう片方の手は腰。自信ありげな笑顔。" },
+    { "number": "004", "category": "expression", "meaning": "大笑い", "description": "上半身を前にかがめ、片手を軽く膝に置く。口を大きく開けて大笑い。" },
+    { "number": "005", "category": "expression", "meaning": "ごめんね", "description": "両手を体の横に力なく下げ、肩を落として頭を下げる。困り眉。" },
+    { "number": "006", "category": "expression", "meaning": "がんばる", "description": "片手をこぶしにして頭より高く突き上げる。もう片方の手は腰。決意の表情。" },
+    { "number": "007", "category": "expression", "meaning": "おやすみ", "description": "片方の頬に両手を添えて首を軽くかしげる。目を閉じて眠そう。" },
+    { "number": "008", "category": "expression", "meaning": "びっくり", "description": "両手を顔の横でパッと開く。目を大きく見開く。" },
+    { "number": "009", "category": "expression", "meaning": "うれしい", "description": "両足は地面につけたまま、両手を頭の上に上げる。満面の笑顔。" },
+    { "number": "010", "category": "expression", "meaning": "泣き笑い", "description": "目に涙をためながら口は笑顔。片手で目元を拭う。" },
+    { "number": "011", "category": "expression", "meaning": "照れる", "description": "両手を両頬に当てて赤面。もじもじした表情。" },
+    { "number": "012", "category": "expression", "meaning": "悲しい", "description": "両手を目に当てて泣く。肩を落として下を向く。" },
+    { "number": "013", "category": "expression", "meaning": "怒る", "description": "腕を組み、頬をふくらませてプンプンした表情。" },
+    { "number": "014", "category": "expression", "meaning": "考え中", "description": "片手を顎に当てて斜め上を見る。考え込む表情。" },
+    { "number": "015", "category": "expression", "meaning": "ひらめいた", "description": "片手の人差し指を立てて頭の上に。目を輝かせる。頭上に軽い光の演出。" },
+    { "number": "016", "category": "expression", "meaning": "眠い", "description": "半目で、片手を口に当ててあくび。" },
+    { "number": "017", "category": "expression", "meaning": "拍手", "description": "両手を顔の横で合わせてパチパチと拍手。目を細めた笑顔。" },
+    { "number": "018", "category": "expression", "meaning": "ハートを送る", "description": "両手で小さなハートの形を作り、体の前に出す。" },
+    { "number": "019", "category": "expression", "meaning": "ため息", "description": "肩を落とし、片手で額を軽く押さえる。疲れた表情。" },
+    { "number": "020", "category": "expression", "meaning": "ウインク", "description": "片目を閉じ、もう片方の手で小さくピースサイン。" },
+    { "number": "021", "category": "pose", "meaning": "スマホを見る", "description": "スマホを両手で持ち、画面をのぞき込む。" },
+    { "number": "022", "category": "pose", "meaning": "パソコン作業", "description": "ノートパソコンに向かって両手でキーボードを打つ。" },
+    { "number": "023", "category": "pose", "meaning": "コーヒーブレイク", "description": "マグカップを両手で持ち、湯気とともに一息つく。" },
+    { "number": "024", "category": "pose", "meaning": "読書中", "description": "本を両手で開いて読む。落ち着いた表情。" },
+    { "number": "025", "category": "pose", "meaning": "きちんとお辞儀", "description": "直立の姿勢から、腰を折ってしっかり深くお辞儀する。002より深く丁寧な角度。" },
+    { "number": "026", "category": "pose", "meaning": "急いでいる", "description": "前傾姿勢で片足を大きく上げ、走っている途中の動き。" },
+    { "number": "027", "category": "pose", "meaning": "ごろ寝", "description": "横向きに寝転がり、頭の下に両手を重ねる。" },
+    { "number": "028", "category": "pose", "meaning": "ジャンプで喜ぶ", "description": "両手両足を大きく広げ、足が地面から離れた瞬間のジャンプ。" },
+    { "number": "029", "category": "pose", "meaning": "首をかしげる", "description": "片手を頭の横に当てて首を傾ける。頭上に小さな「？」マーク。" },
+    { "number": "030", "category": "pose", "meaning": "お願い", "description": "両手を胸の前で強く合わせ、少し前かがみでねだる。眉を下げた困り顔。" },
+    { "number": "031", "category": "icon", "meaning": "ハートマーク", "description": "キャラクターは出さず、大きなハートのアイコンのみを中央に描く。" },
+    { "number": "032", "category": "icon", "meaning": "星マーク", "description": "キャラクターは出さず、大きな星のアイコンのみを中央に描く。" },
+    { "number": "033", "category": "icon", "meaning": "チェックマーク", "description": "キャラクターは出さず、大きなチェック（レ点）のアイコンのみを中央に描く。" },
+    { "number": "034", "category": "phrase", "meaning": "ありがとう", "description": "丸みのある吹き出しの中に「ありがとう」の文字。吹き出しは淡い色、文字ははっきり読める濃い色。" },
+    { "number": "035", "category": "phrase", "meaning": "おつかれさま", "description": "丸みのある吹き出しの中に「おつかれさま」の文字。" },
+    { "number": "036", "category": "phrase", "meaning": "OK！", "description": "丸みのある吹き出しの中に「OK！」の文字。" },
+    { "number": "037", "category": "phrase", "meaning": "よろしくね", "description": "丸みのある吹き出しの中に「よろしくね」の文字。" },
+    { "number": "038", "category": "phrase", "meaning": "ごめんね", "description": "丸みのある吹き出しの中に「ごめんね」の文字。" },
+    { "number": "039", "category": "phrase", "meaning": "またね", "description": "丸みのある吹き出しの中に「またね」の文字。" },
+    { "number": "040", "category": "phrase", "meaning": "おやすみ", "description": "丸みのある吹き出しの中に「おやすみ」の文字。" }
+  ],
+  "tab_source": "001"
+}
+```
+
+emoji_pipeline.py として保存する内容：
+
+```python
+#!/usr/bin/env python3
+"""LINE静止絵文字セット（40個）を、1枚のグリッド画像から一括処理するパイプライン。"""
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import zipfile
+from pathlib import Path
+
+from PIL import Image
+
+CANVAS_SIZE = (180, 180)
+USABLE_SIZE = 152
+BG_COLOR_TOLERANCE = 18
+MAX_ZIP_SIZE_BYTES = 20 * 1024 * 1024
+MAX_FILE_SIZE_BYTES = 1024 * 1024
+TAB_SIZE = (96, 74)
+REVIEW_CHECK_NAMES = (
+    "meaning_matches",
+    "no_semantic_duplicate",
+    "no_clipping_or_cropping",
+    "readable",
+    "background_transparent",
+)
+
+
+def load_plan(plan_path: Path) -> dict:
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    expected = plan["grid_rows"] * plan["grid_cols"]
+    if len(plan["items"]) != expected:
+        raise SystemExit(
+            f"itemsの数（{len(plan['items'])}）がgrid_rows×grid_cols（{expected}）と一致しません。"
+        )
+    return plan
+
+
+def remove_near_background(image: Image.Image, bg_color=(255, 255, 255)) -> Image.Image:
+    image = image.convert("RGBA")
+    pixels = list(image.getdata())
+    has_alpha_variance = any(p[3] < 250 for p in pixels)
+    if has_alpha_variance:
+        return image
+    new_pixels = [
+        (r, g, b, 0)
+        if abs(r - bg_color[0]) <= BG_COLOR_TOLERANCE
+        and abs(g - bg_color[1]) <= BG_COLOR_TOLERANCE
+        and abs(b - bg_color[2]) <= BG_COLOR_TOLERANCE
+        else (r, g, b, a)
+        for r, g, b, a in pixels
+    ]
+    image.putdata(new_pixels)
+    return image
+
+
+def crop_to_content(image: Image.Image) -> Image.Image:
+    bbox = image.getbbox()
+    return image.crop(bbox) if bbox else image
+
+
+def center_on_canvas(image: Image.Image) -> Image.Image:
+    image.thumbnail((USABLE_SIZE, USABLE_SIZE), Image.LANCZOS)
+    canvas = Image.new("RGBA", CANVAS_SIZE, (0, 0, 0, 0))
+    x = (CANVAS_SIZE[0] - image.width) // 2
+    y = (CANVAS_SIZE[1] - image.height) // 2
+    canvas.paste(image, (x, y), image)
+    return canvas
+
+
+def slice_grid(grid_path: Path, plan: dict, out_dir: Path) -> None:
+    grid = Image.open(grid_path).convert("RGBA")
+    items = plan["items"]
+    cols = plan["grid_cols"]
+    rows = plan["grid_rows"]
+    cell_w = grid.width / cols
+    cell_h = grid.height / rows
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for index, item in enumerate(items):
+        row, col = divmod(index, cols)
+        box = (
+            round(col * cell_w),
+            round(row * cell_h),
+            round((col + 1) * cell_w),
+            round((row + 1) * cell_h),
+        )
+        cell = grid.crop(box)
+        cell = remove_near_background(cell)
+        cell = crop_to_content(cell)
+        cell = center_on_canvas(cell)
+        output_path = out_dir / f"{item['number']}.png"
+        cell.save(output_path)
+        size = output_path.stat().st_size
+        if size > MAX_FILE_SIZE_BYTES:
+            raise SystemExit(
+                f"{item['number']}.pngが上限を超えています: {size / 1024:.1f}KB"
+                f"（上限 {MAX_FILE_SIZE_BYTES / 1024:.0f}KB。色数を減らして再生成してください）"
+            )
+    print(f"✅ 切り出し完了: {rows}行×{cols}列 → {len(items)}個 → {out_dir}")
+
+
+def make_tab(source_path: Path, out_path: Path) -> None:
+    image = Image.open(source_path).convert("RGBA")
+    content = crop_to_content(image) or image
+    scale = min(TAB_SIZE[0] / content.width, TAB_SIZE[1] / content.height)
+    resized = content.resize((max(1, round(content.width * scale)), max(1, round(content.height * scale))), Image.LANCZOS)
+    canvas = Image.new("RGBA", TAB_SIZE, (0, 0, 0, 0))
+    x = (TAB_SIZE[0] - resized.width) // 2
+    y = (TAB_SIZE[1] - resized.height) // 2
+    canvas.paste(resized, (x, y), resized)
+    canvas.save(out_path)
+    print(f"✅ タブ画像を作成: {out_path}")
+
+
+def make_review(plan: dict, out_dir: Path) -> None:
+    review_dir = out_dir / "review"
+    review_dir.mkdir(parents=True, exist_ok=True)
+    checklist = {"items": []}
+    for item in plan["items"]:
+        source_path = out_dir / f"{item['number']}.png"
+        if not source_path.exists():
+            raise SystemExit(f"レビュー画像を作れません。先にsliceを実行してください: {item['number']}")
+        Image.open(source_path).convert("RGBA").save(review_dir / f"{item['number']}.png")
+        checklist["items"].append(
+            {
+                "number": item["number"],
+                "meaning": item["meaning"],
+                "description": item["description"],
+                "checks": {name: None for name in REVIEW_CHECK_NAMES},
+                "observation": "",
+            }
+        )
+    checklist_path = review_dir / "checklist_TO_FILL.json"
+    checklist_path.write_text(json.dumps(checklist, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"✅ レビュー用画像とチェックリスト雛形を作成: {review_dir}")
+
+
+def load_checklist(checklist_path: Path, plan: dict) -> dict:
+    checklist = json.loads(checklist_path.read_text(encoding="utf-8"))
+    by_number = {it["number"]: it for it in checklist.get("items", [])}
+    plan_numbers = [item["number"] for item in plan["items"]]
+    missing = [n for n in plan_numbers if n not in by_number]
+    if missing:
+        raise SystemExit(f"チェックリストに番号が足りません: {missing}")
+    failed = []
+    for number in plan_numbers:
+        entry = by_number[number]
+        checks = entry.get("checks", {})
+        for name in REVIEW_CHECK_NAMES:
+            if checks.get(name) is not True:
+                failed.append(f"{number}: {name} が true になっていません（現在: {checks.get(name)!r}）")
+        if not entry.get("observation", "").strip():
+            failed.append(f"{number}: observationが空です（実際に見た内容を書くこと）")
+    if failed:
+        raise SystemExit(
+            "チェックリストが未完了、または不一致が見つかりました。ZIPを作成できません:\n"
+            + "\n".join(f"  - {f}" for f in failed)
+        )
+    return checklist
+
+
+def pack(plan: dict, out_dir: Path, zip_path: Path, review_path: Path) -> None:
+    load_checklist(review_path, plan)
+    files = [out_dir / f"{item['number']}.png" for item in plan["items"]]
+    files.append(out_dir / "tab.png")
+    missing = [f for f in files if not f.exists()]
+    if missing:
+        raise SystemExit(f"ZIPに入れるファイルが見つかりません: {missing}")
+    zip_path.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+        for f in files:
+            zf.write(f, arcname=f.name)
+    size = zip_path.stat().st_size
+    if size > MAX_ZIP_SIZE_BYTES:
+        raise SystemExit(f"ZIPが上限を超えています: {size / 1024 / 1024:.1f}MB（上限 20MB）")
+    print(f"✅ ZIP作成完了: {zip_path}（{size / 1024:.0f}KB）")
+
+
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p_slice = sub.add_parser("slice")
+    p_slice.add_argument("--grid", type=Path, required=True)
+    p_slice.add_argument("--plan", type=Path, required=True)
+    p_slice.add_argument("--out-dir", type=Path, required=True)
+
+    p_tab = sub.add_parser("tab")
+    p_tab.add_argument("--source", type=Path, required=True)
+    p_tab.add_argument("--out", type=Path, required=True)
+
+    p_review = sub.add_parser("review")
+    p_review.add_argument("--plan", type=Path, required=True)
+    p_review.add_argument("--out-dir", type=Path, required=True)
+
+    p_pack = sub.add_parser("pack")
+    p_pack.add_argument("--plan", type=Path, required=True)
+    p_pack.add_argument("--out-dir", type=Path, required=True)
+    p_pack.add_argument("--zip", type=Path, required=True)
+    p_pack.add_argument("--review", type=Path, required=True)
+
+    p_all = sub.add_parser("all")
+    p_all.add_argument("--grid", type=Path, required=True)
+    p_all.add_argument("--plan", type=Path, required=True)
+    p_all.add_argument("--out-dir", type=Path, required=True)
+
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str]) -> int:
+    args = parse_args(argv)
+    if args.command == "slice":
+        slice_grid(args.grid, load_plan(args.plan), args.out_dir)
+    elif args.command == "tab":
+        make_tab(args.source, args.out)
+    elif args.command == "review":
+        make_review(load_plan(args.plan), args.out_dir)
+    elif args.command == "pack":
+        pack(load_plan(args.plan), args.out_dir, args.zip, args.review)
+    elif args.command == "all":
+        plan = load_plan(args.plan)
+        slice_grid(args.grid, plan, args.out_dir)
+        make_tab(args.out_dir / f"{plan['items'][0]['number']}.png", args.out_dir / "tab.png")
+        make_review(plan, args.out_dir)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
+```
+
+保存できたら、次の仕様・進め方に沿って制作を進めてください。
+
+## 仕様（LINE公式・静止絵文字）
+
+- キャンバスサイズ：180×180px固定
+- ファイル形式：PNG（静止画。アニメーションではない）
+- ファイルサイズ：1個あたり1MB以下
+- 背景：透過必須
+- セット内の個数：40個（今回の構成）
+- トークルームタブ画像：96×74pxを1個
+
+## 最重要：新規制作の最初の応答
+
+まだキャラクターが決まっていない場合は、手順説明だけを返してはいけません。
+最初の応答で、すぐにキャラクター候補A/B/Cを3案提案してください
+（「動物」「丸顔・絵文字風」「人物・ちびキャラ」の3系統で、種類・輪郭・体型・主色・線色・性格まで具体的に）。
+
+ユーザーが「別の」と言った場合は新しい3案を、A/B/Cを選んだ場合はそのキャラクターを
+以後ずっと固定して使ってください。自分の画像が送られた場合はそれを最優先します。
+
+## 毎ターン操作を判定
+
+- 「マスター画像生成」→ 採用済みキャラクターの基準画像を1枚、実際に生成し、以後の参照として固定する
+- 「40個生成」→ 40-emoji-set-plan.jsonのitems（40個）に沿って、キャラの見た目を保ったまま
+  1枚の画像（8行×5列）として生成し、grid.pngに保存する。031〜033はキャラを出さずアイコンのみ、
+  034〜040は吹き出し＋文字のみにする。distinctness_noteを参照し、紛らわしいペアを混同しない。
+  時間がかかっても40個描き終えるまで応答を止めない（初心者は途中で止まると「できない」と
+  誤解してやめてしまうため）。本当に続行できない技術的理由がある場合のみ途中で止めて理由を伝える
+- 「zip」→ 画像生成機能は使わず、次を順に実際に実行する。
+  1) python emoji_pipeline.py slice --grid grid.png --plan 40-emoji-set-plan.json --out-dir output
+  2) python emoji_pipeline.py tab --source output/001.png --out output/tab.png
+  3) python emoji_pipeline.py review --plan 40-emoji-set-plan.json --out-dir output
+  （output/review/001.png〜040.pngができる。これを実際に見て、checklist_TO_FILL.jsonの
+  checks（meaning_matches / no_semantic_duplicate等）を正直にtrue/falseで埋め、
+  observationに見た内容を書く。省略・虚偽記入は禁止）
+  4) python emoji_pipeline.py pack --plan 40-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip --review output/review/checklist_TO_FILL.json
+  （packはchecklistにfalse・未記入があるとエラーで停止しZIPを作らない。エラーの番号は
+  「00X修正」で再生成し3〜4をやり直す。最大2回。直らなければ番号を挙げて案内する）
+- 「029だけ修正」「015をもっと怒らせて」→ 指定番号だけをマスター画像を参照して単独で
+  再生成し、output/029.pngを上書きする（40個全体は作り直さない）。番号を複数指定された
+  場合も1個ずつ個別再生成する。「もっと怒らせて」等の修正内容が添えられていれば実際に
+  反映し、40-emoji-set-plan.jsonのdescriptionにも書き加えて引き継ぐ。再生成した番号は
+  checklistのその行をnullに戻す
+- 「zip更新」→ 直近で再生成した番号だけを反映してZIPを作り直す
+
+生成が途中で止まってしまった場合、ユーザーから「続けて」と送られたら続きから再開する
+（最初からやり直さない）。
+
+相手はプログラミングをしない読者です。ファイル名・コード上の変数名・エラー文の原文
+（emoji_pipeline.py、grid.png、no_semantic_duplicate、ModuleNotFoundError等）を
+そのまま出さず、日常の言葉に言い換えてください。各応答の最後に「現在／今回できたこと／次の操作」を
+平易な言葉で短く示し、未実行の処理を完成と書かないでください。
+LINEへのアップロードや審査申請はユーザーが行います。実行したと装わないでください。</pre>
+        <button type="button" class="btn btn--primary copy-btn" data-copy-target="smartphone-prompt-text" aria-label="スマホ用の指示文をコピーする">
+          <span class="copy-btn__label">この指示文をコピーする</span>
+          <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       40個そろったら
+  ============================================================ -->
+  <section class="section" id="review" aria-labelledby="review-heading">
+    <div class="section__inner reveal">
+      <h2 class="section__heading" id="review-heading">40個そろったら</h2>
+      <p class="section__desc">
+        ZIPが完成しても、そこで終わりにせず、申請前に一度は自分の目で40個を見比べてみましょう。
+        AIのレビューだけに任せきりにしないことで、仕上がりへの安心感も上がります。
+      </p>
+      <div class="prose">
+        <ol class="numbered-steps">
+          <li>
+            <strong>全体をひととおり見る</strong><br>
+            40個を並べて、キャラクターの形・色がそろっているか、同じような表情ばかりになって
+            いないかを確認します。気になるものがあれば、「029だけ修正」「015をもっと怒らせて」
+            のように<strong>番号＋直したい内容</strong>を伝えると、ピンポイントで直してもらえます。
+          </li>
+          <li>
+            <strong>LINEの仕様を満たしているか確認する</strong><br>
+            キャンバスサイズ・ファイルサイズ・背景の透過などは<code>emoji_pipeline.py</code>が
+            自動でチェックしていますが、下の「LINEへの申請方法」の一覧と見比べておくと安心です。
+          </li>
+        </ol>
+      </div>
     </div>
   </section>
 

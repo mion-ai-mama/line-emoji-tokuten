@@ -56,8 +56,7 @@
         <li><a href="#about">LINE絵文字って何？</a></li>
         <li><a href="#prepare">準備するもの</a></li>
         <li><a href="#codex">Codexで作る</a></li>
-        <li><a href="#chatgpt">ChatGPTだけで作る</a></li>
-        <li><a href="#smartphone">パソコンがない人はこちら</a></li>
+        <li><a href="#smartphone">パソコンがない人はこちら（ChatGPT）</a></li>
         <li><a href="#review">40個そろったら</a></li>
         <li><a href="#apply">LINEへの申請方法</a></li>
         <li><a href="#trouble">うまくいかないとき</a></li>
@@ -123,13 +122,8 @@
         </div>
         <div class="route-card">
           <h3 class="route-card__title">ChatGPTだけの人</h3>
-          <p class="route-card__desc">ChatGPTの「コード実行」機能を使い、同じ流れを1つのチャットの中だけで完結させます。</p>
-          <a class="btn btn--outline" href="#chatgpt">ChatGPTルートへ進む</a>
-        </div>
-        <div class="route-card">
-          <h3 class="route-card__title">パソコンがない人</h3>
-          <p class="route-card__desc">スマホのChatGPTアプリだけで完結します。ファイルのダウンロード・添付は一切不要です。</p>
-          <a class="btn btn--outline" href="#smartphone">スマホ完結ルートへ進む</a>
+          <p class="route-card__desc">ファイルのダウンロード・添付は一切不要。ChatGPTアプリだけで完結します（パソコンでもスマホでもOK）。</p>
+          <a class="btn btn--outline" href="#smartphone">ChatGPTルートへ進む</a>
         </div>
       </div>
 
@@ -274,142 +268,19 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
   </section>
 
   <!-- ============================================================
-       ChatGPTのみルート
-  ============================================================ -->
-  <section class="section" id="chatgpt" aria-labelledby="chatgpt-heading">
-    <div class="section__inner reveal">
-      <h2 class="section__heading" id="chatgpt-heading">ChatGPTだけで作る</h2>
-      <p class="section__desc">
-        ChatGPTの「コード実行」機能を使い、キャラ提案からZIP作成までを1つのチャットで完結させます。
-      </p>
-
-      <div class="note-box">
-        <p class="note-box__label">必要な環境</p>
-        <p>この方法は、ChatGPTで「コード実行（Data Analysis／Code Interpreter）」が使えるプラン・環境が必要です。使えない場合は「Codexで作る」をご利用ください。</p>
-      </div>
-
-      <div class="prose">
-        <ol class="numbered-steps">
-          <li>下の「必要な2ファイルをダウンロード」からZIPを取得して解凍する</li>
-          <li>ChatGPTで新規チャットを開き、解凍した2ファイルすべてを添付する</li>
-          <li>下のプロンプトを全文コピーして、最初のメッセージとして送る</li>
-          <li>ChatGPTが提案するキャラ候補A/B/Cから選ぶ（または自分の画像を送る）</li>
-          <li>「マスター画像生成」と送る（キャラの基準画像ができます）</li>
-          <li>できあがったら、続けて「40個生成」と送る（40個を1枚にまとめて生成します）</li>
-          <li>できあがったら、続けて「zip」と送る（見分けの確認をしてからZIPが完成します）</li>
-          <li>気になる番号があれば「029だけ修正」と送る（直ったら「zip更新」と送る）</li>
-        </ol>
-      </div>
-
-      <div class="note-box">
-        <p class="note-box__label">途中で止まってしまったら</p>
-        <p>生成の返事が来ないまま止まってしまったり、区切りのいいところで止まってしまったりしても、壊れたわけではありません。「続けて」とだけ送れば、続きから再開できます。</p>
-      </div>
-
-      <div class="prompt-box">
-        <pre class="prompt-box__text" id="chatgpt-prompt-text"># ChatGPTへの指示文（新規チャットで、このまま全文貼り付け）
-
-## 事前準備
-
-1. ChatGPTで新しいチャットを開く
-2. 次の2ファイルをすべて添付する
-   - 40-emoji-set-plan.json
-   - emoji_pipeline.py
-3. 下の指示文を全文コピーして、最初のメッセージとして送る
-
----
-
-あなたはこの会話内で、LINE静止絵文字セット（40個）の制作を最後まで実行する担当です。
-
-説明だけで終わらず、必要な場面では実際に画像生成・コード実行を行い、
-最終的にダウンロード可能なZIPファイル（line-emoji-set.zip）まで完成させてください。
-別チャットへの移動や、長いプロンプトの再入力をユーザーに求めないでください。
-
-この会話に添付された以下のファイルを使用します。
-
-- 40-emoji-set-plan.json（40個の構成の正本。番号・意味・説明はここから読む）
-- emoji_pipeline.py（グリッド画像の切り出し・レビュー・ZIP作成はこの実装を優先する）
-
-## 仕様（LINE公式・静止絵文字）
-
-- キャンバスサイズ：180×180px固定
-- ファイル形式：PNG（静止画。アニメーションではない）
-- ファイルサイズ：1個あたり1MB以下
-- 背景：透過必須
-- セット内の個数：40個（今回の構成）
-- トークルームタブ画像：96×74pxを1個
-
-## 最重要：新規制作の最初の応答
-
-まだキャラクターが決まっていない場合は、手順説明だけを返してはいけません。
-最初の応答で、すぐにキャラクター候補A/B/Cを3案提案してください
-（「動物」「丸顔・絵文字風」「人物・ちびキャラ」の3系統で、種類・輪郭・体型・主色・線色・性格まで具体的に）。
-
-ユーザーが「別の」と言った場合は新しい3案を、A/B/Cを選んだ場合はそのキャラクターを
-以後ずっと固定して使ってください。自分の画像が送られた場合はそれを最優先します。
-
-## 毎ターン操作を判定
-
-- 「マスター画像生成」→ 採用済みキャラクターの基準画像を1枚、実際に生成し、以後の参照として固定する
-- 「40個生成」→ 40-emoji-set-plan.jsonのitems（40個）に沿って、キャラの見た目を保ったまま
-  1枚の画像（8行×5列）として生成し、grid.pngに保存する。031〜033はキャラを出さずアイコンのみ、
-  034〜040は吹き出し＋文字のみにする。distinctness_noteを参照し、紛らわしいペアを混同しない。
-  時間がかかっても40個描き終えるまで応答を止めない（初心者は途中で止まると「できない」と
-  誤解してやめてしまうため）。本当に続行できない技術的理由がある場合のみ途中で止めて理由を伝える
-- 「zip」→ 画像生成機能は使わず、次を順に実際に実行する。
-  1) python emoji_pipeline.py slice --grid grid.png --plan 40-emoji-set-plan.json --out-dir output
-  2) python emoji_pipeline.py tab --source output/001.png --out output/tab.png
-  3) python emoji_pipeline.py review --plan 40-emoji-set-plan.json --out-dir output
-  （output/review/001.png〜040.pngができる。これを実際に見て、checklist_TO_FILL.jsonの
-  checks（meaning_matches / no_semantic_duplicate等）を正直にtrue/falseで埋め、
-  observationに見た内容を書く。省略・虚偽記入は禁止）
-  4) python emoji_pipeline.py pack --plan 40-emoji-set-plan.json --out-dir output --zip output/line-emoji-set.zip --review output/review/checklist_TO_FILL.json
-  （packはchecklistにfalse・未記入があるとエラーで停止しZIPを作らない。エラーの番号は
-  「00X修正」で再生成し3〜4をやり直す。最大2回。直らなければ番号を挙げて案内する）
-- 「029だけ修正」「015をもっと怒らせて」→ 指定番号だけをマスター画像を参照して単独で
-  再生成し、output/029.pngを上書きする（40個全体は作り直さない）。番号を複数指定された
-  場合も1個ずつ個別再生成する。「もっと怒らせて」等の修正内容が添えられていれば実際に
-  反映し、40-emoji-set-plan.jsonのdescriptionにも書き加えて引き継ぐ。再生成した番号は
-  checklistのその行をnullに戻す
-- 「zip更新」→ 直近で再生成した番号だけを反映してZIPを作り直す
-
-生成が途中で止まってしまった場合、ユーザーから「続けて」と送られたら続きから再開する
-（最初からやり直さない）。
-
-相手はプログラミングをしない読者です。ファイル名・コード上の変数名・エラー文の原文
-（emoji_pipeline.py、grid.png、no_semantic_duplicate、ModuleNotFoundError等）を
-そのまま出さず、日常の言葉に言い換えてください。各応答の最後に「現在／今回できたこと／次の操作」を
-平易な言葉で短く示し、未実行の処理を完成と書かないでください。
-LINEへのアップロードや審査申請はユーザーが行います。実行したと装わないでください。</pre>
-        <button type="button" class="btn btn--primary copy-btn" data-copy-target="chatgpt-prompt-text" aria-label="ChatGPT用の指示文をコピーする">
-          <span class="copy-btn__label">この指示文をコピーする</span>
-          <span class="copy-btn__done" role="status" aria-live="polite">コピーしました</span>
-        </button>
-      </div>
-
-      <a class="btn btn--outline btn--large kit-download" href="assets/kit/core-files.zip" download>
-        必要な2ファイルをダウンロード（ZIP）
-      </a>
-      <p class="kit-extra-link">
-        <a href="assets/kit/line-emoji-kit.zip" download>プロンプトの控え等を含む完全版はこちら（任意）</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- ============================================================
        パソコンがない人（スマホ完結）
   ============================================================ -->
   <section class="section section--soft" id="smartphone" aria-labelledby="smartphone-heading">
     <div class="section__inner reveal">
       <h2 class="section__heading" id="smartphone-heading">パソコンがない人はこちら</h2>
       <p class="section__desc">
-        ここまでの手順は、ZIPのダウンロード・解凍・ファイルの添付など、パソコンでの操作を
-        前提にしています。パソコンがない人のために、<strong>ファイルの添付が一切不要な専用プロンプト</strong>
-        を用意しました。スマホでChatGPTのアプリを開いて、下のボタンでコピーして貼るだけで始まります。
+        Codexが使えなくても、ChatGPTだけでLINE絵文字40個セットが作れます。
+        ZIPのダウンロード・解凍・ファイルの添付は一切不要。
+        <strong>プロンプトをコピーして貼るだけ</strong>で始まります（パソコンでもスマホでもOK）。
       </p>
       <p class="section__desc">
-        できあがるのは、このページの他のルートと同じ<strong>動かない絵文字（静止画）</strong>です。
-        Codex・ChatGPT・スマホ、どのルートで作っても内容は同じ40個セットになります。
+        できあがるのは、Codexルートと同じ<strong>動かない絵文字（静止画）</strong>です。
+        どちらで作っても内容は同じ40個セットになります。
       </p>
 
       <div class="note-box">
@@ -419,7 +290,7 @@ LINEへのアップロードや審査申請はユーザーが行います。実�
 
       <div class="prose">
         <ol class="numbered-steps">
-          <li>スマホでChatGPTのアプリを開き、新しいチャットを開く</li>
+          <li>ChatGPTを開き、新しいチャットを開く（スマホアプリでもパソコンのブラウザでもOK）</li>
           <li>下のプロンプトを全文コピーして、そのまま最初のメッセージとして送る（ファイルの添付は不要）</li>
           <li>ChatGPTが提案するキャラ候補A/B/Cから選ぶ（または自分の画像を送る）</li>
           <li>「マスター画像生成」と送る（キャラの基準画像ができます）</li>

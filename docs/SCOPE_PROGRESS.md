@@ -1,5 +1,10 @@
 # 開発進捗：動くLINE絵文字の作り方 完全ガイド
 
+> 2026-09-22改訂（3回目）: 告知リールの台本が「Codexで動く絵文字」一本の訴求になったため、
+> ChatGPT＝静止絵文字ルート（`#smartphone`セクション、P-006、K-004/K-005/K-007）を
+> ページ・配布キットの両方から完全に削除し、Codex単一ルート構成にした（ユーザー判断）。
+> 詳細は`docs/requirements.md`の改訂日3参照。
+
 ## アーキ構成
 
 - 確定アーキ: #6 WEBアプリ（決定論）の最小形＝静的1ページサイト
@@ -36,15 +41,18 @@
 > ファイル添付不要版はパソコンでもスマホでも使え、ファイル添付版より手間が少ないため、
 > ファイル添付版を残す理由がないと判断（ユーザー指摘）。`#chatgpt`セクションは削除し、
 > 旧`#smartphone`のURLをそのまま「ChatGPTだけの人」ルートとして使う。
+>
+> 2026-09-22追記（3回目）: 告知リールがCodex単一訴求になったため、P-006（ChatGPTだけの人
+> ルート＝`#smartphone`セクション）を**削除**。P-004・P-005もCodex単一ルート前提の文言に修正。
 
 | ID | セクション | 状態 |
 |----|-----------|------|
 | P-001 | ファーストビュー | [x] |
 | P-002 | 目次 | [x] |
 | P-003 | できること | [x] |
-| P-004 | 準備するもの（Codex＝動く絵文字/ChatGPT＝静止絵文字の分岐・40個セット内容一覧） | [x] |
-| P-005 | Codexルート（動く絵文字。Codex入手ボタン＋パソコン必須の注記＋手順＋マスタープロンプト＋キットDLボタン3ファイル） | [x] |
-| P-006 | ChatGPTだけの人ルート（静止絵文字。=旧「パソコンがない人はこちら」。ファイル添付不要・プロンプト1つに全内容を埋め込み。パソコン・スマホ両対応） | [x] |
+| P-004 | 準備するもの（Codexに必要な準備の案内・40個セット内容一覧） | [x] |
+| P-005 | Codexで動く絵文字を作る（Codex入手ボタン＋パソコン必須の注記＋手順＋マスタープロンプト＋キットDLボタン3ファイル） | [x] |
+| P-006 | ~~ChatGPTだけの人ルート~~ | 削除済み（2026-09-22・3回目。理由は本ファイル冒頭の改訂note参照） |
 | P-006.6 | 40個そろったら（申請前の目視チェック手順・番号＋修正内容を指定する使い方の案内） | [x] |
 | P-007 | LINEへの申請方法 | [x] |
 | P-008 | うまくいかないとき（アコーディオン） | [x] |
@@ -66,18 +74,20 @@
 > 動く絵文字（APNG）であり、静止画はChatGPT向けの副次ルートに過ぎないと判明
 > （`docs/requirements.md` §2.2の追記参照）。**Codexルートを動く絵文字40個に作り直した**。
 > `build_apng.py`をPillow単体版として復元し、`emoji_pipeline_animated.py`（1個ずつ個別生成＋
-> APNG合成＋レビュー＋ZIP作成）を新設。ChatGPTルートは静止絵文字のまま維持。
+> APNG合成＋レビュー＋ZIP作成）を新設。この時点ではChatGPTルートは静止絵文字のまま維持していた。
 > 旧`core-files.zip`（ChatGPT用2ファイル・もう使われていない）を廃止し、`codex-kit.zip`
 > （Codex用3ファイル）を新設した。旧`chatgpt-emoji-set-prompt.md`（ファイル添付版・未使用）は削除。
+>
+> 2026-09-22改訂（大・3回目）: 告知リールがCodex単一訴求になったため、ChatGPT＝静止絵文字用の
+> K-004（`40-emoji-set-plan.json`）・K-005（`emoji_pipeline.py`）・K-007
+> （`chatgpt-smartphone-prompt.md`）を`git rm`で削除し、Codex単一ルート構成にした。
+> `line-emoji-kit.zip`もCodex用6ファイルのみで再圧縮済み。
 
 | ID | 内容 | 状態 |
 |----|------|------|
-| K-004 | 40個セットの構成・静止画版（正本JSON。番号・意味・説明。表情20／生活シーン10／単独アイコン3／ふきだし文字7） | [x] `assets/kit/prompts/40-emoji-set-plan.json`（ChatGPT用） |
 | K-004b | 40個セットの構成・動く絵文字版（正本JSON。番号・意味・動き・10フレーム・1秒ループ×3回） | [x] `assets/kit/prompts/40-emoji-animated-plan.json`（Codex用） |
-| K-005 | グリッド画像一括処理パイプライン（切り出し・中央配置・背景透過・レビュー・ZIP作成） | [x] `assets/kit/scripts/emoji_pipeline.py`（ChatGPT用・静止画） |
 | K-005b | 1個ずつ個別生成パイプライン（帯画像切り出し・APNG合成・レビュー・ZIP作成） | [x] `assets/kit/scripts/emoji_pipeline_animated.py` + `build_apng.py`（Codex用・動く絵文字。Pillow単体・外部パッケージ不要） |
 | K-006 | Codex用マスタープロンプト（キャラ候補A/B/C提案＋会話コマンド駆動＋目口の絶対条件＋整数秒ループ厳守） | [x] `assets/kit/prompts/codex-emoji-set-prompt.md` |
-| K-007 | ChatGPTだけの人用マスタープロンプト（40-emoji-set-plan.json・emoji_pipeline.pyの中身を埋め込み、ファイル添付を不要にしたもの） | [x] `assets/kit/prompts/chatgpt-smartphone-prompt.md` |
 
 > 2026-09-21追記: 配布ZIPを`prompts/`・`scripts/`のフォルダ分け構成から**フラット構成**に変更。
 > ユーザーが実機で解凍したところ2フォルダに分かれて見え、ページの「3ファイルを添付」という
@@ -123,3 +133,12 @@
   index.htmlのCodexセクション・LINEへの申請方法（仕様を2本立てに）・うまくいかないとき
   （動く絵文字特有のFAQ追加）・タイトル/hero/aboutを更新。旧core-files.zipを廃止しcodex-kit.zip
   を新設。旧chatgpt-emoji-set-prompt.md（未使用）を削除
+- [x] ChatGPT＝静止絵文字ルート（`#smartphone`セクション）を完全削除し、Codex単一ルート構成に
+  刷新（告知リールの台本がCodex単一訴求になったため）。`index.html`のP-006相当セクション・
+  目次・`#prepare`の分岐案内・`#apply`の仕様2本立て・関連FAQを削除し、`style.css`の
+  `.route-grid`関連CSSも削除。旧`40-emoji-set-plan.json`・`chatgpt-smartphone-prompt.md`・
+  `emoji_pipeline.py`を`git rm`、`line-emoji-kit.zip`をCodex用6ファイルのみで再圧縮。
+  `README.md`・`CLAUDE.md`・`docs/requirements.md`もCodex単一ルート前提に書き換え済み
+- [ ] LINEへの申請方法セクションに、実際の申請画面スクリーンショットを追加
+  （ユーザー自身がLINE Creators Marketへ実際に申請し、スクリーンショットを撮って共有する
+  予定。共有され次第、着手する）

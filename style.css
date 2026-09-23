@@ -555,6 +555,18 @@ button:focus-visible {
   height: auto;
 }
 
+.apply-screenshot {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ar, 16 / 9);
+  object-fit: contain;
+  height: auto;
+  margin: 1.25rem 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-soft);
+}
+
 /* ============================================================
    目次
 ============================================================ */

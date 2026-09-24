@@ -581,17 +581,29 @@ button:focus-visible {
 }
 
 .cta-card__toc {
-  max-width: 280px;
+  max-width: 360px;
   margin: 1.5rem auto;
   text-align: center;
 }
-.cta-card__toc-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-md);
+.cta-card__toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  text-align: left;
+  background: #fff;
   border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   box-shadow: 0 12px 28px -18px var(--color-card-shadow);
+}
+.cta-card__toc-chapter {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.2em;
 }
 .cta-card__toc-caption {
   margin: 0.6rem 0 0;

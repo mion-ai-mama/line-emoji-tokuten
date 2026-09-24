@@ -6,16 +6,16 @@
    ============================================================ */
 
 :root {
-  /* 色（大人ピンク×アイボリー系） */
+  /* 色（大人ピンク×アイボリー系。彩度は競合参考に引き上げ済み） */
   --color-bg: #fdfaf7;
   --color-bg-soft: #fbeeec;
-  --color-primary: #cf8a92;
-  --color-primary-dark: #b16d76;
+  --color-primary: #d03f64;
+  --color-primary-dark: #b02c52;
   --color-accent-light: #f7dfe0;
   --color-text: #3d322f;
   --color-text-muted: #8a7972;
   --color-border: #f0dfdc;
-  --color-card-shadow: rgba(207, 138, 146, 0.16);
+  --color-card-shadow: rgba(208, 63, 100, 0.22);
 
   /* 形 */
   --radius-lg: 20px;
@@ -170,9 +170,9 @@ button:focus-visible {
 }
 
 .btn--primary {
-  background: var(--color-primary);
+  background: linear-gradient(160deg, var(--color-primary), var(--color-primary-dark));
   color: #fff;
-  box-shadow: 0 10px 24px var(--color-card-shadow);
+  box-shadow: 0 14px 26px -8px var(--color-card-shadow);
 }
 .btn--primary:hover {
   background: var(--color-primary-dark);

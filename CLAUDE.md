@@ -67,14 +67,21 @@ index.html / style.css / script.js / README.md / assets/
 |---|---|---|
 | 背景 | `--color-bg` | `#fdfaf7` |
 | 淡いブラッシュピンク | `--color-bg-soft` | `#fbeeec` |
-| メインピンク（くすみローズ） | `--color-primary` | `#cf8a92` |
-| 濃いピンク | `--color-primary-dark` | `#b16d76` |
+| メインピンク（くすみローズ・彩度強め） | `--color-primary` | `#d03f64` |
+| 濃いピンク | `--color-primary-dark` | `#b02c52` |
 | アクセント淡ピンク | `--color-accent-light` | `#f7dfe0` |
 | メイン文字（濃茶） | `--color-text` | `#3d322f` |
 | 補助文字 | `--color-text-muted` | `#8a7972` |
 | ボーダー | `--color-border` | `#f0dfdc` |
 
 大人ピンク×アイボリー系。40代女性が見ても幼く感じない、大人っぽいトーンを保つ。
+
+> 2026-09-24改訂: 競合LP（one-lp-1.com/lp/line-emoji/）のボタン・見出し色を確認したところ
+> 視認性が高かったため、色相（ローズ系）と背景・文字色は維持したまま、メインボタン・見出し
+> アクセントに使う`--color-primary`/`--color-primary-dark`の彩度のみ引き上げた
+> （`#cf8a92`→`#d03f64`等）。白背景に対するコントラスト比も約2.7:1→約4.6:1に改善している。
+> `.btn--primary`は単色から`linear-gradient(160deg, primary, primary-dark)`のグラデーション＋
+> 影を強めに変更（ユーザー判断・彩度のみ寄せる方針）。
 
 ## コード品質
 

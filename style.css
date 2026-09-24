@@ -580,6 +580,25 @@ button:focus-visible {
   height: auto;
 }
 
+.cta-card__toc {
+  max-width: 280px;
+  margin: 1.5rem auto;
+  text-align: center;
+}
+.cta-card__toc-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 12px 28px -18px var(--color-card-shadow);
+}
+.cta-card__toc-caption {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
 .apply-screenshot {
   display: block;
   width: 100%;

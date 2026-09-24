@@ -44,7 +44,12 @@ HTML / CSS / JavaScript だけで作られた静的サイトで、ビルド作�
 │   └── SCOPE_PROGRESS.md    進捗管理
 └── assets/
     ├── favicon/favicon.svg
-    ├── images/cta-banner.png   「AIマネタイズの教科書」バナー（既存ポリシー通り固定）
+    ├── images/
+    │   ├── cta-banner.png              「AIマネタイズの教科書」バナー（既存ポリシー通り固定）
+    │   ├── line-creators-market-top.png LINE Creators Marketのトップ画面
+    │   └── apply-steps/                LINE申請手順の実画面スクリーンショット13枚
+    ├── videos/completed-example.mp4   完成した動く絵文字がLINE Creators Market上で
+    │                                   動いている実際の様子（#aboutセクションの完成イメージ）
     └── kit/                    配布キット本体（§6参照）
         ├── codex-kit.zip       必須3ファイルのみ（Codexセクションのメインボタン）
         ├── line-emoji-kit.zip  プロンプトの控え等も含む完全版（任意・サブリンク）

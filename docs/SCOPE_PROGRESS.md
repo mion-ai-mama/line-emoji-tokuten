@@ -112,7 +112,14 @@
 
 - [x] キットZIP本体の圧縮（`assets/kit/line-emoji-kit.zip`。ページの「プロンプトキット一式をダウンロード」ボタンからリンク済み）
 - [x] ページ本文（`index.html`）の執筆（40個セット方式への書き換え済み）
-- [ ] スクリーンショット・完成例画像の準備（`#about`セクションは現状テキスト＋アイコンのみ。完成イメージ画像は未着手）
+- [x] 完成イメージの追加（`#about`セクション）。ユーザーが実際にLINE Creators Marketへ申請して
+  動作確認した際の画面録画から、モーダルプレビュー部分のみを切り出し・トリミングした
+  `assets/videos/completed-example.mp4`（780×922・6.5秒・音声なし・H.264・61KB）を
+  `<video autoplay muted loop playsinline>`として埋め込み。実際にLINE公式アプリ上で
+  動いている様子を見せることで、読者が完成形を見ないまま先へ進む問題を解消した
+  （Playwrightの実Chromiumで再生・デコードを確認済み。claude-in-chromeの自動化タブでは
+  動画デコードが機能せずブラックアウトすることを確認したが、これは自動化環境固有の制約で
+  実ユーザー環境には影響しない）
 - [x] `README.md`のプロジェクト固有情報への更新（`CLAUDE.md`は元から固有内容だったため対象外）
 - [x] GitHub Pages公開設定（main / root。https://mion-ai-mama.github.io/line-emoji-tokuten/ で公開確認済み）
 - [x] スマホ完結ルート（ファイル添付不要・プロンプト1つで完結）を追加。`40-emoji-set-plan.json`と

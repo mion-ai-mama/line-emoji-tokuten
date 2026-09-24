@@ -139,6 +139,18 @@
   `.route-grid`関連CSSも削除。旧`40-emoji-set-plan.json`・`chatgpt-smartphone-prompt.md`・
   `emoji_pipeline.py`を`git rm`、`line-emoji-kit.zip`をCodex用6ファイルのみで再圧縮。
   `README.md`・`CLAUDE.md`・`docs/requirements.md`もCodex単一ルート前提に書き換え済み
-- [ ] LINEへの申請方法セクションに、実際の申請画面スクリーンショットを追加
-  （ユーザー自身がLINE Creators Marketへ実際に申請し、スクリーンショットを撮って共有する
-  予定。共有され次第、着手する）
+- [x] LINEへの申請方法セクションに、実際の申請画面スクリーンショットを追加
+  （ユーザーが実際にLINE Creators Marketへ申請しながら13枚のスクリーンショットを共有。
+  新規登録→絵文字タイプ／パッケージタイプ選択→タイトル・説明文（英語必須・言語を追加で
+  日本語追加）→販売情報（コピーライト・AIの使用・販売エリア）→絵文字画像タブでのZIP
+  アップロード→メイン画像4個の番号指定→販売価格情報→送金先登録・リクエストまでの
+  一連の流れを`#apply`セクションの`numbered-steps`に組み込み。画像は
+  `assets/images/apply-steps/step-01〜13-*.png`として保存（1400px以下に圧縮）
+- [x] バグ修正: `#apply`セクションがステップ画像13枚の追加で9,000px超に伸びたことで、
+  上記と同じ「IntersectionObserver threshold 0.15が高さに対して満たせない」不具合が
+  再発した。個別セレクタへの対処ではなく`script.js`の`setupRevealAnimation`の
+  `threshold`を`0.15`→`0`に変更し、要素の高さに関わらず一部でも視界に入れば表示される
+  よう根本修正（同種の不具合の再発を防ぐ）。real な wheel scroll（claude-in-chromeの
+  `computer`スクロール）で実機確認済み。JSでの`scrollTo`ジャンプ単体では
+  IntersectionObserverの再評価がこの自動化環境では発火しないことも確認（実ユーザーの
+  スクロール操作では問題なし）
